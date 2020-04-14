@@ -1,9 +1,9 @@
 package com.mgtech.acudame.activity;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -36,8 +36,10 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private Switch tipoAcesso, tipoUsuario;
     private LinearLayout linearTipoUsuario;
     private AlertDialog dialog;
-
+    private boolean validarBotao = false;
+    private int contador = 1;
     private FirebaseAuth autenticacao;
+    final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,57 +67,63 @@ public class AutenticacaoActivity extends AppCompatActivity {
         botaoAcessar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                botaoAcessar.setClickable(false);
+                    dialog = new SpotsDialog.Builder()
+                            .setContext(AutenticacaoActivity.this)
+                            .setMessage("Carregando Dados")
+                            .setCancelable(false)
+                            .build();
+                    dialog.show();
 
-                botaoAcessar.setEnabled(false);
 
-                String email = campoEmail.getText().toString();
-                String senha = campoSenha.getText().toString();
+                    String email = campoEmail.getText().toString();
+                    String senha = campoSenha.getText().toString();
 
-                if(!email.isEmpty()){
-                    if(!senha.isEmpty()){
+                    if (!email.isEmpty()) {
+                        if (!senha.isEmpty()) {
 
-                        // verifica estado do switch
-                        if(tipoAcesso.isChecked()){ // cadastro
+                            // verifica estado do switch
+                            if (tipoAcesso.isChecked()) { // cadastro
 
-                            autenticacao.createUserWithEmailAndPassword(
-                                    email, senha
-                            ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                autenticacao.createUserWithEmailAndPassword(
+                                        email, senha
+                                ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                    if (task.isSuccessful()) {
+                                        if (task.isSuccessful()) {
 
-                                        Toast.makeText(AutenticacaoActivity.this,
-                                                "Cadastro realizado com sucesso!",
-                                                Toast.LENGTH_SHORT).show();
-                                        String tipoUsuario = getTipoUsuario();
-                                        UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
-                                        abrirTelaPrincipal(tipoUsuario);
+                                            Toast.makeText(AutenticacaoActivity.this,
+                                                    "Cadastro realizado com sucesso!",
+                                                    Toast.LENGTH_SHORT).show();
+                                            String tipoUsuario = getTipoUsuario();
+                                            UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
+                                            abrirTelaPrincipal(tipoUsuario);
 
-                                    } else {
-                                        String erroExcecao = "";
+                                        } else {
+                                            String erroExcecao = "";
 
-                                        try {
-                                            throw task.getException();
-                                        }catch (FirebaseAuthWeakPasswordException e){
-                                            erroExcecao = "Digite uma senha mais forte!";
-                                        }catch (FirebaseAuthInvalidCredentialsException e){
-                                            erroExcecao = "E-mail inválido! Informe um e-mail válido!";
-                                        }catch (FirebaseAuthUserCollisionException e){
-                                            erroExcecao = "Esta conta já foi cadastrada";
-                                        }catch (Exception e){
-                                            erroExcecao = "ao cadastrar usuário: " + e.getMessage();
-                                            e.printStackTrace();
+                                            try {
+                                                throw task.getException();
+                                            } catch (FirebaseAuthWeakPasswordException e) {
+                                                erroExcecao = "Digite uma senha mais forte!";
+                                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                                erroExcecao = "E-mail inválido! Informe um e-mail válido!";
+                                            } catch (FirebaseAuthUserCollisionException e) {
+                                                erroExcecao = "Esta conta já foi cadastrada";
+                                            } catch (Exception e) {
+                                                erroExcecao = "ao cadastrar usuário: " + e.getMessage();
+                                                e.printStackTrace();
+                                            }
+
+                                            Toast.makeText(AutenticacaoActivity.this,
+                                                    "Erro: " + erroExcecao,
+                                                    Toast.LENGTH_SHORT).show();
                                         }
-
-                                        Toast.makeText(AutenticacaoActivity.this,
-                                                "Erro: " + erroExcecao,
-                                                Toast.LENGTH_SHORT).show();
                                     }
-                                }
-                            });
+                                });
 
-                        }else { //login
+                            } else { //login
 
                             /*final ProgressDialog progressDialog = new ProgressDialog(AutenticacaoActivity.this,
                                     R.style.Theme_AppCompat_Light_DarkActionBar);
@@ -123,57 +131,60 @@ public class AutenticacaoActivity extends AppCompatActivity {
                             progressDialog.setMessage("Autenticando...");
                             progressDialog.show();*/
 
-                            dialog = new SpotsDialog.Builder()
-                                    .setContext(AutenticacaoActivity.this)
-                                    .setMessage("Carregando Dados")
-                                    .setCancelable(false)
-                                    .build();
-                            dialog.show();
 
-                            autenticacao.signInWithEmailAndPassword(
-                                    email, senha
-                            ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
+                                autenticacao.signInWithEmailAndPassword(
+                                        email, senha
+                                ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
 
-                                        Toast.makeText(AutenticacaoActivity.this,
-                                                "Logado com sucesso!",
-                                                Toast.LENGTH_SHORT).show();
-                                        String tipoUsuario = task.getResult().getUser().getDisplayName();
-                                        abrirTelaPrincipal(tipoUsuario);
+                                            //botaoAcessar.setEnabled(false);
 
-                                    }else {
+                                            Toast.makeText(AutenticacaoActivity.this,
+                                                    "Logado com sucesso!",
+                                                    Toast.LENGTH_SHORT).show();
+                                            String tipoUsuario = task.getResult().getUser().getDisplayName();
+                                            abrirTelaPrincipal(tipoUsuario);
 
-                                        Toast.makeText(AutenticacaoActivity.this,
-                                                "Falha ao tentar logar: " + task.getException() ,
-                                                Toast.LENGTH_SHORT).show();
+                                        } else {
 
+                                            Toast.makeText(AutenticacaoActivity.this,
+                                                    "Falha ao tentar logar: " + task.getException(),
+                                                    Toast.LENGTH_SHORT).show();
+
+                                        }
                                     }
-                                }
-                            });
+                                });
 
-                            //progressDialog.dismiss();
-                            dialog.dismiss();
+                                //progressDialog.dismiss();
 
+
+                            }
+
+                        } else {
+                            Toast.makeText(AutenticacaoActivity.this,
+                                    "Senha é obrigatória!",
+                                    Toast.LENGTH_SHORT).show();
                         }
-
                     } else {
                         Toast.makeText(AutenticacaoActivity.this,
-                                "Senha é obrigatória!",
+                                "E-mail é obrigatório!",
                                 Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(AutenticacaoActivity.this,
-                            "E-mail é obrigatório!",
-                            Toast.LENGTH_SHORT).show();
-                }
 
-                botaoAcessar.setEnabled(true);
-
+                    dialog.dismiss();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Do something after 5s = 5000ms
+                       botaoAcessar.setClickable(true);
+                    }
+                }, 1500);
             }
-
         });
+
+
     }
 
     private void verificarUsuarioLogado(){
@@ -205,5 +216,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
         tipoAcesso = findViewById(R.id.switchAcesso);
         tipoUsuario = findViewById(R.id.switchTipoUsuario);
         linearTipoUsuario = findViewById(R.id.linearTipoUsuario);
+        botaoAcessar.setClickable(true);
     }
+
 }

@@ -10,23 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.PedidosActivity"
-            android:parentActivityName=".activity.EmpresaActivity"></activity>
+            android:parentActivityName=".activity.EmpresaActivity" android:launchMode="singleTop"></activity>
         <activity
             android:name=".activity.CardapioActivity"
-            android:parentActivityName=".activity.HomeActivity" />
+            android:parentActivityName=".activity.HomeActivity" android:launchMode="singleTop" />
         <activity
             android:name=".activity.ConfiguracoesUsuarioActivity"
-            android:parentActivityName=".activity.HomeActivity" />
+            android:parentActivityName=".activity.HomeActivity" android:launchMode="singleTop" />
         <activity
             android:name=".activity.NovoProdutoEmpresaActivity"
-            android:parentActivityName=".activity.EmpresaActivity" />
+            android:parentActivityName=".activity.EmpresaActivity" android:launchMode="singleTop"/>
         <activity
             android:name=".activity.ConfiguracoesEmpresaActivity"
-            android:parentActivityName=".activity.EmpresaActivity" />
-        <activity android:name=".activity.EmpresaActivity" />
-        <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.AutenticacaoActivity" />
-        <activity android:name=".activity.SplashActivity">
+            android:parentActivityName=".activity.EmpresaActivity" android:launchMode="singleTop"  />
+        <activity android:name=".activity.EmpresaActivity" android:launchMode="singleTop"/>
+        <activity android:name=".activity.HomeActivity" android:launchMode="singleTop" />
+        <activity android:name=".activity.AutenticacaoActivity" android:launchMode="singleTop" />
+        <activity android:name=".activity.SplashActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
