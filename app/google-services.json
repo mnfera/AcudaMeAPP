@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "555298662312",
+    "firebase_url": "https://acuda-me-ca583.firebaseio.com",
+    "project_id": "acuda-me-ca583",
+    "storage_bucket": "acuda-me-ca583.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555298662312:android:65619784c01c858d211f9d",
+        "android_client_info": {
+          "package_name": "com.mgtech.acudame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555298662312-s4qgtkd1bcp3p04sq7e3p20qbdtm09fo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mgtech.acudame",
+            "certificate_hash": "20abcba7c49a4537f8132cf7dc7f272c46bcedc0"
+          }
+        },
+        {
+          "client_id": "555298662312-a7ucr91be153mfbvv1h4ce08lkldcd3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWdq521tqaIgtg83w-9i-NkAmsHnpe1qI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555298662312-a7ucr91be153mfbvv1h4ce08lkldcd3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
