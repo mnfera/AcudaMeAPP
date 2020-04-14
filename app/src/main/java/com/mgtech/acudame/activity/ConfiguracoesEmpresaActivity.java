@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -32,6 +33,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
+import dmax.dialog.SpotsDialog;
+
 public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
 
     private EditText editEmpresaNome, editEmpresaCategoria,
@@ -43,6 +46,7 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private String idUsuarioLogado;
     private String urlImagemSelecionada = "";
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,13 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
 
     private void recuperarDadosEmpresa() {
 
+        dialog = new SpotsDialog.Builder()
+                .setContext(ConfiguracoesEmpresaActivity.this)
+                .setMessage("Carregando Dados")
+                .setCancelable(false)
+                .build();
+        dialog.show();
+
         DatabaseReference empresaRef = firebaseRef
                 .child("empresas")
                 .child(idUsuarioLogado);
@@ -107,6 +118,8 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                                 .into(imagePerfilEmpresa);
                     }
                 }
+
+                dialog.dismiss();
 
             }
 

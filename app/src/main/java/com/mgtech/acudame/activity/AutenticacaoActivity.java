@@ -1,5 +1,6 @@
 package com.mgtech.acudame.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,12 +27,15 @@ import com.mgtech.acudame.R;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 
+import dmax.dialog.SpotsDialog;
+
 public class AutenticacaoActivity extends AppCompatActivity {
 
     private Button botaoAcessar;
     private EditText campoEmail, campoSenha;
     private Switch tipoAcesso, tipoUsuario;
     private LinearLayout linearTipoUsuario;
+    private AlertDialog dialog;
 
     private FirebaseAuth autenticacao;
 
@@ -113,11 +117,18 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                         }else { //login
 
-                            final ProgressDialog progressDialog = new ProgressDialog(AutenticacaoActivity.this,
+                            /*final ProgressDialog progressDialog = new ProgressDialog(AutenticacaoActivity.this,
                                     R.style.Theme_AppCompat_Light_DarkActionBar);
                             progressDialog.setIndeterminate(true);
                             progressDialog.setMessage("Autenticando...");
-                            progressDialog.show();
+                            progressDialog.show();*/
+
+                            dialog = new SpotsDialog.Builder()
+                                    .setContext(AutenticacaoActivity.this)
+                                    .setMessage("Carregando Dados")
+                                    .setCancelable(false)
+                                    .build();
+                            dialog.show();
 
                             autenticacao.signInWithEmailAndPassword(
                                     email, senha
@@ -142,7 +153,8 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                 }
                             });
 
-                            progressDialog.dismiss();
+                            //progressDialog.dismiss();
+                            dialog.dismiss();
 
                         }
 

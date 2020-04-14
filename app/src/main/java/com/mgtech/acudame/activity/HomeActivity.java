@@ -30,6 +30,8 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
+
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
@@ -38,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private AdapterEmpresa adapterEmpresa;
     private List<Empresa> empresas = new ArrayList<>();
     private DatabaseReference firebaseRef;
-    //private String idUsuarioLogado;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +137,13 @@ public class HomeActivity extends AppCompatActivity {
 
     private void recuperarEmpresas(){
 
+        dialog = new SpotsDialog.Builder()
+                .setContext(HomeActivity.this)
+                .setMessage("Carregando Dados")
+                .setCancelable(false)
+                .build();
+        dialog.show();
+
         DatabaseReference empresaRef = firebaseRef.child("empresas");
         empresaRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -145,6 +154,8 @@ public class HomeActivity extends AppCompatActivity {
                     empresas.add(ds.getValue(Empresa.class));
                 }
                 adapterEmpresa.notifyDataSetChanged();
+
+                dialog.dismiss();
 
             }
 

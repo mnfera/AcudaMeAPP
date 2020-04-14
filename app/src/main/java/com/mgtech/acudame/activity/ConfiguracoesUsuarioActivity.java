@@ -1,5 +1,6 @@
 package com.mgtech.acudame.activity;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,12 +19,15 @@ import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.model.Usuario;
 
+import dmax.dialog.SpotsDialog;
+
 public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
 
     private EditText editUsuarioNome, editUsuarioEndereco;
     private Button buttonSalvar;
     private String idUsuario;
     private DatabaseReference firebaseRef;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,13 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
 
     private void recuperarDadosUsuario() {
 
+        dialog = new SpotsDialog.Builder()
+                .setContext(ConfiguracoesUsuarioActivity.this)
+                .setMessage("Carregando Dados")
+                .setCancelable(false)
+                .build();
+        dialog.show();
+
         DatabaseReference usuarioRef = firebaseRef
                 .child("usuarios")
                 .child(idUsuario);
@@ -65,6 +76,8 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
                     editUsuarioNome.setText(usuario.getNome());
                     editUsuarioEndereco.setText(usuario.getEndereco());
                 }
+
+                dialog.dismiss();
 
             }
 
