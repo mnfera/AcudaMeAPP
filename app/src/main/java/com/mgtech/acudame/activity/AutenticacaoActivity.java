@@ -34,8 +34,8 @@ import dmax.dialog.SpotsDialog;
 public class AutenticacaoActivity extends AppCompatActivity {
 
     private Button botaoAcessar;
-    private EditText campoEmail, campoSenha;
-    private Switch tipoAcesso, tipoUsuario;
+    private EditText campoEmail, campoSenha, campoConfirmarSenha;
+    private Switch tipoAcesso;
     private LinearLayout linearTipoUsuario;
     private AlertDialog dialog;
     private FirebaseAuth autenticacao;
@@ -57,9 +57,9 @@ public class AutenticacaoActivity extends AppCompatActivity {
         tipoAcesso.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){ // empresa
+                if(isChecked){
                     linearTipoUsuario.setVisibility(View.VISIBLE);
-                }else { // usuario
+                }else {
                     linearTipoUsuario.setVisibility(View.GONE);
                 }
             }
@@ -79,6 +79,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                     String email = campoEmail.getText().toString();
                     String senha = campoSenha.getText().toString();
+                    String confirmarSenha = campoConfirmarSenha.getText().toString();
 
                     if (!email.isEmpty()) {
                         if (!senha.isEmpty()) {
@@ -86,45 +87,53 @@ public class AutenticacaoActivity extends AppCompatActivity {
                             // verifica estado do switch
                             if (tipoAcesso.isChecked()) { // cadastro
 
-                                autenticacao.createUserWithEmailAndPassword(
-                                        email, senha
-                                ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (senha.equals(confirmarSenha)) {
 
-                                        if (task.isSuccessful()) {
+                                    autenticacao.createUserWithEmailAndPassword(
+                                            email, senha
+                                    ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                            Toast.makeText(AutenticacaoActivity.this,
-                                                    "Cadastro realizado com sucesso!",
-                                                    Toast.LENGTH_SHORT).show();
-                                            String tipoUsuario = getTipoUsuario();
-                                            UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
-                                            abrirTelaPrincipal(tipoUsuario);
+                                            if (task.isSuccessful()) {
 
-                                        } else {
-                                            String erroExcecao = "";
-                                            String titulo = "";
+                                                Toast.makeText(AutenticacaoActivity.this,
+                                                        "Cadastro realizado com sucesso!",
+                                                        Toast.LENGTH_SHORT).show();
+                                                String tipoUsuario = "U";
+                                                UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
+                                                abrirTelaPrincipal(tipoUsuario);
 
-                                            try {
-                                                throw task.getException();
-                                            } catch (FirebaseAuthWeakPasswordException e) {
-                                                erroExcecao = "Digite uma senha mais forte!";
-                                                titulo = "Senha";
-                                            } catch (FirebaseAuthInvalidCredentialsException e) {
-                                                erroExcecao = "E-mail inválido! Informe um e-mail válido!";
-                                                titulo = "Email";
-                                            } catch (FirebaseAuthUserCollisionException e) {
-                                                erroExcecao = "Esta conta já foi cadastrada";
-                                                titulo = "Conta";
-                                            } catch (Exception e) {
-                                                erroExcecao = "ao cadastrar usuário: " + e.getMessage();
-                                               titulo = "Usuário";
+                                            } else {
+                                                String erroExcecao = "";
+                                                String titulo = "";
+
+                                                try {
+                                                    throw task.getException();
+                                                } catch (FirebaseAuthWeakPasswordException e) {
+                                                    erroExcecao = "Digite uma senha mais forte!";
+                                                    titulo = "Senha";
+                                                } catch (FirebaseAuthInvalidCredentialsException e) {
+                                                    erroExcecao = "E-mail inválido! Informe um e-mail válido!";
+                                                    titulo = "Email";
+                                                } catch (FirebaseAuthUserCollisionException e) {
+                                                    erroExcecao = "Esta conta já foi cadastrada";
+                                                    titulo = "Conta";
+                                                } catch (Exception e) {
+                                                    erroExcecao = "ao cadastrar usuário: " + e.getMessage();
+                                                   titulo = "Usuário";
+                                                }
+
+                                                alertaSimples(erroExcecao, getApplicationContext(), titulo);
                                             }
-
-                                            alertaSimples(erroExcecao, getApplicationContext(), titulo);
                                         }
-                                    }
-                                });
+                                    });
+                                }else {
+
+                                    Toast.makeText(AutenticacaoActivity.this,
+                                            "As senhas não são iguais!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
 
                             } else { //login
 
@@ -190,9 +199,9 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
     }
 
-    private String getTipoUsuario(){
+    /*private String getTipoUsuario(){
         return tipoUsuario.isChecked() ? "E" : "U";
-    }
+    }*/
 
     private void abrirTelaPrincipal(String tipoUsuario){
         if(tipoUsuario.equals("E")){ // empresa
@@ -206,6 +215,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private void inicializarComponentes(){
                 campoEmail = findViewById(R.id.editCadastroEmail);
                 campoSenha = findViewById(R.id.editCadastroSenha);
+                campoConfirmarSenha = findViewById(R.id.editSenhaConfirmar);
                 botaoAcessar = findViewById(R.id.buttonAcesso);
                 tipoAcesso = findViewById(R.id.switchAcesso);
                 linearTipoUsuario = findViewById(R.id.linearTipoUsuario);
