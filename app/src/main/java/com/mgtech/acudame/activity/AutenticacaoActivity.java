@@ -49,6 +49,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
         inicializarComponentes();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
         //autenticacao.signOut();
 
         // verificar se usuario está logado
@@ -97,12 +98,27 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                                             if (task.isSuccessful()) {
 
-                                                Toast.makeText(AutenticacaoActivity.this,
-                                                        "Cadastro realizado com sucesso!",
-                                                        Toast.LENGTH_SHORT).show();
-                                                String tipoUsuario = "U";
-                                                UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
-                                                abrirTelaPrincipal(tipoUsuario);
+                                                //Enviar link email para verificação
+                                                autenticacao.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                                        if(task.isSuccessful()){
+                                                            alertaSimples("Cadastro realizado com sucesso! Por favor, verifique seu email!", getApplicationContext(), "Cadastro");
+
+                                                            String tipoUsuario = "U";
+                                                            UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
+
+                                                            //abrirTelaPrincipal(tipoUsuario);
+
+                                                        }else{
+                                                            Toast.makeText(AutenticacaoActivity.this,
+                                                                    task.getException().getMessage(),
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+
+                                                    }
+                                                });
 
                                             } else {
                                                 String erroExcecao = "";
@@ -151,13 +167,18 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
 
-                                            //botaoAcessar.setEnabled(false);
+                                            //Verificando vizualização do link enviado para o email
+                                            if(autenticacao.getCurrentUser().isEmailVerified()){
+                                                Toast.makeText(AutenticacaoActivity.this,
+                                                        "Logado com sucesso!",
+                                                        Toast.LENGTH_SHORT).show();
+                                                String tipoUsuario = task.getResult().getUser().getDisplayName();
+                                                abrirTelaPrincipal(tipoUsuario);
 
-                                            Toast.makeText(AutenticacaoActivity.this,
-                                                    "Logado com sucesso!",
-                                                    Toast.LENGTH_SHORT).show();
-                                            String tipoUsuario = task.getResult().getUser().getDisplayName();
-                                            abrirTelaPrincipal(tipoUsuario);
+                                                //botaoAcessar.setEnabled(false);
+                                            }else {
+                                                alertaSimples("Por favor verifique seu endereço de email", getApplicationContext(), "Email não verificado");
+                                            }
 
                                         } else {
                                             alertaSimples(task.getException().toString(), getApplicationContext(), "Falha ao tentar logar");
@@ -192,7 +213,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
     private void verificarUsuarioLogado(){
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
-        if(usuarioAtual != null) {
+        if(usuarioAtual != null && usuarioAtual.isEmailVerified()) {
             String tipoUsuario = usuarioAtual.getDisplayName();
             abrirTelaPrincipal(tipoUsuario);
         }
