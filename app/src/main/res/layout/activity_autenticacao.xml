@@ -78,26 +78,16 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/textUsuario"
-            android:layout_width="50dp"
+        <EditText
+            android:id="@+id/editSenhaConfirmar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Usuário"
-            android:textColor="@android:color/white" />
-
-        <Switch
-            android:id="@+id/switchTipoUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
-
-        <TextView
-            android:id="@+id/textEmpresa"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="Empresa"
-            android:textColor="@android:color/white" />
+            android:layout_marginTop="-2dp"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="Confirmar Senha"
+            android:inputType="textPassword"
+            android:padding="16dp" />
     </LinearLayout>
 
     <Button
