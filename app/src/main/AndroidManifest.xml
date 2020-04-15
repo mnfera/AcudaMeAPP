@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PedidosActivity"
-            android:parentActivityName=".activity.EmpresaActivity" android:launchMode="singleTop"></activity>
+        <activity android:name=".activity.PedidosActivity" android:launchMode="singleTop"
+            android:parentActivityName=".activity.EmpresaActivity"></activity>
         <activity
             android:name=".activity.CardapioActivity"
             android:parentActivityName=".activity.HomeActivity" android:launchMode="singleTop" />

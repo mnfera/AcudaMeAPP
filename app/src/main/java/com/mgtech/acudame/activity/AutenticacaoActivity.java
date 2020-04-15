@@ -1,6 +1,7 @@
 package com.mgtech.acudame.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
+import com.mgtech.acudame.message.MessengerDialog;
 
 import dmax.dialog.SpotsDialog;
 
@@ -36,10 +38,9 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private Switch tipoAcesso, tipoUsuario;
     private LinearLayout linearTipoUsuario;
     private AlertDialog dialog;
-    private boolean validarBotao = false;
-    private int contador = 1;
     private FirebaseAuth autenticacao;
     final Handler handler = new Handler();
+    private AlertDialog alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,23 +103,25 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                                         } else {
                                             String erroExcecao = "";
+                                            String titulo = "";
 
                                             try {
                                                 throw task.getException();
                                             } catch (FirebaseAuthWeakPasswordException e) {
                                                 erroExcecao = "Digite uma senha mais forte!";
+                                                titulo = "Senha";
                                             } catch (FirebaseAuthInvalidCredentialsException e) {
                                                 erroExcecao = "E-mail inválido! Informe um e-mail válido!";
+                                                titulo = "Email";
                                             } catch (FirebaseAuthUserCollisionException e) {
                                                 erroExcecao = "Esta conta já foi cadastrada";
+                                                titulo = "Conta";
                                             } catch (Exception e) {
                                                 erroExcecao = "ao cadastrar usuário: " + e.getMessage();
-                                                e.printStackTrace();
+                                               titulo = "Usuário";
                                             }
 
-                                            Toast.makeText(AutenticacaoActivity.this,
-                                                    "Erro: " + erroExcecao,
-                                                    Toast.LENGTH_SHORT).show();
+                                            alertaSimples(erroExcecao, getApplicationContext(), titulo);
                                         }
                                     }
                                 });
@@ -148,29 +151,20 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                             abrirTelaPrincipal(tipoUsuario);
 
                                         } else {
-
-                                            Toast.makeText(AutenticacaoActivity.this,
-                                                    "Falha ao tentar logar: " + task.getException(),
-                                                    Toast.LENGTH_SHORT).show();
-
+                                            alertaSimples(task.getException().toString(), getApplicationContext(), "Falha ao tentar logar");
                                         }
                                     }
                                 });
 
                                 //progressDialog.dismiss();
 
-
                             }
 
                         } else {
-                            Toast.makeText(AutenticacaoActivity.this,
-                                    "Senha é obrigatória!",
-                                    Toast.LENGTH_SHORT).show();
+                            alertaSimples("Senha é obrigatória!", getApplicationContext(), "Campo Senha está vazio");
                         }
                     } else {
-                        Toast.makeText(AutenticacaoActivity.this,
-                                "E-mail é obrigatório!",
-                                Toast.LENGTH_SHORT).show();
+                        alertaSimples("Email é obrigatório!", getApplicationContext(), "Campo Email está vazio");
                     }
 
                     dialog.dismiss();
@@ -210,13 +204,20 @@ public class AutenticacaoActivity extends AppCompatActivity {
     }
 
     private void inicializarComponentes(){
-        campoEmail = findViewById(R.id.editCadastroEmail);
-        campoSenha = findViewById(R.id.editCadastroSenha);
-        botaoAcessar = findViewById(R.id.buttonAcesso);
-        tipoAcesso = findViewById(R.id.switchAcesso);
-        tipoUsuario = findViewById(R.id.switchTipoUsuario);
-        linearTipoUsuario = findViewById(R.id.linearTipoUsuario);
-        botaoAcessar.setClickable(true);
+                campoEmail = findViewById(R.id.editCadastroEmail);
+                campoSenha = findViewById(R.id.editCadastroSenha);
+                botaoAcessar = findViewById(R.id.buttonAcesso);
+                tipoAcesso = findViewById(R.id.switchAcesso);
+                tipoUsuario = findViewById(R.id.switchTipoUsuario);
+                linearTipoUsuario = findViewById(R.id.linearTipoUsuario);
+                botaoAcessar.setClickable(true);
+    }
+
+    public void alertaSimples(String conteudo, Context context, String titulo){
+        MessengerDialog dialog = new MessengerDialog();
+        dialog.setConteudo(conteudo);
+        dialog.setTitulo(titulo);
+        dialog.show(getSupportFragmentManager(), "exemplo dialog");
     }
 
 }

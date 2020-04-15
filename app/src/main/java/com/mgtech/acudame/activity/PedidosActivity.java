@@ -1,6 +1,7 @@
 package com.mgtech.acudame.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ import com.mgtech.acudame.adapter.AdapterPedido;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
+import com.mgtech.acudame.message.MessengerDialog;
 import com.mgtech.acudame.model.Pedido;
 
 import java.util.ArrayList;
@@ -119,8 +121,7 @@ public class PedidosActivity extends AppCompatActivity {
 
                     adapterPedido.notifyDataSetChanged();
                 }else {
-
-                    Toast.makeText(getApplicationContext(), "Não há nenhum pedido!", Toast.LENGTH_SHORT).show();
+                    alertaSimples("Não há nenhum pedido", getApplicationContext(), "Pedidos ");
                 }
                 dialog.dismiss();
             }
@@ -136,4 +137,12 @@ public class PedidosActivity extends AppCompatActivity {
     private void inicializarComponentes() {
         recyclerPedidos = findViewById(R.id.recyclerPedidos);
     }
+
+    public void alertaSimples(String conteudo, Context context, String titulo){
+        MessengerDialog dialog = new MessengerDialog();
+        dialog.setConteudo(conteudo);
+        dialog.setTitulo(titulo);
+        dialog.show(getSupportFragmentManager(), "exemplo dialog");
+    }
+
 }

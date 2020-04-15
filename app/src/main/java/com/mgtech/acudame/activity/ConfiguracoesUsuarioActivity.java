@@ -76,9 +76,7 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
                     editUsuarioNome.setText(usuario.getNome());
                     editUsuarioEndereco.setText(usuario.getEndereco());
                 }
-
                 dialog.dismiss();
-
             }
 
             @Override
