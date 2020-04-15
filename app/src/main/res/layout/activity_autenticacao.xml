@@ -99,7 +99,7 @@
         android:theme="@style/botaoPadrao" />
 
     <TextView
-        android:id="@+id/textEsqueciSenha"
+        android:id="@+id/textEsqueciSe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
