@@ -208,7 +208,6 @@ public class AutenticacaoActivity extends AppCompatActivity {
                 campoSenha = findViewById(R.id.editCadastroSenha);
                 botaoAcessar = findViewById(R.id.buttonAcesso);
                 tipoAcesso = findViewById(R.id.switchAcesso);
-                tipoUsuario = findViewById(R.id.switchTipoUsuario);
                 linearTipoUsuario = findViewById(R.id.linearTipoUsuario);
                 botaoAcessar.setClickable(true);
     }
