@@ -2,6 +2,7 @@ package com.mgtech.acudame.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +31,9 @@ import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.message.MessengerDialog;
 
+
+import org.w3c.dom.Text;
+
 import dmax.dialog.SpotsDialog;
 
 public class AutenticacaoActivity extends AppCompatActivity {
@@ -41,6 +46,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private FirebaseAuth autenticacao;
     final Handler handler = new Handler();
     private AlertDialog alerta;
+    private TextView recuperarSenha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,14 @@ public class AutenticacaoActivity extends AppCompatActivity {
                 }else {
                     linearTipoUsuario.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        recuperarSenha.setClickable(true);
+        recuperarSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recuperarEmail();
             }
         });
 
@@ -240,7 +254,8 @@ public class AutenticacaoActivity extends AppCompatActivity {
                 botaoAcessar = findViewById(R.id.buttonAcesso);
                 tipoAcesso = findViewById(R.id.switchAcesso);
                 linearTipoUsuario = findViewById(R.id.linearTipoUsuario);
-                botaoAcessar.setClickable(true);
+                recuperarSenha = findViewById(R.id.textEsqueciSe);
+
     }
 
     public void alertaSimples(String conteudo, Context context, String titulo){
@@ -250,4 +265,51 @@ public class AutenticacaoActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "exemplo dialog");
     }
 
+    public void recuperarSenha(){
+
+        autenticacao.sendPasswordResetEmail(campoEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if( task.isSuccessful() ){
+                    alertaSimples("Verifique seu email para recuperar sua senha", getApplicationContext(), "Recuperação da senha");
+                }else{
+                    alertaSimples("Falha na recuperação! Tente novamente!", getApplicationContext(), "Recuperação da senha");
+                }
+            }
+        });
+    }
+
+    //Função para capturar o email do usário para a recuperação da senha
+    public void recuperarEmail(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Recuperar senha");
+        builder.setMessage("Por favor, digite seu email cadastrado no sistema");
+
+        final EditText email = new EditText(this);
+
+        builder.setView(email);
+
+        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if(!email.getText().toString().isEmpty()){
+                    recuperarSenha();
+                }else{
+
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
