@@ -1,4 +1,4 @@
-package com.mgtech.acudame.message;
+package com.mgtech.acudame.messenger;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

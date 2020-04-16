@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,7 +21,7 @@ import com.mgtech.acudame.adapter.AdapterPedido;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
-import com.mgtech.acudame.message.MessengerDialog;
+import com.mgtech.acudame.messenger.MessengerDialog;
 import com.mgtech.acudame.model.Pedido;
 
 import java.util.ArrayList;

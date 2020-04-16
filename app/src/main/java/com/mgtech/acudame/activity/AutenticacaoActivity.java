@@ -30,10 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
-import com.mgtech.acudame.message.MessengerDialog;
+import com.mgtech.acudame.messenger.MessengerDialog;
 
-
-import org.w3c.dom.Text;
 
 import dmax.dialog.SpotsDialog;
 
