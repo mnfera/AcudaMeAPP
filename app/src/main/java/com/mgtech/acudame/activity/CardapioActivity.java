@@ -1,7 +1,9 @@
 package com.mgtech.acudame.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +28,7 @@ import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
+import com.mgtech.acudame.message.MessengerDialog;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
@@ -124,51 +127,71 @@ public class CardapioActivity extends AppCompatActivity {
     }
 
     private void confirmarQuantidade(final int posicao) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Quantidade");
-        builder.setMessage("Digite a quantidade");
 
-        final EditText editQuantidade = new EditText(this);
-        editQuantidade.setText("1");
+        if( usuario == null ){
 
-        builder.setView(editQuantidade);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Nenhum endereço cadastrado");
+            builder.setMessage("Por favor, cadastre um endereço para fazer um pedido.");
 
-        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                String quantidade = editQuantidade.getText().toString();
-
-                Produto produtoSelecionado = produtos.get(posicao);
-                ItemPedido itemPedido = new ItemPedido();
-                itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
-                itemPedido.setNomeProduto(produtoSelecionado.getNome());
-                itemPedido.setPreco(produtoSelecionado.getPreco());
-                itemPedido.setQuantidade(Integer.parseInt(quantidade));
-
-                itensCarrinho.add(itemPedido);
-
-                if(pedidoRecuperado == null) {
-                    pedidoRecuperado = new Pedido(idUsuarioLogado, idEmpresaSelecionada);
+            builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(CardapioActivity.this, ConfiguracoesUsuarioActivity.class));
                 }
+            });
 
-                pedidoRecuperado.setNome(usuario.getNome());
-                pedidoRecuperado.setEndereco(usuario.getEndereco());
-                pedidoRecuperado.setItens(itensCarrinho);
-                pedidoRecuperado.salvar();
-            }
-        });
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Quantidade");
+            builder.setMessage("Digite a quantidade");
 
-            }
-        });
+            final EditText editQuantidade = new EditText(this);
+            editQuantidade.setText("1");
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+            builder.setView(editQuantidade);
+
+            builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    String quantidade = editQuantidade.getText().toString();
+
+                    Produto produtoSelecionado = produtos.get(posicao);
+                    ItemPedido itemPedido = new ItemPedido();
+                    itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
+                    itemPedido.setNomeProduto(produtoSelecionado.getNome());
+                    itemPedido.setPreco(produtoSelecionado.getPreco());
+                    itemPedido.setQuantidade(Integer.parseInt(quantidade));
+
+                    itensCarrinho.add(itemPedido);
+
+                    if(pedidoRecuperado == null) {
+                        pedidoRecuperado = new Pedido(idUsuarioLogado, idEmpresaSelecionada);
+                    }
+
+                    pedidoRecuperado.setNome(usuario.getNome());
+                    pedidoRecuperado.setEndereco(usuario.getEndereco());
+                    pedidoRecuperado.setItens(itensCarrinho);
+                    pedidoRecuperado.salvar();
+                }
+            });
+
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
+
 
     private void recuperarDadosUsuario() {
 
@@ -337,4 +360,12 @@ public class CardapioActivity extends AppCompatActivity {
         textCarrinhoTotal = findViewById(R.id.textCarrinhoTotal);
 
     }
+
+    public void alertaSimples(String conteudo, Context context, String titulo){
+        MessengerDialog dialog = new MessengerDialog();
+        dialog.setConteudo(conteudo);
+        dialog.setTitulo(titulo);
+        dialog.show(getSupportFragmentManager(), "exemplo dialog");
+    }
+
 }
