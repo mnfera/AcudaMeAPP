@@ -29,6 +29,7 @@ import com.mgtech.acudame.R;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.model.Empresa;
+import com.santalu.maskedittext.MaskEditText;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -39,7 +40,9 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
 
     private EditText editEmpresaNome, editEmpresaCategoria,
                     editEmpresaTempo, editEmpresaTaxa;
+
     private ImageView imagePerfilEmpresa;
+    private MaskEditText editEmpresaTelefone;;
     private Button buttonSalvar;
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageReference;
@@ -110,6 +113,8 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                     editEmpresaCategoria.setText(empresa.getCategoria());
                     editEmpresaTaxa.setText(empresa.getPrecoEntrega().toString());
                     editEmpresaTempo.setText(empresa.getTempo());
+                    editEmpresaTelefone.setText(empresa.getTelefone());
+
 
                     urlImagemSelecionada = empresa.getUrlImagem();
                     if(urlImagemSelecionada != ""){
@@ -138,22 +143,27 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
         String categoria = editEmpresaCategoria.getText().toString();
         String tempo = editEmpresaTempo.getText().toString();
         String taxa = editEmpresaTaxa.getText().toString();
+        String telefone = editEmpresaTelefone.getText().toString();
 
         if(!nome.isEmpty()) {
             if(!taxa.isEmpty()) {
                 if(!categoria.isEmpty()) {
                     if(!tempo.isEmpty()) {
+                        if( !telefone.isEmpty()){
+                            Empresa empresa = new Empresa();
+                            empresa.setIdUsuario(idUsuarioLogado);
+                            empresa.setNome(nome);
+                            empresa.setCategoria(categoria);
+                            empresa.setTempo(tempo);
+                            empresa.setPrecoEntrega(Double.parseDouble(taxa));
+                            empresa.setUrlImagem(urlImagemSelecionada);
+                            empresa.setTelefone(telefone);
+                            empresa.salvar();
 
-                        Empresa empresa = new Empresa();
-                        empresa.setIdUsuario(idUsuarioLogado);
-                        empresa.setNome(nome);
-                        empresa.setCategoria(categoria);
-                        empresa.setTempo(tempo);
-                        empresa.setPrecoEntrega(Double.parseDouble(taxa));
-                        empresa.setUrlImagem(urlImagemSelecionada);
-                        empresa.salvar();
-                        finish();
-
+                            finish();
+                        }else{
+                            exibirMensagem("Digite seu telefone");
+                        }
                     }else {
                         exibirMensagem("Digite um tempo médio para entrega");
                     }
@@ -237,6 +247,7 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
         editEmpresaCategoria = findViewById(R.id.editEmpresaCategoria);
         editEmpresaTempo = findViewById(R.id.editEmpresaTempo);
         editEmpresaTaxa = findViewById(R.id.editEmpresaTaxa);
+        editEmpresaTelefone = findViewById(R.id.editTelefone);
         imagePerfilEmpresa = findViewById(R.id.imagePerfilEmpresa);
         buttonSalvar = findViewById(R.id.buttonSalvar);
     }

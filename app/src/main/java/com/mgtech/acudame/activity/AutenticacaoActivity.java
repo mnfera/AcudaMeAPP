@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
@@ -47,6 +48,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
     final Handler handler = new Handler();
     private AlertDialog alerta;
     private TextView recuperarSenha;
+    private DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
         inicializarComponentes();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-
+        reference = ConfiguracaoFirebase.getFirebase();
         //autenticacao.signOut();
 
         // verificar se usuario está logado
@@ -181,17 +183,25 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
 
-                                            //Verificando vizualização do link enviado para o email
-                                            if(autenticacao.getCurrentUser().isEmailVerified()){
-                                                Toast.makeText(AutenticacaoActivity.this,
-                                                        "Logado com sucesso!",
-                                                        Toast.LENGTH_SHORT).show();
-                                                String tipoUsuario = task.getResult().getUser().getDisplayName();
+                                            String tipoUsuario = task.getResult().getUser().getDisplayName();
+
+                                            if(tipoUsuario .equals("E")){//Se for Empresa logando
+
                                                 abrirTelaPrincipal(tipoUsuario);
 
-                                                //botaoAcessar.setEnabled(false);
-                                            }else {
-                                                alertaSimples("Por favor verifique seu endereço de email", getApplicationContext(), "Email não verificado");
+                                            }else{//Se não é Usuario logando
+                                                //Verificando vizualização do link enviado para o email
+                                                if(autenticacao.getCurrentUser().isEmailVerified()){
+                                                    Toast.makeText(AutenticacaoActivity.this,
+                                                            "Logado com sucesso!",
+                                                            Toast.LENGTH_SHORT).show();
+
+                                                    abrirTelaPrincipal(tipoUsuario);
+
+                                                    //botaoAcessar.setEnabled(false);
+                                                }else {
+                                                    alertaSimples("Por favor verifique seu endereço de email", getApplicationContext(), "Email não verificado");
+                                                }
                                             }
 
                                         } else {

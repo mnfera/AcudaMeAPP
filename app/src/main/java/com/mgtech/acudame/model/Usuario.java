@@ -8,6 +8,7 @@ public class Usuario {
     private String idUsuario;
     private String nome;
     private String endereco;
+    private String telefone;
 
     public Usuario() {
     }
@@ -18,6 +19,10 @@ public class Usuario {
                 .child(getIdUsuario());
         usuarioRef.setValue(this);
     }
+
+    public String getTelefone() { return telefone; }
+
+    public void setTelefone(String telefone) { this.telefone = telefone; }
 
     public String getIdUsuario() {
         return idUsuario;

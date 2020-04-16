@@ -13,6 +13,7 @@ public class Empresa implements Serializable {
     private String categoria;
     private String tempo;
     private Double precoEntrega;
+    private String telefone;
 
     public Empresa() {
     }
@@ -23,6 +24,10 @@ public class Empresa implements Serializable {
                 .child(getIdUsuario());
         empresaRef.setValue(this);
     }
+
+    public String getTelefone() { return telefone; }
+
+    public void setTelefone(String telefone) { this.telefone = telefone; }
 
     public String getIdUsuario() {
         return idUsuario;

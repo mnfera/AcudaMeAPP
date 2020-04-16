@@ -69,6 +69,18 @@
             android:inputType="none|numberDecimal"
             android:padding="16dp" />
 
+        <com.santalu.maskedittext.MaskEditText
+            android:id="@+id/editTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-2dp"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="Telefone empresa"
+            android:inputType="phone"
+            android:padding="16dp"
+            app:met_mask="(##) #####-####" />
+
         <Button
             android:id="@+id/buttonSalvar"
             android:layout_width="match_parent"

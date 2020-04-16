@@ -18,12 +18,14 @@ import com.mgtech.acudame.R;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.model.Usuario;
+import com.santalu.maskedittext.MaskEditText;
 
 import dmax.dialog.SpotsDialog;
 
 public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
 
     private EditText editUsuarioNome, editUsuarioEndereco;
+    private MaskEditText editUsuarioTelefone;
     private Button buttonSalvar;
     private String idUsuario;
     private DatabaseReference firebaseRef;
@@ -75,6 +77,7 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
                     Usuario usuario = dataSnapshot.getValue(Usuario.class);
                     editUsuarioNome.setText(usuario.getNome());
                     editUsuarioEndereco.setText(usuario.getEndereco());
+                    editUsuarioTelefone.setText(usuario.getTelefone());
                 }
                 dialog.dismiss();
             }
@@ -91,19 +94,25 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
         // verifica se os campos foram preenchidos
         String nome = editUsuarioNome.getText().toString();
         String endereco = editUsuarioEndereco.getText().toString();
+        String telefone = editUsuarioTelefone.getText().toString();
 
         if(!nome.isEmpty()) {
             if(!endereco.isEmpty()) {
+                if(!telefone.isEmpty()) {
 
-                        Usuario usuario = new Usuario();
-                        usuario.setIdUsuario(idUsuario);
-                        usuario.setNome(nome);
-                        usuario.setEndereco(endereco);
-                        usuario.salvar();
+                    Usuario usuario = new Usuario();
+                    usuario.setIdUsuario(idUsuario);
+                    usuario.setNome(nome);
+                    usuario.setEndereco(endereco);
+                    usuario.setTelefone(telefone);
+                    usuario.salvar();
 
-                        exibirMensagem("Dados atualizados com sucesso!");
-                        finish();
+                    exibirMensagem("Dados atualizados com sucesso!");
+                    finish();
 
+                }else{
+                    exibirMensagem("Digite seu telefone");
+                }
             }else {
                 exibirMensagem("Digite seu endereço completo");
             }
@@ -121,5 +130,6 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
         editUsuarioNome = findViewById(R.id.editUsuarioNome);
         editUsuarioEndereco = findViewById(R.id.editUsuarioEndereco);
         buttonSalvar = findViewById(R.id.buttonSalvar);
+        editUsuarioTelefone = findViewById(R.id.editUsuarioTelefone);
     }
 }
