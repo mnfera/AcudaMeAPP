@@ -189,6 +189,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menuConfiguracoes :
                 abrirConfiguracoes();
                 break;
+            case R.id.menuHistoricoPedidos :
+                abrirHistoricoPedidos();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -212,5 +215,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private void abrirConfiguracoes() {
         startActivity(new Intent(HomeActivity.this, ConfiguracoesUsuarioActivity.class));
+    }
+
+    private void abrirHistoricoPedidos() {
+        startActivity(new Intent(HomeActivity.this, HistoricoPedidosUsuarioActivity.class));
     }
 }
