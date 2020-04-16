@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,6 +41,8 @@ import com.mgtech.acudame.model.Usuario;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -159,10 +163,12 @@ public class CardapioActivity extends AppCompatActivity {
             builder.setView(editQuantidade);
 
             builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
                      String quantidade = editQuantidade.getText().toString();
+
                      if(!quantidade.isEmpty()){
 
                          Produto produtoSelecionado = produtos.get(posicao);
@@ -187,7 +193,7 @@ public class CardapioActivity extends AppCompatActivity {
                                  , Toast.LENGTH_SHORT).show();
 
                      }else{
-                         Toast.makeText(CardapioActivity.this, "Caompo está em branco"
+                         Toast.makeText(CardapioActivity.this, "Quantidade está em branco!"
                          , Toast.LENGTH_SHORT).show();
                          confirmarQuantidade(posicao);
                      }
@@ -336,21 +342,37 @@ public class CardapioActivity extends AppCompatActivity {
         });
 
         final EditText editObservacao = new EditText(this);
-        editObservacao.setHint("Digite uma observação como o troco necessário, por exemplo");
+        editObservacao.setHint("Digite uma observação como ou troco necessário, por exemplo");
         builder.setView(editObservacao);
 
         builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                // data/hora atual
+                LocalDateTime agora = LocalDateTime.now();
+
+                // formatar a data
+                DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+                String dataFormatada = formatterData.format(agora);
+
+                // formatar a hora
+                DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String horaFormatada = formatterHora.format(agora);
 
                 String observacao = editObservacao.getText().toString();
                 pedidoRecuperado.setMetodoPagamento(metodoPagamento);
                 pedidoRecuperado.setObservacao(observacao);
                 pedidoRecuperado.setStatus("confirmado");
+                pedidoRecuperado.setData(dataFormatada);
+                pedidoRecuperado.setHora(horaFormatada);
                 pedidoRecuperado.confirmar();
                 pedidoRecuperado.criarHistorico();
                 pedidoRecuperado.remover();
                 pedidoRecuperado = null;
+
+                startActivity(new Intent(CardapioActivity.this, HistoricoPedidosUsuarioActivity.class));
 
             }
         });

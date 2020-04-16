@@ -185,11 +185,16 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                                             String tipoUsuario = task.getResult().getUser().getDisplayName();
 
-                                            if(tipoUsuario .equals("E")){//Se for Empresa logando
+                                            if(tipoUsuario == null){
+                                                tipoUsuario = "E";
+                                                UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
+                                            }
+
+                                            if(tipoUsuario .equals("E")){ //Se for empresa logando
 
                                                 abrirTelaPrincipal(tipoUsuario);
 
-                                            }else{//Se não é Usuario logando
+                                            }else{ //Usuario logando
                                                 //Verificando vizualização do link enviado para o email
                                                 if(autenticacao.getCurrentUser().isEmailVerified()){
                                                     Toast.makeText(AutenticacaoActivity.this,
@@ -249,10 +254,10 @@ public class AutenticacaoActivity extends AppCompatActivity {
     }*/
 
     private void abrirTelaPrincipal(String tipoUsuario){
-        if(tipoUsuario.equals("E")){ // empresa
-            startActivity(new Intent(getApplicationContext(), EmpresaActivity.class));
-        }else { // usuario
+        if(tipoUsuario.equals("U")){ // usuario
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        }else { // empresa
+            startActivity(new Intent(getApplicationContext(), EmpresaActivity.class));
         }
 
     }
