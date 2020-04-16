@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -145,11 +147,13 @@ public class CardapioActivity extends AppCompatActivity {
             dialog.show();
 
         }else{
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Quantidade");
             builder.setMessage("Digite a quantidade");
 
             final EditText editQuantidade = new EditText(this);
+            editQuantidade.setRawInputType(InputType.TYPE_CLASS_NUMBER);
             editQuantidade.setText("1");
 
             builder.setView(editQuantidade);
@@ -158,25 +162,35 @@ public class CardapioActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    String quantidade = editQuantidade.getText().toString();
+                     String quantidade = editQuantidade.getText().toString();
+                     if(!quantidade.isEmpty()){
 
-                    Produto produtoSelecionado = produtos.get(posicao);
-                    ItemPedido itemPedido = new ItemPedido();
-                    itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
-                    itemPedido.setNomeProduto(produtoSelecionado.getNome());
-                    itemPedido.setPreco(produtoSelecionado.getPreco());
-                    itemPedido.setQuantidade(Integer.parseInt(quantidade));
+                         Produto produtoSelecionado = produtos.get(posicao);
+                         ItemPedido itemPedido = new ItemPedido();
+                         itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
+                         itemPedido.setNomeProduto(produtoSelecionado.getNome());
+                         itemPedido.setPreco(produtoSelecionado.getPreco());
+                         itemPedido.setQuantidade(Integer.parseInt(quantidade));
 
-                    itensCarrinho.add(itemPedido);
+                         itensCarrinho.add(itemPedido);
 
-                    if(pedidoRecuperado == null) {
-                        pedidoRecuperado = new Pedido(idUsuarioLogado, idEmpresaSelecionada);
-                    }
+                         if(pedidoRecuperado == null) {
+                             pedidoRecuperado = new Pedido(idUsuarioLogado, idEmpresaSelecionada);
+                         }
 
-                    pedidoRecuperado.setNome(usuario.getNome());
-                    pedidoRecuperado.setEndereco(usuario.getEndereco());
-                    pedidoRecuperado.setItens(itensCarrinho);
-                    pedidoRecuperado.salvar();
+                         pedidoRecuperado.setNome(usuario.getNome());
+                         pedidoRecuperado.setEndereco(usuario.getEndereco());
+                         pedidoRecuperado.setItens(itensCarrinho);
+                         pedidoRecuperado.salvar();
+
+                         Toast.makeText(CardapioActivity.this, "Pedido adicionado ao carrinho!"
+                                 , Toast.LENGTH_SHORT).show();
+
+                     }else{
+                         Toast.makeText(CardapioActivity.this, "Caompo está em branco"
+                         , Toast.LENGTH_SHORT).show();
+                         confirmarQuantidade(posicao);
+                     }
                 }
             });
 
@@ -187,11 +201,11 @@ public class CardapioActivity extends AppCompatActivity {
                 }
             });
 
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
-    }
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
 
+        }
 
     private void recuperarDadosUsuario() {
 
@@ -359,13 +373,6 @@ public class CardapioActivity extends AppCompatActivity {
         textCarrinhoQtde = findViewById(R.id.textCarrinhoQtd);
         textCarrinhoTotal = findViewById(R.id.textCarrinhoTotal);
 
-    }
-
-    public void alertaSimples(String conteudo, Context context, String titulo){
-        MessengerDialog dialog = new MessengerDialog();
-        dialog.setConteudo(conteudo);
-        dialog.setTitulo(titulo);
-        dialog.show(getSupportFragmentManager(), "exemplo dialog");
     }
 
 }
