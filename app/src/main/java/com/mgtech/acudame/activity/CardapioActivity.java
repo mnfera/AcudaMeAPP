@@ -204,6 +204,7 @@ public class CardapioActivity extends AppCompatActivity {
                 .child(idEmpresaSelecionada)
                 .child(idUsuarioLogado);
 
+
         pedidoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -310,6 +311,7 @@ public class CardapioActivity extends AppCompatActivity {
                 pedidoRecuperado.setObservacao(observacao);
                 pedidoRecuperado.setStatus("confirmado");
                 pedidoRecuperado.confirmar();
+                pedidoRecuperado.criarHistorico();
                 pedidoRecuperado.remover();
                 pedidoRecuperado = null;
 

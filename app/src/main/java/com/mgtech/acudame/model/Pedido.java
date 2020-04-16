@@ -52,6 +52,15 @@ public class Pedido {
         pedidoRef.removeValue();
     }
 
+    public void criarHistorico() {
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference pedidoRef = firebaseRef
+                .child("historico_pedidos_usuario")
+                .child(getIdUsuario())
+                .child(getIdPedido());
+        pedidoRef.setValue(this);
+    }
+
     public void confirmar() {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
         DatabaseReference pedidoRef = firebaseRef
