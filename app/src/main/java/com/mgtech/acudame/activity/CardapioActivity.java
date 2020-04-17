@@ -326,6 +326,7 @@ public class CardapioActivity extends AppCompatActivity {
     }
 
     private void confirmarPedido() {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Selecione um método de pagamento");
 

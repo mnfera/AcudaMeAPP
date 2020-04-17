@@ -2,10 +2,15 @@ package com.mgtech.acudame.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +29,7 @@ import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.messenger.MessengerDialog;
 import com.mgtech.acudame.model.Pedido;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +43,8 @@ public class PedidosActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private DatabaseReference firebaseRef;
     private String idEmpresa;
+    private int pedidoEntrega;
+    private int posicaoItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +80,56 @@ public class PedidosActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(View view, int position) {
 
+                                posicaoItem = position;
+                                AlertDialog.Builder builder = new AlertDialog.Builder(PedidosActivity.this);
+                                builder.setTitle("Selecione uma opção para o pedido");
+
+                                CharSequence[] itens = new CharSequence[]{
+                                        "Finalizar pedido", "Cancelar pedido"
+                                };
+                                builder.setSingleChoiceItems(itens, 0, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        pedidoEntrega = which;
+                                    }
+                                });
+
+                                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                                    @RequiresApi(api = Build.VERSION_CODES.O)
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        if(pedidoEntrega == 0){
+                                            Pedido pedido = pedidos.get(posicaoItem);
+                                            pedido.setStatus("finalizado");
+                                            startActivity(new Intent(PedidosActivity.this, EmpresaActivity.class));
+                                            pedido.atualizarStatus();
+                                            Toast.makeText(PedidosActivity.this, "Pedido confirmado",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Pedido pedido = pedidos.get(posicaoItem);
+                                            pedido.setStatus("cancelado");
+                                            startActivity(new Intent(PedidosActivity.this, EmpresaActivity.class));
+                                            pedido.atualizarStatus();
+                                            Toast.makeText(PedidosActivity.this, "Pedido cancelado",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
                             }
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                Pedido pedido = pedidos.get(position);
-                                pedido.setStatus("finalizado");
-                                pedido.atualizarStatus();
 
                             }
 
