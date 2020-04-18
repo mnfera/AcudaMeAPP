@@ -85,6 +85,8 @@ public class PedidosFinalizadosEmpresaActivity extends AppCompatActivity {
         Query pedidoPesquisa = pedidosRef.orderByChild("status")
                 .equalTo("finalizado");
 
+        //pedidoPesquisa.orderByKey();
+
         pedidoPesquisa.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
