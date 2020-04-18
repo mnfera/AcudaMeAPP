@@ -31,15 +31,35 @@
                 android:layout_height="60dp"
                 android:src="@drawable/perfil" />
 
-            <TextView
-                android:id="@+id/textNomeEmpresacardapio"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="China in box"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textNomeEmpresaCardapio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="China in box"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textTelefoneEmpresaCardapio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(99) 99999-9999" />
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

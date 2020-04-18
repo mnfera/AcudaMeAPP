@@ -50,7 +50,7 @@ public class CardapioActivity extends AppCompatActivity {
 
     private RecyclerView recyclerProdutosCardapio;
     private ImageView imageEmpresaCardapio;
-    private TextView textNomeEmpresaCardapio;
+    private TextView textNomeEmpresaCardapio, textTelefoneEmpresaCardapio;
     private Empresa empresaSelecionada;
     private AlertDialog dialog;
     private TextView textCarrinhoQtde, textCarrinhoTotal, textVerCarrinho;
@@ -83,6 +83,7 @@ public class CardapioActivity extends AppCompatActivity {
             empresaSelecionada = (Empresa) bundle.getSerializable("empresa");
 
             textNomeEmpresaCardapio.setText(empresaSelecionada.getNome());
+            textTelefoneEmpresaCardapio.setText(empresaSelecionada.getTelefone());
             idEmpresaSelecionada = empresaSelecionada.getIdUsuario();
 
             String url = empresaSelecionada.getUrlImagem();
@@ -412,7 +413,8 @@ public class CardapioActivity extends AppCompatActivity {
     private void inicializarComponentes() {
         recyclerProdutosCardapio = findViewById(R.id.recyclerProdutosCardapio);
         imageEmpresaCardapio = findViewById(R.id.imageEmpresaCardapio);
-        textNomeEmpresaCardapio = findViewById(R.id.textNomeEmpresacardapio);
+        textNomeEmpresaCardapio = findViewById(R.id.textNomeEmpresaCardapio);
+        textTelefoneEmpresaCardapio = findViewById(R.id.textTelefoneEmpresaCardapio);
         textCarrinhoQtde = findViewById(R.id.textCarrinhoQtd);
         textCarrinhoTotal = findViewById(R.id.textCarrinhoTotal);
         textVerCarrinho = findViewById(R.id.textVerCarrinho);
