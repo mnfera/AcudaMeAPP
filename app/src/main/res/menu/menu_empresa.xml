@@ -16,7 +16,17 @@
 
     <item
         android:id="@+id/menuConfiguracoes"
-        android:title="Configurações"
+        android:title="Dados da Empresa"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuPedidosFinalizados"
+        android:title="Pedidos Finalizados"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuPedidosCancelados"
+        android:title="Pedidos Cancelados"
         app:showAsAction="never" />
 
     <item

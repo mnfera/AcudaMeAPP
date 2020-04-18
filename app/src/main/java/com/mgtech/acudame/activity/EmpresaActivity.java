@@ -136,6 +136,12 @@ public class EmpresaActivity extends AppCompatActivity {
             case R.id.menuConfiguracoes :
                 abrirConfiguracoes();
                 break;
+            case R.id.menuPedidosFinalizados :
+                abrirPedidosFinalizados();
+                break;
+            case R.id.menuPedidosCancelados :
+                abrirPedidosCancelados();
+                break;
             case R.id.menuNovoProduto :
                 abrirNovoProduto();
                 break;
@@ -164,6 +170,14 @@ public class EmpresaActivity extends AppCompatActivity {
 
     private void abrirConfiguracoes() {
         startActivity(new Intent(EmpresaActivity.this, ConfiguracoesEmpresaActivity.class));
+    }
+
+    private void abrirPedidosFinalizados() {
+        startActivity(new Intent(EmpresaActivity.this, PedidosFinalizadosEmpresaActivity.class));
+    }
+
+    private void abrirPedidosCancelados() {
+        startActivity(new Intent(EmpresaActivity.this, PedidosCanceladosEmpresaActivity.class));
     }
 
     private void abrirNovoProduto() {

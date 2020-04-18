@@ -9,8 +9,14 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CarrinhoActivity"
-            android:parentActivityName=".activity.HomeActivity"></activity>
+        <activity android:name=".activity.PedidosCanceladosEmpresaActivity"
+            android:parentActivityName=".activity.EmpresaActivity"></activity>
+        <activity
+            android:name=".activity.PedidosFinalizadosEmpresaActivity"
+            android:parentActivityName=".activity.EmpresaActivity" />
+        <activity
+            android:name=".activity.CarrinhoActivity"
+            android:parentActivityName=".activity.HomeActivity" />
         <activity
             android:name=".activity.HistoricoPedidosUsuarioActivity"
             android:parentActivityName=".activity.HomeActivity" />
