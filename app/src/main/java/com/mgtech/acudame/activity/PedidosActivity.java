@@ -43,7 +43,7 @@ public class PedidosActivity extends AppCompatActivity {
     private List<Pedido> pedidos = new ArrayList<>();
     private AlertDialog dialog;
     private DatabaseReference firebaseRef;
-    private String idEmpresa;
+    private String idEmpresa, idUsu, idPed;
     private int pedidoEntrega;
     private int posicaoItem;
 
@@ -102,16 +102,22 @@ public class PedidosActivity extends AppCompatActivity {
 
                                         if(pedidoEntrega == 0){
                                             Pedido pedido = pedidos.get(posicaoItem);
+                                            idUsu = pedido.getIdUsuario();
+                                            idPed = pedido.getIdPedido();
                                             pedido.setStatus("finalizado");
-                                            startActivity(new Intent(PedidosActivity.this, EmpresaActivity.class));
+                                            startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
+                                            pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
                                             Toast.makeText(PedidosActivity.this, "Pedido confirmado",
                                                     Toast.LENGTH_SHORT).show();
                                         }else{
                                             Pedido pedido = pedidos.get(posicaoItem);
+                                            idUsu = pedido.getIdUsuario();
+                                            idPed = pedido.getIdPedido();
                                             pedido.setStatus("cancelado");
-                                            startActivity(new Intent(PedidosActivity.this, EmpresaActivity.class));
+                                            startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
+                                            pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
                                             Toast.makeText(PedidosActivity.this, "Pedido cancelado",
                                                     Toast.LENGTH_SHORT).show();
                                         }

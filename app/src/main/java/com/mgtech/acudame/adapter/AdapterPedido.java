@@ -1,5 +1,6 @@
 package com.mgtech.acudame.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,21 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
         holder.nome.setText( pedido.getNome() );
         holder.endereco.setText( "Endereço: "+pedido.getEndereco() );
         holder.observacao.setText( "Obs: "+ pedido.getObservacao() );
+        holder.status.setText("Status: "+pedido.getStatus().toUpperCase());
+        switch (pedido.getStatus()) {
+            case "pendente":
+                holder.status.setTextColor(Color.parseColor("#FF9800"));
+                break;
+            case "confirmado":
+                holder.status.setTextColor(Color.parseColor("#FF4CAF50"));
+                break;
+            case "finalizado":
+                holder.status.setTextColor(Color.parseColor("#FF00BCD4"));
+                break;
+            case "cancelado":
+                holder.status.setTextColor(Color.parseColor("#FFF44336"));
+                break;
+        }
 
         List<ItemPedido> itens = new ArrayList<>();
         itens = pedido.getItens();
@@ -74,6 +90,7 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
         TextView endereco;
         TextView pgto;
         TextView observacao;
+        TextView status;
         TextView itens;
 
         public MyViewHolder(View itemView) {
@@ -83,6 +100,7 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
             endereco    = itemView.findViewById(R.id.textPedidoEndereco);
             pgto        = itemView.findViewById(R.id.textPedidoPgto);
             observacao  = itemView.findViewById(R.id.textPedidoObs);
+            status      = itemView.findViewById(R.id.textPedidoStatus);
             itens       = itemView.findViewById(R.id.textPedidoItens);
         }
     }

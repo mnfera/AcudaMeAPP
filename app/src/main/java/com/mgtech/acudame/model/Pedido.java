@@ -86,6 +86,20 @@ public class Pedido implements Serializable {
         pedidoRef.updateChildren(status);
     }
 
+    public void atualizarStatusPedidoUsuario(String idUsu, String idPed) {
+
+        HashMap<String, Object> status = new HashMap<>();
+        status.put("status", getStatus());
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference pedidoRef = firebaseRef
+                .child("historico_pedidos_usuario")
+                .child(idUsu)
+                .child(idPed);
+        pedidoRef.updateChildren(status);
+
+    }
+
     public String getIdUsuario() {
         return idUsuario;
     }
