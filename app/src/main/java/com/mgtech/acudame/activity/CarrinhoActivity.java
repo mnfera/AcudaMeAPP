@@ -61,14 +61,13 @@ public class CarrinhoActivity extends AppCompatActivity {
         // recuperar pedido selecionado
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
+
             pedidoSelecionado = (Pedido) bundle.getSerializable("pedido");
             idEmpresaSelecionada = pedidoSelecionado.getIdEmpresa();
             idPedidoSelecionado = pedidoSelecionado.getIdPedido();
 
         }else {
-
             alertaSimples("Não há nenhum pedido", getApplicationContext(), "Pedidos ");
-
         }
 
         // configurações toolbar
@@ -110,10 +109,12 @@ public class CarrinhoActivity extends AppCompatActivity {
                         pedidoSelecionado.remover();
                         pedidoSelecionado = null;
 
-                        startActivity(new Intent(CarrinhoActivity.this, HomeActivity.class));
-
                         Toast.makeText(CarrinhoActivity.this, "Pedido Excluído!"
                                 , Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(CarrinhoActivity.this, HistoricoPedidosUsuarioActivity.class));
+
+                        finish();
 
                     }
                 });
@@ -162,6 +163,7 @@ public class CarrinhoActivity extends AppCompatActivity {
                 }else {
                     alertaSimples("Não há nenhum pedido", getApplicationContext(), "Pedidos ");
                 }
+
                 dialog.dismiss();
             }
 
