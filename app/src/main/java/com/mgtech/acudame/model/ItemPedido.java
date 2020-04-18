@@ -1,6 +1,8 @@
 package com.mgtech.acudame.model;
 
-public class ItemPedido {
+import java.io.Serializable;
+
+public class ItemPedido implements Serializable {
 
     private String idProduto;
     private String nomeProduto;

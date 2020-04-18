@@ -53,7 +53,7 @@ public class CardapioActivity extends AppCompatActivity {
     private TextView textNomeEmpresaCardapio;
     private Empresa empresaSelecionada;
     private AlertDialog dialog;
-    private TextView textCarrinhoQtde, textCarrinhoTotal;
+    private TextView textCarrinhoQtde, textCarrinhoTotal, textVerCarrinho;
 
     private AdapterProduto adapterProduto;
     private List<Produto> produtos = new ArrayList<>();
@@ -62,7 +62,7 @@ public class CardapioActivity extends AppCompatActivity {
     private String idEmpresaSelecionada;
     private String idUsuarioLogado;
     private Usuario usuario;
-    private Pedido pedidoRecuperado;
+    private Pedido pedidoRecuperado, pedidoEnviarCarrinho;
     private int qtdItensCarrinho;
     private Double totalCarrinho;
     private int metodoPagamento;
@@ -128,6 +128,28 @@ public class CardapioActivity extends AppCompatActivity {
         // recupera os produtos da empresa
         recuperarProdutos();
         recuperarDadosUsuario();
+
+        textVerCarrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verCarrinho();
+            }
+        });
+    }
+
+    private void verCarrinho() {
+
+        if(pedidoRecuperado != null) {
+
+            Intent i = new Intent(CardapioActivity.this, CarrinhoActivity.class);
+            i.putExtra("pedido", pedidoRecuperado);
+            startActivity(i);
+
+        }else {
+            Toast.makeText(CardapioActivity.this, "Seu carrinho está vazio!"
+                    , Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void confirmarQuantidade(final int posicao) {
@@ -318,7 +340,7 @@ public class CardapioActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menuPedido :
-                confirmarPedido();
+                verCarrinho();
                 break;
         }
 
@@ -393,6 +415,7 @@ public class CardapioActivity extends AppCompatActivity {
         textNomeEmpresaCardapio = findViewById(R.id.textNomeEmpresacardapio);
         textCarrinhoQtde = findViewById(R.id.textCarrinhoQtd);
         textCarrinhoTotal = findViewById(R.id.textCarrinhoTotal);
+        textVerCarrinho = findViewById(R.id.textVerCarrinho);
 
     }
 

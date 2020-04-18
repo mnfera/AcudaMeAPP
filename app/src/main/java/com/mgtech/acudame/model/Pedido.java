@@ -3,10 +3,11 @@ package com.mgtech.acudame.model;
 import com.google.firebase.database.DatabaseReference;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-public class Pedido {
+public class Pedido implements Serializable {
 
     private String idUsuario;
     private String idEmpresa;

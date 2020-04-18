@@ -14,4 +14,10 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="botaoExcluir" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#FF9800</item>
+        <item name="colorButtonNormal">#FF5722</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>
