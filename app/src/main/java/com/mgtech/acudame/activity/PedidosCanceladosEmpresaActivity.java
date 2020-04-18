@@ -22,6 +22,7 @@ import com.mgtech.acudame.messenger.MessengerDialog;
 import com.mgtech.acudame.model.Pedido;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
@@ -88,7 +89,9 @@ public class PedidosCanceladosEmpresaActivity extends AppCompatActivity {
                         pedidos.add(pedido);
                     }
 
+                    Collections.reverse(pedidos);
                     adapterPedido.notifyDataSetChanged();
+
                 } else {
                     alertaSimples("Não há nenhum pedido", getApplicationContext(), "Pedidos Cancelados");
                 }

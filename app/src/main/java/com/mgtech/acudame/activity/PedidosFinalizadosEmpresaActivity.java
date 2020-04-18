@@ -30,6 +30,7 @@ import com.mgtech.acudame.messenger.MessengerDialog;
 import com.mgtech.acudame.model.Pedido;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
@@ -85,8 +86,6 @@ public class PedidosFinalizadosEmpresaActivity extends AppCompatActivity {
         Query pedidoPesquisa = pedidosRef.orderByChild("status")
                 .equalTo("finalizado");
 
-        //pedidoPesquisa.orderByKey();
-
         pedidoPesquisa.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -98,7 +97,9 @@ public class PedidosFinalizadosEmpresaActivity extends AppCompatActivity {
                         pedidos.add(pedido);
                     }
 
+                    Collections.reverse(pedidos);
                     adapterPedido.notifyDataSetChanged();
+
                 }else {
                     alertaSimples("Não há nenhum pedido", getApplicationContext(), "Pedidos Finalizados");
                 }
