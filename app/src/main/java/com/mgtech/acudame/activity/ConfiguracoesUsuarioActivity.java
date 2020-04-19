@@ -24,7 +24,8 @@ import dmax.dialog.SpotsDialog;
 
 public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
 
-    private EditText editUsuarioNome, editUsuarioEndereco;
+    private EditText editUsuarioNome, editUsuarioEndereco,
+                    editTextUsuarioNumero, editTextUsuarioReferencia;
     private MaskEditText editUsuarioTelefone;
     private Button buttonSalvar;
     private String idUsuario;
@@ -77,6 +78,8 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
                     Usuario usuario = dataSnapshot.getValue(Usuario.class);
                     editUsuarioNome.setText(usuario.getNome());
                     editUsuarioEndereco.setText(usuario.getEndereco());
+                    editTextUsuarioNumero.setText(usuario.getNumero());
+                    editTextUsuarioReferencia.setText(usuario.getReferencia());
                     editUsuarioTelefone.setText(usuario.getTelefone());
                 }
                 dialog.dismiss();
@@ -95,26 +98,39 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
         String nome = editUsuarioNome.getText().toString();
         String endereco = editUsuarioEndereco.getText().toString();
         String telefone = editUsuarioTelefone.getText().toString();
+        String numero = editTextUsuarioNumero.getText().toString();
+        String referencia = editTextUsuarioReferencia.getText().toString();
 
         if(!nome.isEmpty()) {
             if(!endereco.isEmpty()) {
-                if(!telefone.isEmpty()) {
+                if(!numero.isEmpty()) {
+                    if (!referencia.isEmpty()) {
 
-                    Usuario usuario = new Usuario();
-                    usuario.setIdUsuario(idUsuario);
-                    usuario.setNome(nome);
-                    usuario.setEndereco(endereco);
-                    usuario.setTelefone(telefone);
-                    usuario.salvar();
+                        if (!telefone.isEmpty()) {
 
-                    exibirMensagem("Dados atualizados com sucesso!");
-                    finish();
+                            Usuario usuario = new Usuario();
+                            usuario.setIdUsuario(idUsuario);
+                            usuario.setNome(nome);
+                            usuario.setEndereco(endereco);
+                            usuario.setNumero(numero);
+                            usuario.setReferencia(referencia);
+                            usuario.setTelefone(telefone);
+                            usuario.salvar();
 
-                }else{
-                    exibirMensagem("Digite seu telefone");
+                            exibirMensagem("Dados atualizados com sucesso!");
+                            finish();
+
+                        } else {
+                            exibirMensagem("Digite seu telefone");
+                        }
+                    } else {
+                        exibirMensagem("Digite um ponto de referência ou característica");
+                    }
+                }else {
+                    exibirMensagem("Digite um número ou zero para sem número");
                 }
             }else {
-                exibirMensagem("Digite seu endereço completo");
+                exibirMensagem("Digite o nome da rua");
             }
         }else {
             exibirMensagem("Digite seu nome!");
@@ -131,5 +147,7 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
         editUsuarioEndereco = findViewById(R.id.editUsuarioEndereco);
         buttonSalvar = findViewById(R.id.buttonSalvar);
         editUsuarioTelefone = findViewById(R.id.editUsuarioTelefone);
+        editTextUsuarioNumero = findViewById(R.id.editUsuarioNumero);
+        editTextUsuarioReferencia = findViewById(R.id.editUsuarioReferencia);
     }
 }

@@ -8,6 +8,8 @@ public class Usuario {
     private String idUsuario;
     private String nome;
     private String endereco;
+    private String numero;
+    private String referencia;
     private String telefone;
 
     public Usuario() {
@@ -46,5 +48,21 @@ public class Usuario {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 }
