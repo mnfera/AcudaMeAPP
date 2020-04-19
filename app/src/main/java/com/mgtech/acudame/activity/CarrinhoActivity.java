@@ -66,8 +66,6 @@ public class CarrinhoActivity extends AppCompatActivity {
             idEmpresaSelecionada = pedidoSelecionado.getIdEmpresa();
             idPedidoSelecionado = pedidoSelecionado.getIdPedido();
 
-        }else {
-            alertaSimples("Não há nenhum pedido", getApplicationContext(), "Pedidos ");
         }
 
         // configurações toolbar
@@ -114,8 +112,6 @@ public class CarrinhoActivity extends AppCompatActivity {
 
                         startActivity(new Intent(CarrinhoActivity.this, HistoricoPedidosUsuarioActivity.class));
 
-                        finish();
-
                     }
                 });
 
@@ -160,8 +156,6 @@ public class CarrinhoActivity extends AppCompatActivity {
                     }
 
                     adapterPedido.notifyDataSetChanged();
-                }else {
-                    alertaSimples("Não há nenhum pedido", getApplicationContext(), "Pedidos ");
                 }
 
                 dialog.dismiss();

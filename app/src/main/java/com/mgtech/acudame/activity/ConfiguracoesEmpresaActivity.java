@@ -39,7 +39,6 @@ import dmax.dialog.SpotsDialog;
 public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
 
     private EditText editEmpresaNome, editEmpresaCategoria,
-                    editEmpresaTempo, editEmpresaTaxa,
                     editEmpresaHorario, editEmpresaDias;
 
     private ImageView imagePerfilEmpresa;

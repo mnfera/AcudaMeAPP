@@ -1,6 +1,9 @@
 package com.mgtech.acudame.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +28,7 @@ import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
+import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Produto;
 
 import java.util.ArrayList;
@@ -36,7 +41,8 @@ public class EmpresaActivity extends AppCompatActivity {
     private AdapterProduto adapterProduto;
     private List<Produto> produtos = new ArrayList<>();
     private DatabaseReference firebaseRef;
-    private String idUsuarioLogado;
+    private String idUsuarioLogado, idPro;
+    private int posicaoItem, produtoOpcao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +76,58 @@ public class EmpresaActivity extends AppCompatActivity {
                         recyclerProdutos,
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
-                            public void onItemClick(View view, int position) {
+                            public void onItemClick(View view, final int position) {
+
+                                //posicaoItem = position;
+                                AlertDialog.Builder builder = new AlertDialog.Builder(EmpresaActivity.this);
+                                builder.setTitle("Selecione uma opção para o produto");
+
+                                CharSequence[] itens = new CharSequence[]{
+                                        "Editar produto", "Excluir produto"
+                                };
+                                builder.setSingleChoiceItems(itens, 0, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        produtoOpcao = which;
+                                    }
+                                });
+
+                                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                                    @RequiresApi(api = Build.VERSION_CODES.O)
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        if(produtoOpcao == 0){
+                                            Produto produto = produtos.get(position);
+                                            idPro = produto.getIdProduto();
+                                            Intent i = new Intent(EmpresaActivity.this, ConfiguracoesProdutoActivity.class);
+                                            i.putExtra("produto", idPro);
+                                            startActivity(i);
+                                        }else{
+                                            Produto produtoSelecionado = produtos.get(position);
+                                            produtoSelecionado.remover();
+                                            Toast.makeText(EmpresaActivity.this,
+                                                    "Produto Excluído com sucesso!",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
 
                             }
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                Produto produtoSelecionado = produtos.get(position);
-                                produtoSelecionado.remover();
-                                Toast.makeText(EmpresaActivity.this,
-                                        "Produto Excluído com sucesso!",
-                                        Toast.LENGTH_SHORT).show();
+
                             }
 
                             @Override
