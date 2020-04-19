@@ -11,8 +11,8 @@ public class Empresa implements Serializable {
     private String urlImagem;
     private String nome;
     private String categoria;
-    private String tempo;
-    private Double precoEntrega;
+    private String horario;
+    private String dias;
     private String telefone;
 
     public Empresa() {
@@ -61,19 +61,19 @@ public class Empresa implements Serializable {
         this.categoria = categoria;
     }
 
-    public String getTempo() {
-        return tempo;
+    public String getHorario() {
+        return horario;
     }
 
-    public void setTempo(String tempo) {
-        this.tempo = tempo;
+    public void setHorario(String horario) {
+        this.horario = horario;
     }
 
-    public Double getPrecoEntrega() {
-        return precoEntrega;
+    public String getDias() {
+        return dias;
     }
 
-    public void setPrecoEntrega(Double precoEntrega) {
-        this.precoEntrega = precoEntrega;
+    public void setDias(String dias) {
+        this.dias = dias;
     }
 }

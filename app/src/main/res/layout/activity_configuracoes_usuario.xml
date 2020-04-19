@@ -49,7 +49,7 @@
             android:hint="Telefone"
             android:inputType="phone"
             android:padding="16dp"
-        app:met_mask="(##) #####-####"/>
+            app:met_mask="(##) #####-####"/>
 
         <Button
             android:id="@+id/buttonSalvar"

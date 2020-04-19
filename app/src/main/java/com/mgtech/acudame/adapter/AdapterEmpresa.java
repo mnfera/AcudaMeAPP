@@ -35,8 +35,8 @@ public class AdapterEmpresa extends RecyclerView.Adapter<AdapterEmpresa.MyViewHo
         Empresa empresa = empresas.get(i);
         holder.nomeEmpresa.setText(empresa.getNome());
         holder.categoria.setText(empresa.getCategoria() + " - ");
-        holder.tempo.setText(empresa.getTempo() + " Min");
-        holder.entrega.setText("R$ " + empresa.getPrecoEntrega().toString());
+        holder.dias.setText(empresa.getDias());
+        holder.horario.setText(empresa.getHorario() + " Hrs - ");
 
         //Carregar imagem
         String urlImagem = empresa.getUrlImagem();
@@ -54,16 +54,16 @@ public class AdapterEmpresa extends RecyclerView.Adapter<AdapterEmpresa.MyViewHo
         ImageView imagemEmpresa;
         TextView nomeEmpresa;
         TextView categoria;
-        TextView tempo;
-        TextView entrega;
+        TextView dias;
+        TextView horario;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             nomeEmpresa = itemView.findViewById(R.id.textNomeEmpresa);
             categoria = itemView.findViewById(R.id.textCategoriaEmpresa);
-            tempo = itemView.findViewById(R.id.textTempoEmpresa);
-            entrega = itemView.findViewById(R.id.textEntregaEmpresa);
+            dias = itemView.findViewById(R.id.textDiasEmpresa);
+            horario = itemView.findViewById(R.id.textHorarioEmpresa);
             imagemEmpresa = itemView.findViewById(R.id.imageEmpresa);
         }
     }

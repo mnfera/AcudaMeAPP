@@ -46,19 +46,19 @@
                     android:text="Chinesa" />
 
                 <TextView
-                    android:id="@+id/textTempoEmpresa"
+                    android:id="@+id/textHorarioEmpresa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
-                    android:text="- 25-30 min" />
+                    android:text="- 18 - 23 hrs" />
 
                 <TextView
-                    android:id="@+id/textEntregaEmpresa"
+                    android:id="@+id/textDiasEmpresa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:text="- R$ 10" />
+                    android:text="- Ter a Dom" />
 
             </LinearLayout>
 

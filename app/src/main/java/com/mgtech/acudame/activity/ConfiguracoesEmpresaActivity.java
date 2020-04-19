@@ -39,7 +39,8 @@ import dmax.dialog.SpotsDialog;
 public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
 
     private EditText editEmpresaNome, editEmpresaCategoria,
-                    editEmpresaTempo, editEmpresaTaxa;
+                    editEmpresaTempo, editEmpresaTaxa,
+                    editEmpresaHorario, editEmpresaDias;
 
     private ImageView imagePerfilEmpresa;
     private MaskEditText editEmpresaTelefone;;
@@ -111,8 +112,8 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                     Empresa empresa = dataSnapshot.getValue(Empresa.class);
                     editEmpresaNome.setText(empresa.getNome());
                     editEmpresaCategoria.setText(empresa.getCategoria());
-                    editEmpresaTaxa.setText(empresa.getPrecoEntrega().toString());
-                    editEmpresaTempo.setText(empresa.getTempo());
+                    editEmpresaHorario.setText(empresa.getHorario());
+                    editEmpresaDias.setText(empresa.getDias());
                     editEmpresaTelefone.setText(empresa.getTelefone());
 
 
@@ -141,21 +142,21 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
         // verifica se os campos foram preenchidos
         String nome = editEmpresaNome.getText().toString();
         String categoria = editEmpresaCategoria.getText().toString();
-        String tempo = editEmpresaTempo.getText().toString();
-        String taxa = editEmpresaTaxa.getText().toString();
+        String horario = editEmpresaHorario.getText().toString();
+        String dias = editEmpresaDias.getText().toString();
         String telefone = editEmpresaTelefone.getText().toString();
 
         if(!nome.isEmpty()) {
-            if(!taxa.isEmpty()) {
+            if(!horario.isEmpty()) {
                 if(!categoria.isEmpty()) {
-                    if(!tempo.isEmpty()) {
+                    if(!dias.isEmpty()) {
                         if( !telefone.isEmpty()){
                             Empresa empresa = new Empresa();
                             empresa.setIdUsuario(idUsuarioLogado);
                             empresa.setNome(nome);
                             empresa.setCategoria(categoria);
-                            empresa.setTempo(tempo);
-                            empresa.setPrecoEntrega(Double.parseDouble(taxa));
+                            empresa.setHorario(horario);
+                            empresa.setDias(dias);
                             empresa.setUrlImagem(urlImagemSelecionada);
                             empresa.setTelefone(telefone);
                             empresa.salvar();
@@ -165,13 +166,13 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                             exibirMensagem("Digite seu telefone");
                         }
                     }else {
-                        exibirMensagem("Digite um tempo médio para entrega");
+                        exibirMensagem("Informe os dias de funcionamento, ex.: Ter a Dom");
                     }
                 }else {
                     exibirMensagem("Informe pelo menos uma categoria para sua empresa");
                 }
             }else {
-                exibirMensagem("Digite um valor para taxa de entrega ou zero para nenhuma");
+                exibirMensagem("Informe o horário de funcionamento, ex.: 17 - 22 hrs");
             }
         }else {
             exibirMensagem("Digite um nome para sua empresa");
@@ -245,8 +246,8 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
     private void inicializarComponentes() {
         editEmpresaNome = findViewById(R.id.editEmpresaNome);
         editEmpresaCategoria = findViewById(R.id.editEmpresaCategoria);
-        editEmpresaTempo = findViewById(R.id.editEmpresaTempo);
-        editEmpresaTaxa = findViewById(R.id.editEmpresaTaxa);
+        editEmpresaDias = findViewById(R.id.editEmpresaDias);
+        editEmpresaHorario = findViewById(R.id.editEmpresaHorario);
         editEmpresaTelefone = findViewById(R.id.editTelefone);
         imagePerfilEmpresa = findViewById(R.id.imagePerfilEmpresa);
         buttonSalvar = findViewById(R.id.buttonSalvar);

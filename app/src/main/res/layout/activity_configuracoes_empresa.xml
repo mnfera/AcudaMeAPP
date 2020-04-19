@@ -47,26 +47,27 @@
             android:inputType="none|text"
             android:padding="16dp" />
 
+
         <EditText
-            android:id="@+id/editEmpresaTempo"
+            android:id="@+id/editEmpresaDias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-2dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
-            android:hint="Tempo entrega (minutos)"
+            android:hint="Dias de funcionamento. Ex.: Ter a Dom"
             android:inputType="none|text"
             android:padding="16dp" />
 
         <EditText
-            android:id="@+id/editEmpresaTaxa"
+            android:id="@+id/editEmpresaHorario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-2dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
-            android:hint="Taxa de entrega"
-            android:inputType="none|numberDecimal"
+            android:hint="Horário. Ex.: 18:00 - 22:30"
+            android:inputType="none|text"
             android:padding="16dp" />
 
         <com.santalu.maskedittext.MaskEditText
