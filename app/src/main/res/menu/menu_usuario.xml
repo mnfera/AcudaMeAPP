@@ -16,7 +16,7 @@
 
     <item
         android:id="@+id/menuConfiguracoes"
-        android:title="Configurações"
+        android:title="Minhas Informações"
         app:showAsAction="never" />
 
     <item

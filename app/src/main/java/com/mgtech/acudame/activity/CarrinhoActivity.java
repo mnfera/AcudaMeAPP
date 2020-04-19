@@ -184,7 +184,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         });
 
         final EditText editObservacao = new EditText(this);
-        editObservacao.setHint("Digite uma observação como ou troco necessário, por exemplo");
+        editObservacao.setHint("Digite uma observação. Ex.: Troco para 50");
         builder.setView(editObservacao);
 
         builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {

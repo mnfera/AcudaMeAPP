@@ -59,7 +59,7 @@ public class PedidosActivity extends AppCompatActivity {
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Pedidos");
+        toolbar.setTitle("Novos Pedidos");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
