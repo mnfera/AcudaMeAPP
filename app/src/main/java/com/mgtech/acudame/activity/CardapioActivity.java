@@ -3,6 +3,8 @@ package com.mgtech.acudame.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -49,7 +51,7 @@ import dmax.dialog.SpotsDialog;
 public class CardapioActivity extends AppCompatActivity {
 
     private RecyclerView recyclerProdutosCardapio;
-    private ImageView imageEmpresaCardapio;
+    private ImageView imageEmpresaCardapio, imageWhatsapp;
     private TextView textNomeEmpresaCardapio, textTelefoneEmpresaCardapio;
     private Empresa empresaSelecionada;
     private AlertDialog dialog;
@@ -134,6 +136,31 @@ public class CardapioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 verCarrinho();
+            }
+        });
+
+        imageWhatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PackageManager pm = getPackageManager();
+
+                try {
+
+                    String number = "8498971665";
+                    Intent sendIntent = new Intent("android.intent.action.MAIN");
+                    sendIntent.putExtra("jid", "55" + number + "@s.whatsapp.net");
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Testando");
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+                    sendIntent.setPackage("com.whatsapp");
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+
+                }catch (PackageManager.NameNotFoundException e) {
+                    Toast.makeText(CardapioActivity.this, "WhatsApp não instalado!"
+                            , Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -418,6 +445,7 @@ public class CardapioActivity extends AppCompatActivity {
         textCarrinhoQtde = findViewById(R.id.textCarrinhoQtd);
         textCarrinhoTotal = findViewById(R.id.textCarrinhoTotal);
         textVerCarrinho = findViewById(R.id.textVerCarrinho);
+        imageWhatsapp = findViewById(R.id.imageWhatsapp);
 
     }
 
