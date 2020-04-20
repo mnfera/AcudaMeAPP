@@ -56,9 +56,19 @@
                         android:id="@+id/textTelefoneEmpresaCardapio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:text="(99) 99999-9999" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <ImageView
+                        android:id="@+id/imageCelular"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="1dp"
+                        android:clickable="true"
+                        android:src="@drawable/ic_fazer_ligacao_24dp" />
+
+                    <ImageView
                         android:id="@+id/imageWhatsapp"
                         android:layout_width="30dp"
                         android:layout_height="30dp"

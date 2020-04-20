@@ -1,10 +1,12 @@
 package com.mgtech.acudame.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,7 +54,7 @@ import dmax.dialog.SpotsDialog;
 public class CardapioActivity extends AppCompatActivity {
 
     private RecyclerView recyclerProdutosCardapio;
-    private ImageView imageEmpresaCardapio, imageWhatsapp;
+    private ImageView imageEmpresaCardapio, imageCelular, imageWhatsapp;
     private TextView textNomeEmpresaCardapio, textTelefoneEmpresaCardapio;
     private Empresa empresaSelecionada;
     private AlertDialog dialog;
@@ -64,7 +67,7 @@ public class CardapioActivity extends AppCompatActivity {
     private String idEmpresaSelecionada;
     private String idUsuarioLogado;
     private Usuario usuario;
-    private Pedido pedidoRecuperado, pedidoEnviarCarrinho;
+    private Pedido pedidoRecuperado;
     private int qtdItensCarrinho;
     private Double totalCarrinho;
     private int metodoPagamento;
@@ -81,7 +84,7 @@ public class CardapioActivity extends AppCompatActivity {
 
         // recuperar empresa selecionada
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
+        if (bundle != null) {
             empresaSelecionada = (Empresa) bundle.getSerializable("empresa");
 
             textNomeEmpresaCardapio.setText(empresaSelecionada.getNome());
@@ -139,14 +142,15 @@ public class CardapioActivity extends AppCompatActivity {
             }
         });
 
-        imageWhatsapp.setOnClickListener(new View.OnClickListener() {
+        /*imageWhatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 PackageManager pm = getPackageManager();
 
                 try {
 
-                    String number = "8498971665";
+                    String number = empresaSelecionada.getTelefone();
                     Intent sendIntent = new Intent("android.intent.action.MAIN");
                     sendIntent.putExtra("jid", "55" + number + "@s.whatsapp.net");
                     sendIntent.putExtra(Intent.EXTRA_TEXT, "Testando");
@@ -161,6 +165,28 @@ public class CardapioActivity extends AppCompatActivity {
                             , Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });*/
+
+        imageCelular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("tel:" + empresaSelecionada.getTelefone());
+                Intent intent = new Intent(Intent.ACTION_CALL, uri);
+                if (ActivityCompat.checkSelfPermission(CardapioActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(CardapioActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+                    return;
+                }
+                startActivity(intent);
+            }
+        });
+
+        imageWhatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String link = "https://api.whatsapp.com/send?phone=+55"+empresaSelecionada.getTelefone()+"&text=Olá%20"+empresaSelecionada.getNome();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                startActivity(intent);
             }
         });
     }
@@ -445,6 +471,7 @@ public class CardapioActivity extends AppCompatActivity {
         textCarrinhoQtde = findViewById(R.id.textCarrinhoQtd);
         textCarrinhoTotal = findViewById(R.id.textCarrinhoTotal);
         textVerCarrinho = findViewById(R.id.textVerCarrinho);
+        imageCelular = findViewById(R.id.imageCelular);
         imageWhatsapp = findViewById(R.id.imageWhatsapp);
 
     }

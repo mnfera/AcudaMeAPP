@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Confirmar pedido"
-        android:theme="@style/botaoPadrao"/>
+        android:theme="@style/botaoPadrao" />
 
     <Button
         android:id="@+id/buttonExcluir"
