@@ -23,10 +23,14 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterPedido;
+import com.mgtech.acudame.api.NotificacaoService;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.messenger.MessengerDialog;
+import com.mgtech.acudame.model.Empresa;
+import com.mgtech.acudame.model.Notificacao;
+import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
 
 
@@ -35,6 +39,11 @@ import java.util.Collections;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PedidosActivity extends AppCompatActivity {
 
@@ -46,6 +55,8 @@ public class PedidosActivity extends AppCompatActivity {
     private String idEmpresa, idUsu, idPed;
     private int pedidoEntrega;
     private int posicaoItem;
+    private Retrofit retrofit;
+    private String baseUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +67,11 @@ public class PedidosActivity extends AppCompatActivity {
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idEmpresa = UsuarioFirebase.getIdUsuario();
+        baseUrl = "https://fcm.googleapis.com/fcm/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl( baseUrl )
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -104,12 +120,11 @@ public class PedidosActivity extends AppCompatActivity {
                                             Pedido pedido = pedidos.get(posicaoItem);
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
+                                            enviarNotificacao();
                                             pedido.setStatus("finalizado");
                                             startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
-                                            pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
-                                            Toast.makeText(PedidosActivity.this, "Pedido confirmado",
-                                                    Toast.LENGTH_SHORT).show();
+
                                         }else{
                                             Pedido pedido = pedidos.get(posicaoItem);
                                             idUsu = pedido.getIdUsuario();
@@ -202,6 +217,56 @@ public class PedidosActivity extends AppCompatActivity {
         dialog.setConteudo(conteudo);
         dialog.setTitulo(titulo);
         dialog.show(getSupportFragmentManager(), "exemplo dialog");
+    }
+
+    public void enviarNotificacao(){
+
+        //recuperar token empresa
+        DatabaseReference empresaRef = firebaseRef
+                .child("empresas")
+                .child(idUsu);
+        empresaRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() != null){
+                    Empresa empresa = dataSnapshot.getValue(Empresa.class);
+                    String to;
+                    String token = empresa.getTokenEmpresa();
+
+                    to = token;
+
+                    //Monta o objeto notificação
+                    Notificacao notificacao = new Notificacao("ATENÇÃO","Seu pedido foifinalizado");
+                    NotificacaoDados notificacaoDados = new NotificacaoDados(to, notificacao);
+
+                    NotificacaoService service = retrofit.create(NotificacaoService.class);
+                    Call<NotificacaoDados> call = service.salvarNotificacao( notificacaoDados );
+
+                    call.enqueue(new Callback<NotificacaoDados>() {
+                        @Override
+                        public void onResponse(Call<NotificacaoDados> call, Response<NotificacaoDados> response) {
+                            if(response.isSuccessful()){
+                                Toast.makeText(PedidosActivity.this, "Pedido confirmado"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<NotificacaoDados> call, Throwable t) {
+
+                        }
+                    });
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 }

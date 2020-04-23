@@ -48,6 +48,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private TextView recuperarSenha;
     private DatabaseReference reference;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,6 +191,10 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                                             if(tipoUsuario .equals("E")){ //Se for empresa logando
 
+                                                Toast.makeText(AutenticacaoActivity.this,
+                                                        "Logado com sucesso!",
+                                                        Toast.LENGTH_SHORT).show();
+
                                                 abrirTelaPrincipal(tipoUsuario);
 
                                             }else{ //Usuario logando
@@ -325,4 +330,6 @@ public class AutenticacaoActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 }

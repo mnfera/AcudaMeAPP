@@ -18,16 +18,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
+import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Produto;
 
@@ -43,6 +47,8 @@ public class EmpresaActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private String idUsuarioLogado, idPro;
     private int posicaoItem, produtoOpcao;
+    private Empresa empresa;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,11 @@ public class EmpresaActivity extends AppCompatActivity {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
+        //Salvando token da empresa
+        recuperarToken ();
+
+
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -229,5 +240,23 @@ public class EmpresaActivity extends AppCompatActivity {
 
     private void abrirNovoProduto() {
         startActivity(new Intent(EmpresaActivity.this, NovoProdutoEmpresaActivity.class));
+    }
+
+    public void recuperarToken (){
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                //recuperando token
+                String token = instanceIdResult.getToken();
+
+                //salvando
+                empresa = new Empresa();
+                empresa.setTokenEmpresa(token);
+                empresa.setIdUsuario(idUsuarioLogado);
+                empresa.salvarTokenEmpresa();
+
+            }
+        });
     }
 }

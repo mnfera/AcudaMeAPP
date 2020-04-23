@@ -14,6 +14,7 @@ public class Empresa implements Serializable {
     private String horario;
     private String dias;
     private String telefone;
+    private String tokenEmpresa;
 
     public Empresa() {
     }
@@ -22,7 +23,20 @@ public class Empresa implements Serializable {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
         DatabaseReference empresaRef = firebaseRef.child("empresas")
                 .child(getIdUsuario());
-        empresaRef.setValue(this);
+        empresaRef.child("idUsuario").setValue(getIdUsuario());
+        empresaRef.child("urlImagem").setValue(getUrlImagem());
+        empresaRef.child("nome").setValue(getNome());
+        empresaRef.child("categoria").setValue(getCategoria());
+        empresaRef.child("horario").setValue(getHorario());
+        empresaRef.child("dias").setValue(getDias());
+        empresaRef.child("telefone").setValue(getTelefone());
+    }
+
+    public void salvarTokenEmpresa() {
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference empresaRef = firebaseRef.child("empresas")
+                .child(getIdUsuario());
+        empresaRef.child("tokenEmpresa").setValue(getTokenEmpresa());
     }
 
     public String getTelefone() { return telefone; }
@@ -76,4 +90,8 @@ public class Empresa implements Serializable {
     public void setDias(String dias) {
         this.dias = dias;
     }
+
+    public String getTokenEmpresa() {return tokenEmpresa;}
+
+    public void setTokenEmpresa(String tokenEmpresa) {this.tokenEmpresa = tokenEmpresa;}
 }

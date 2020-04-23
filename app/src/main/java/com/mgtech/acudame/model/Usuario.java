@@ -11,6 +11,7 @@ public class Usuario {
     private String numero;
     private String referencia;
     private String telefone;
+    private String tokenUsuario;
 
     public Usuario() {
     }
@@ -62,7 +63,9 @@ public class Usuario {
         return referencia;
     }
 
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
-    }
+    public void setReferencia(String referencia) { this.referencia = referencia; }
+
+    public String getTokenUsuario() {return tokenUsuario;}
+
+    public void setTokenUsuario(String tokenUsuario) {this.tokenUsuario = tokenUsuario;}
 }

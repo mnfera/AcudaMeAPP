@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,11 +24,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterPedido;
+import com.mgtech.acudame.api.NotificacaoService;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.messenger.MessengerDialog;
+import com.mgtech.acudame.model.Empresa;
+import com.mgtech.acudame.model.Notificacao;
+import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +41,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CarrinhoActivity extends AppCompatActivity {
 
@@ -47,6 +58,8 @@ public class CarrinhoActivity extends AppCompatActivity {
     private Pedido pedidoSelecionado;
     private Button botaoComprar, botaoExcluir;
     private int metodoPagamento;
+    private Retrofit retrofit;
+    private String baseUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +70,11 @@ public class CarrinhoActivity extends AppCompatActivity {
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuario = UsuarioFirebase.getIdUsuario();
+        baseUrl = "https://fcm.googleapis.com/fcm/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl( baseUrl )
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         // recuperar pedido selecionado
         Bundle bundle = getIntent().getExtras();
@@ -216,8 +234,8 @@ public class CarrinhoActivity extends AppCompatActivity {
 
                 startActivity(new Intent(CarrinhoActivity.this, HistoricoPedidosUsuarioActivity.class));
 
-                Toast.makeText(CarrinhoActivity.this, "Pedido realizado com sucesso!"
-                        , Toast.LENGTH_SHORT).show();
+                //enviar notificação do pedido
+                enviarNotificacao();
 
             }
         });
@@ -244,5 +262,55 @@ public class CarrinhoActivity extends AppCompatActivity {
         dialog.setConteudo(conteudo);
         dialog.setTitulo(titulo);
         dialog.show(getSupportFragmentManager(), "exemplo dialog");
+    }
+
+    public void enviarNotificacao(){
+
+        //recuperar token empresa
+        DatabaseReference empresaRef = firebaseRef
+                .child("empresas")
+                .child(idEmpresaSelecionada);
+        empresaRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() != null){
+                    Empresa empresa = dataSnapshot.getValue(Empresa.class);
+                    String to;
+                    String token = empresa.getTokenEmpresa();
+
+                    to = token;
+
+                    //Monta o objeto notificação
+                    Notificacao notificacao = new Notificacao("ATENÇÃO","Você tem um novo pedido");
+                    NotificacaoDados notificacaoDados = new NotificacaoDados(to, notificacao);
+
+                    NotificacaoService service = retrofit.create(NotificacaoService.class);
+                    Call<NotificacaoDados> call = service.salvarNotificacao( notificacaoDados );
+
+                    call.enqueue(new Callback<NotificacaoDados>() {
+                        @Override
+                        public void onResponse(Call<NotificacaoDados> call, Response<NotificacaoDados> response) {
+                            if(response.isSuccessful()){
+                                Toast.makeText(CarrinhoActivity.this, "Pedido realizado com sucesso!"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<NotificacaoDados> call, Throwable t) {
+
+                        }
+                    });
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }

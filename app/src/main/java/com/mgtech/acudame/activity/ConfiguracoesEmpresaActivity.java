@@ -17,8 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -227,10 +229,16 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            urlImagemSelecionada = taskSnapshot.getDownloadUrl().toString();
-                            Toast.makeText(ConfiguracoesEmpresaActivity.this,
-                                    "Sucesso ao fazer upload da imagem!",
-                                    Toast.LENGTH_SHORT).show();
+                            imagemRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    urlImagemSelecionada = uri.toString();
+                                    Toast.makeText(ConfiguracoesEmpresaActivity.this,urlImagemSelecionada
+                                            ,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                         }
                     });
 
