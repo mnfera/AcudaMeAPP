@@ -8,13 +8,11 @@ public class Notificacao {
     private String body;
 
 
-
     public Notificacao(String title, String body) {
         this.title = title;
         this.body = body;
 
     }
-
 
     public String getTitle() {
         return title;
@@ -31,5 +29,7 @@ public class Notificacao {
     public void setBody(String body) {
         this.body = body;
     }
+
+
 
 }

@@ -6,6 +6,7 @@ public class NotificacaoDados {
     private Notificacao notification;
 
 
+
     public NotificacaoDados(String to, Notificacao notification) {
         this.to = to;
         this.notification = notification;

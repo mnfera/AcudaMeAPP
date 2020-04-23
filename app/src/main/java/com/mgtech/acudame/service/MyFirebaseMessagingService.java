@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mgtech.acudame.R;
+import com.mgtech.acudame.activity.HistoricoPedidosUsuarioActivity;
 import com.mgtech.acudame.activity.PedidosActivity;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -31,6 +32,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String titulo = notificacao.getNotification().getTitle();
             String corpo = notificacao.getNotification().getBody();
 
+
             enviarNotificacao(titulo, corpo);
 
         }
@@ -42,7 +44,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //Configurações para notificação
         String canal = getString(R.string.default_notification_channel_id);
         Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Intent intent = new Intent(this, PedidosActivity.class);
+        Intent intent = null;
+
+        if(corpo.equals("Seu pedido foi finalizado")){
+
+            intent = new Intent(this, HistoricoPedidosUsuarioActivity.class);
+
+
+        }if(corpo.equals("Você tem um novo pedido")){
+
+            intent = new Intent(this, PedidosActivity.class);
+
+        }
+
         PendingIntent pendingIntent  = PendingIntent.getActivities(this , 100, new Intent[]{intent}, PendingIntent.FLAG_ONE_SHOT);
 
 
@@ -50,7 +64,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         @SuppressLint("ResourceAsColor") NotificationCompat.Builder notficacao = new NotificationCompat.Builder(this, canal)
                 .setContentTitle( titulo )
                 .setContentText( corpo )
-                .setSmallIcon( R.drawable.ic_delivery)
+                .setSmallIcon( R.drawable.ic_delive)
                 .setColor(R.color.vermelhoEscuro)
                 .setSound( som )
                 .setAutoCancel( true )
