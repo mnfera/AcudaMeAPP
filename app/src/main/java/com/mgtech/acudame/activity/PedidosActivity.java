@@ -32,6 +32,7 @@ import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Notificacao;
 import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
+import com.mgtech.acudame.model.Usuario;
 
 
 import java.util.ArrayList;
@@ -221,17 +222,17 @@ public class PedidosActivity extends AppCompatActivity {
 
     public void enviarNotificacao(){
 
-        //recuperar token empresa
-        DatabaseReference empresaRef = firebaseRef
+        //recuperar token usuario
+        DatabaseReference usuarioRef = firebaseRef
                 .child("usuarios")
                 .child(idUsu);
-        empresaRef.addValueEventListener(new ValueEventListener() {
+        usuarioRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue() != null){
-                    Empresa empresa = dataSnapshot.getValue(Empresa.class);
+                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
                     String to;
-                    String token = empresa.getTokenEmpresa();
+                    String token = usuario.getTokenUsuario();
 
                     to = token;
 
