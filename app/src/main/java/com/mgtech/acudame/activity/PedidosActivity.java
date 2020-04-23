@@ -223,7 +223,7 @@ public class PedidosActivity extends AppCompatActivity {
 
         //recuperar token empresa
         DatabaseReference empresaRef = firebaseRef
-                .child("empresas")
+                .child("usuarios")
                 .child(idUsu);
         empresaRef.addValueEventListener(new ValueEventListener() {
             @Override
