@@ -120,10 +120,10 @@ public class PedidosActivity extends AppCompatActivity {
                                             Pedido pedido = pedidos.get(posicaoItem);
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
-                                            enviarNotificacao();
                                             pedido.setStatus("finalizado");
                                             startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
+                                            enviarNotificacao();
 
                                         }else{
                                             Pedido pedido = pedidos.get(posicaoItem);
