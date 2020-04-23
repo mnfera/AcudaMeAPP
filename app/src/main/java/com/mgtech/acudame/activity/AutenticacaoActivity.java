@@ -58,7 +58,6 @@ public class AutenticacaoActivity extends AppCompatActivity {
         inicializarComponentes();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         reference = ConfiguracaoFirebase.getFirebase();
-        //autenticacao.signOut();
 
 
         // verificar se usuario está logado
@@ -247,14 +246,17 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private void verificarUsuarioLogado(){
 
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
-        String tipoUsuario = usuarioAtual.getDisplayName();
-        if(tipoUsuario.equals("E")){
-            if(usuarioAtual != null) {
+
+        if(usuarioAtual != null){
+
+            String tipoUsuario = usuarioAtual.getDisplayName();
+
+            if (tipoUsuario.equals("E")) {
                 abrirTelaPrincipal(tipoUsuario);
-            }
-        }else{
-            if(usuarioAtual != null && usuarioAtual.isEmailVerified()) {
-                abrirTelaPrincipal(tipoUsuario);
+            } else {
+                if (usuarioAtual.isEmailVerified()) {
+                    abrirTelaPrincipal(tipoUsuario);
+                }
             }
         }
     }

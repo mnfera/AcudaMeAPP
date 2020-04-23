@@ -213,7 +213,7 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                     imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
                     byte[] dadosImagem = baos.toByteArray();
 
-                    StorageReference imagemRef = storageReference
+                    final StorageReference imagemRef = storageReference
                             .child("images")
                             .child("empresas")
                             .child(idUsuarioLogado + "jpeg");
