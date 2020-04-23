@@ -237,7 +237,7 @@ public class PedidosActivity extends AppCompatActivity {
                     to = token;
 
                     //Monta o objeto notificação
-                    Notificacao notificacao = new Notificacao("ATENÇÃO","Seu pedido foifinalizado");
+                    Notificacao notificacao = new Notificacao("ATENÇÃO","Seu pedido foi finalizado");
                     NotificacaoDados notificacaoDados = new NotificacaoDados(to, notificacao);
 
                     NotificacaoService service = retrofit.create(NotificacaoService.class);
