@@ -124,18 +124,19 @@ public class PedidosActivity extends AppCompatActivity {
                                             pedido.setStatus("finalizado");
                                             startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
-                                            enviarNotificacao();
+                                            enviarNotificacao("ATENÇÃO", "Seu pedido foi finalizado");
 
                                         }else{
                                             Pedido pedido = pedidos.get(posicaoItem);
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
-                                            pedido.setStatus("cancelado");
+                                            pedido.setStatus("cancTelado");
                                             startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
                                             pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
                                             Toast.makeText(PedidosActivity.this, "Pedido cancelado",
                                                     Toast.LENGTH_SHORT).show();
+                                            enviarNotificacao("ATENÇÃO", "Seu pedido foi cancelado");
                                         }
                                     }
                                 });
@@ -220,7 +221,7 @@ public class PedidosActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "exemplo dialog");
     }
 
-    public void enviarNotificacao(){
+    public void enviarNotificacao(String titulo, String corpo){
 
         //recuperar token usuario
         DatabaseReference usuarioRef = firebaseRef
@@ -237,7 +238,7 @@ public class PedidosActivity extends AppCompatActivity {
                     to = token;
 
                     //Monta o objeto notificação
-                    Notificacao notificacao = new Notificacao("ATENÇÃO","Seu pedido foi finalizado");
+                    Notificacao notificacao = new Notificacao(titulo, corpo);
                     NotificacaoDados notificacaoDados = new NotificacaoDados(to, notificacao);
 
                     NotificacaoService service = retrofit.create(NotificacaoService.class);
