@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterPedido;
+import com.mgtech.acudame.adapter.AdapterPedidoUsuario;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.messenger.MessengerDialog;
@@ -29,7 +30,7 @@ import dmax.dialog.SpotsDialog;
 public class HistoricoPedidosUsuarioActivity extends AppCompatActivity {
 
     private RecyclerView recyclerHistoricoPedidos;
-    private AdapterPedido adapterPedido;
+    private AdapterPedidoUsuario adapterPedido;
     private List<Pedido> pedidos = new ArrayList<>();
     private AlertDialog dialog;
     private DatabaseReference firebaseRef;
@@ -54,7 +55,7 @@ public class HistoricoPedidosUsuarioActivity extends AppCompatActivity {
         // conf recyclerview
         recyclerHistoricoPedidos.setLayoutManager(new LinearLayoutManager(this));
         recyclerHistoricoPedidos.setHasFixedSize(true);
-        adapterPedido = new AdapterPedido(pedidos);
+        adapterPedido = new AdapterPedidoUsuario(pedidos, HistoricoPedidosUsuarioActivity.this);
         recyclerHistoricoPedidos.setAdapter(adapterPedido);
 
         // recuperar os pedidos

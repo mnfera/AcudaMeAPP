@@ -13,7 +13,12 @@ public class Pedido implements Serializable {
     private String idEmpresa;
     private String idPedido;
     private String nome;
+    private String nomeEmpresa;
     private String endereco;
+    private String numero;
+    private String referencia;
+    private String telEmpresa;
+    private String telUsuario;
     private List<ItemPedido> itens;
     private Double total;
     private String status = "pendente";
@@ -98,6 +103,46 @@ public class Pedido implements Serializable {
                 .child(idPed);
         pedidoRef.updateChildren(status);
 
+    }
+
+    public String getNomeEmpresa() {
+        return nomeEmpresa;
+    }
+
+    public void setNomeEmpresa(String nomeEmpresa) {
+        this.nomeEmpresa = nomeEmpresa;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
+
+    public String getTelEmpresa() {
+        return telEmpresa;
+    }
+
+    public void setTelEmpresa(String telEmpresa) {
+        this.telEmpresa = telEmpresa;
+    }
+
+    public String getTelUsuario() {
+        return telUsuario;
+    }
+
+    public void setTelUsuario(String telUsuario) {
+        this.telUsuario = telUsuario;
     }
 
     public String getIdUsuario() {

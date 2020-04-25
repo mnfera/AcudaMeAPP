@@ -46,12 +46,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent intent = null;
 
-        if(corpo.equals("Seu pedido foi finalizado")){
+        if(corpo.equals("Seu pedido foi finalizado")) {
 
             intent = new Intent(this, HistoricoPedidosUsuarioActivity.class);
 
 
-        }if(corpo.equals("Você tem um novo pedido")){
+        }
+
+        if(corpo.equals("Você tem um novo pedido")) {
 
             intent = new Intent(this, PedidosActivity.class);
 
@@ -73,6 +75,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         //Recuperar notificationManager
         NotificationManager notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
 
         //Verificar versão do android a partir do Oreo para configurar o canal de notificação
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ){

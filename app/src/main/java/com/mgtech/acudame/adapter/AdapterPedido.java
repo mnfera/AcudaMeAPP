@@ -71,7 +71,7 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
             numeroItem++;
         }
         descricaoItens += "Total: R$ " + total;
-        holder.itens.setText(descricaoItens);
+        holder.itens.setText(String.format(descricaoItens));
 
         int metodoPagamento = pedido.getMetodoPagamento();
         String pagamento = metodoPagamento == 0 ? "Dinheiro" : "Máquina cartão" ;

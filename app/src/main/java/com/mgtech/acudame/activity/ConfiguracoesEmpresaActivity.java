@@ -152,6 +152,7 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                 if(!categoria.isEmpty()) {
                     if(!dias.isEmpty()) {
                         if( !telefone.isEmpty()){
+
                             Empresa empresa = new Empresa();
                             empresa.setIdUsuario(idUsuarioLogado);
                             empresa.setNome(nome);

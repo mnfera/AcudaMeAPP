@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterPedido;
+import com.mgtech.acudame.adapter.AdapterPedidoUsuario;
 import com.mgtech.acudame.api.NotificacaoService;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
@@ -51,6 +52,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     private RecyclerView recyclerCarrinho;
     private AdapterPedido adapterPedido;
+    private AdapterPedidoUsuario adapterPedidoUsuario;
     private List<Pedido> pedidos = new ArrayList<>();
     private AlertDialog dialog;
     private DatabaseReference firebaseRef;
@@ -95,8 +97,8 @@ public class CarrinhoActivity extends AppCompatActivity {
         // conf recyclerview
         recyclerCarrinho.setLayoutManager(new LinearLayoutManager(this));
         recyclerCarrinho.setHasFixedSize(true);
-        adapterPedido = new AdapterPedido(pedidos);
-        recyclerCarrinho.setAdapter(adapterPedido);
+        adapterPedidoUsuario = new AdapterPedidoUsuario(pedidos, CarrinhoActivity.this);
+        recyclerCarrinho.setAdapter(adapterPedidoUsuario);
 
         // recuperar os pedidos
         recuperarPedidos();
@@ -173,7 +175,7 @@ public class CarrinhoActivity extends AppCompatActivity {
                         pedidos.add(pedido);
                     }
 
-                    adapterPedido.notifyDataSetChanged();
+                    adapterPedidoUsuario.notifyDataSetChanged();
                 }
 
                 dialog.dismiss();
@@ -235,7 +237,7 @@ public class CarrinhoActivity extends AppCompatActivity {
                 startActivity(new Intent(CarrinhoActivity.this, HistoricoPedidosUsuarioActivity.class));
 
                 //enviar notificação do pedido
-                enviarNotificacao();
+                enviarNotificacaoUsuario();
 
             }
         });
@@ -264,7 +266,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "exemplo dialog");
     }
 
-    public void enviarNotificacao(){
+    public void enviarNotificacaoUsuario(){
 
         //recuperar token empresa
         DatabaseReference empresaRef = firebaseRef

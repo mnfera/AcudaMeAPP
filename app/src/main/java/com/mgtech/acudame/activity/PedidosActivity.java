@@ -124,13 +124,16 @@ public class PedidosActivity extends AppCompatActivity {
                                             pedido.setStatus("finalizado");
                                             startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
+                                            pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
+                                            Toast.makeText(PedidosActivity.this, "Pedido finalizado",
+                                                    Toast.LENGTH_SHORT).show();
                                             enviarNotificacao("ATENÇÃO", "Seu pedido foi finalizado");
 
                                         }else{
                                             Pedido pedido = pedidos.get(posicaoItem);
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
-                                            pedido.setStatus("cancTelado");
+                                            pedido.setStatus("cancelado");
                                             startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
                                             pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
