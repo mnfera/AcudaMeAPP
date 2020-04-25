@@ -83,7 +83,7 @@ public class PedidosActivity extends AppCompatActivity {
         // conf recyclerview
         recyclerPedidos.setLayoutManager(new LinearLayoutManager(this));
         recyclerPedidos.setHasFixedSize(true);
-        adapterPedido = new AdapterPedido(pedidos);
+        adapterPedido = new AdapterPedido(pedidos, PedidosActivity.this);
         recyclerPedidos.setAdapter(adapterPedido);
 
         // recuperar os pedidos

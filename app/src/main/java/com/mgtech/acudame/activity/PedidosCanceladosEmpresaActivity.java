@@ -55,7 +55,7 @@ public class PedidosCanceladosEmpresaActivity extends AppCompatActivity {
         // conf recyclerview
         recyclerPedidos.setLayoutManager(new LinearLayoutManager(this));
         recyclerPedidos.setHasFixedSize(true);
-        adapterPedido = new AdapterPedido(pedidos);
+        adapterPedido = new AdapterPedido(pedidos, PedidosCanceladosEmpresaActivity.this);
         recyclerPedidos.setAdapter(adapterPedido);
 
         // recuperar os pedidos

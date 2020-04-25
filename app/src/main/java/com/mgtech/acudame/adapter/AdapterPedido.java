@@ -1,12 +1,20 @@
 package com.mgtech.acudame.adapter;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mgtech.acudame.R;
@@ -19,9 +27,11 @@ import java.util.List;
 public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHolder> {
 
     private List<Pedido> pedidos;
+    private final Context context;
 
-    public AdapterPedido(List<Pedido> pedidos) {
+    public AdapterPedido(List<Pedido> pedidos, final Context context) {
         this.pedidos = pedidos;
+        this.context = context;
     }
 
     @NonNull
@@ -37,7 +47,10 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
         Pedido pedido = pedidos.get(i);
         holder.nome.setText( pedido.getNome() );
         holder.endereco.setText( "Endereço: "+pedido.getEndereco() );
+        holder.numero.setText("Número: "+pedido.getNumero());
+        holder.referencia.setText("Referência: "+pedido.getReferencia());
         holder.observacao.setText( "Obs: "+ pedido.getObservacao() );
+        holder.telefone.setText(pedido.getTelUsuario());
         holder.status.setText("Status: "+pedido.getStatus().toUpperCase());
         switch (pedido.getStatus()) {
             case "pendente":
@@ -77,6 +90,31 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
         String pagamento = metodoPagamento == 0 ? "Dinheiro" : "Máquina cartão" ;
         holder.pgto.setText( "pgto: " + pagamento );
 
+        String texto = "Seu pedido:\n"+descricaoItens;
+
+        holder.imageCelular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("tel:" + pedido.getTelUsuario());
+                Intent intent = new Intent(Intent.ACTION_CALL, uri);
+                if (ActivityCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions((Activity) context.getApplicationContext(), new String[]{Manifest.permission.CALL_PHONE}, 1);
+                    return;
+                }
+                context.startActivity(intent);
+            }
+        });
+
+        holder.imageWhatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String link = "https://api.whatsapp.com/send?phone=+55"+pedido.getTelUsuario()+
+                        "&text=Olá%20"+pedido.getNome()+"\n"+texto;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -88,20 +126,30 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
 
         TextView nome;
         TextView endereco;
+        TextView numero;
+        TextView referencia;
         TextView pgto;
         TextView observacao;
+        TextView telefone;
         TextView status;
         TextView itens;
+        ImageView imageCelular;
+        ImageView imageWhatsapp;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             nome        = itemView.findViewById(R.id.textPedidoNome);
             endereco    = itemView.findViewById(R.id.textPedidoEndereco);
+            numero      = itemView.findViewById(R.id.textPedidoNumero);
+            referencia  = itemView.findViewById(R.id.textPedidoReferencia);
             pgto        = itemView.findViewById(R.id.textPedidoPgto);
             observacao  = itemView.findViewById(R.id.textPedidoObs);
+            telefone    = itemView.findViewById(R.id.textPedidoTelefone);
             status      = itemView.findViewById(R.id.textPedidoStatus);
             itens       = itemView.findViewById(R.id.textPedidoItens);
+            imageCelular = itemView.findViewById(R.id.imageCelular);
+            imageWhatsapp = itemView.findViewById(R.id.imageWhatsapp);
         }
     }
 

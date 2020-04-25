@@ -17,23 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
-import com.mgtech.acudame.activity.CardapioActivity;
-import com.mgtech.acudame.helper.ConfiguracaoFirebase;
-import com.mgtech.acudame.helper.UsuarioFirebase;
-import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
-import com.mgtech.acudame.model.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class AdapterPedidoUsuario extends RecyclerView.Adapter<AdapterPedidoUsuario.MyViewHolderUser> {
 
