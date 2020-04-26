@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +30,7 @@ import dmax.dialog.SpotsDialog;
 public class ConfiguracoesProdutoActivity extends AppCompatActivity {
 
     private EditText editProdutoNome, editProdutoDescricao, editProdutoPreco;
+    private Switch tipoStatus;
     private Button buttonSalvar;
     private StorageReference storageReference;
     private DatabaseReference firebaseRef;
@@ -111,6 +113,12 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
         String nome = editProdutoNome.getText().toString();
         String descricao = editProdutoDescricao.getText().toString();
         String preco = editProdutoPreco.getText().toString();
+        String status = "ativo";
+
+        // verifica estado do switch
+        if(tipoStatus.isChecked()) {
+            status = "inativo";
+        }
 
         if (!nome.isEmpty()) {
             if (!descricao.isEmpty()) {
@@ -121,6 +129,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
                     produto.setNome(nome);
                     produto.setDescricao(descricao);
                     produto.setPreco(Double.parseDouble(preco));
+                    produto.setStatus(status);
                     produto.salvar();
                     finish();
                     exibirMensagem("Produto salvo com sucesso!");
@@ -143,6 +152,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
         editProdutoNome = findViewById(R.id.editProdutoNome);
         editProdutoDescricao = findViewById(R.id.editProdutoDescricao);
         editProdutoPreco = findViewById(R.id.editProdutoPreco);
+        tipoStatus = findViewById(R.id.switchStatus);
         buttonSalvar = findViewById(R.id.buttonSalvar);
     }
 }

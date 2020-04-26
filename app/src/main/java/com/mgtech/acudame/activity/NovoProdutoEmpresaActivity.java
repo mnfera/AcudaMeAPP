@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +20,7 @@ import com.mgtech.acudame.model.Produto;
 public class NovoProdutoEmpresaActivity extends AppCompatActivity {
 
     private EditText editProdutoNome, editProdutoDescricao, editProdutoPreco;
+    private Switch tipoStatus;
     private Button buttonSalvar;
     private FirebaseAuth autenticacao;
     private String idUsuarioLogado;
@@ -52,6 +54,12 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity {
         String nome = editProdutoNome.getText().toString();
         String descricao = editProdutoDescricao.getText().toString();
         String preco = editProdutoPreco.getText().toString();
+        String status = "ativo";
+
+        // verifica estado do switch
+        if(tipoStatus.isChecked()) {
+            status = "inativo";
+        }
 
         if(!nome.isEmpty()) {
             if(!descricao.isEmpty()) {
@@ -63,6 +71,7 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity {
                     produto.setNome(nome);
                     produto.setDescricao(descricao);
                     produto.setPreco(Double.parseDouble(preco));
+                    produto.setStatus(status);
                     produto.salvar();
                     finish();
                     exibirMensagem("Produto salvo com sucesso!");
@@ -87,6 +96,7 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity {
         editProdutoNome = findViewById(R.id.editProdutoNome);
         editProdutoDescricao = findViewById(R.id.editProdutoDescricao);
         editProdutoPreco = findViewById(R.id.editProdutoPreco);
+        tipoStatus = findViewById(R.id.switchStatus);
         buttonSalvar = findViewById(R.id.buttonSalvar);
     }
 }

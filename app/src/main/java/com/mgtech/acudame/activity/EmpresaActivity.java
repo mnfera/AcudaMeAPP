@@ -28,6 +28,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterProduto;
+import com.mgtech.acudame.adapter.AdapterProdutoEmpresa;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
@@ -42,7 +43,7 @@ public class EmpresaActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
     private RecyclerView recyclerProdutos;
-    private AdapterProduto adapterProduto;
+    private AdapterProdutoEmpresa adapterProduto;
     private List<Produto> produtos = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private String idUsuarioLogado, idPro;
@@ -74,7 +75,7 @@ public class EmpresaActivity extends AppCompatActivity {
         // conf recyclerview
         recyclerProdutos.setLayoutManager(new LinearLayoutManager(this));
         recyclerProdutos.setHasFixedSize(true);
-        adapterProduto = new AdapterProduto(produtos, this);
+        adapterProduto = new AdapterProdutoEmpresa(produtos, this);
         recyclerProdutos.setAdapter(adapterProduto);
 
         // recupera os produtos da empresa
