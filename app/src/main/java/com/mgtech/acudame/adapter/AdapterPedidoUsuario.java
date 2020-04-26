@@ -60,8 +60,11 @@ public class AdapterPedidoUsuario extends RecyclerView.Adapter<AdapterPedidoUsua
             case "confirmado":
                 holder.status.setTextColor(Color.parseColor("#FF4CAF50"));
                 break;
-            case "finalizado":
+            case "recebido":
                 holder.status.setTextColor(Color.parseColor("#FF00BCD4"));
+                break;
+            case "finalizado":
+                holder.status.setTextColor(Color.parseColor("#FFD700"));
                 break;
             case "cancelado":
                 holder.status.setTextColor(Color.parseColor("#FFF44336"));

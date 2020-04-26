@@ -20,6 +20,11 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/menuPedidosRecebidos"
+        android:title="Pedidos Recebidos"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menuPedidosFinalizados"
         android:title="Pedidos Finalizados"
         app:showAsAction="never" />

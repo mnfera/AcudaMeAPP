@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".adapter.AdapterPedidoUsuario"></activity>
+        <activity android:name=".activity.PedidosRecebidosEmpresaActivity"
+            android:parentActivityName=".activity.EmpresaActivity"></activity>
+        <activity android:name=".adapter.AdapterPedidoUsuario" />
         <activity
             android:name=".activity.ConfiguracoesProdutoActivity"
             android:parentActivityName=".activity.EmpresaActivity" />

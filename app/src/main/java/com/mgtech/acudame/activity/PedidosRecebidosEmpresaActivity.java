@@ -1,5 +1,11 @@
 package com.mgtech.acudame.activity;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,12 +15,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,12 +28,10 @@ import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.messenger.MessengerDialog;
-import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Notificacao;
 import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Usuario;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +44,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PedidosActivity extends AppCompatActivity {
+public class PedidosRecebidosEmpresaActivity extends AppCompatActivity {
 
     private RecyclerView recyclerPedidos;
     private AdapterPedido adapterPedido;
@@ -62,7 +60,7 @@ public class PedidosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pedidos);
+        setContentView(R.layout.activity_pedidos_recebidos_empresa);
 
         // conf iniciais
         inicializarComponentes();
@@ -76,14 +74,14 @@ public class PedidosActivity extends AppCompatActivity {
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Novos Pedidos");
+        toolbar.setTitle("Pedidos Recebidos");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // conf recyclerview
         recyclerPedidos.setLayoutManager(new LinearLayoutManager(this));
         recyclerPedidos.setHasFixedSize(true);
-        adapterPedido = new AdapterPedido(pedidos, PedidosActivity.this);
+        adapterPedido = new AdapterPedido(pedidos, PedidosRecebidosEmpresaActivity.this);
         recyclerPedidos.setAdapter(adapterPedido);
 
         // recuperar os pedidos
@@ -104,11 +102,11 @@ public class PedidosActivity extends AppCompatActivity {
                             public void onLongItemClick(View view, int position) {
 
                                 posicaoItem = position;
-                                AlertDialog.Builder builder = new AlertDialog.Builder(PedidosActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(PedidosRecebidosEmpresaActivity.this);
                                 builder.setTitle("Selecione uma opção para o pedido:");
 
                                 CharSequence[] itens = new CharSequence[]{
-                                        "Confirmar Recebimento", "Finalizar Pedido", "Cancelar Pedido"
+                                        "Finalizar Pedido", "Cancelar Pedido"
                                 };
                                 builder.setSingleChoiceItems(itens, 0, new DialogInterface.OnClickListener() {
                                     @Override
@@ -126,23 +124,11 @@ public class PedidosActivity extends AppCompatActivity {
                                             Pedido pedido = pedidos.get(posicaoItem);
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
-                                            pedido.setStatus("recebido");
-                                            startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
-                                            pedido.atualizarStatus();
-                                            pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
-                                            Toast.makeText(PedidosActivity.this, "Pedido Recebido",
-                                                    Toast.LENGTH_SHORT).show();
-                                            enviarNotificacao("ATENÇÃO", "Seu pedido foi recebido pela empresa e está sendo preparado");
-
-                                        }else if(pedidoEntrega == 1){
-                                            Pedido pedido = pedidos.get(posicaoItem);
-                                            idUsu = pedido.getIdUsuario();
-                                            idPed = pedido.getIdPedido();
                                             pedido.setStatus("finalizado");
-                                            startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
+                                            startActivity(new Intent(PedidosRecebidosEmpresaActivity.this, PedidosRecebidosEmpresaActivity.class));
                                             pedido.atualizarStatus();
                                             pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
-                                            Toast.makeText(PedidosActivity.this, "Pedido finalizado",
+                                            Toast.makeText(PedidosRecebidosEmpresaActivity.this, "Pedido finalizado",
                                                     Toast.LENGTH_SHORT).show();
                                             enviarNotificacao("ATENÇÃO", "Seu pedido foi/será entregue e finalizado");
 
@@ -151,10 +137,10 @@ public class PedidosActivity extends AppCompatActivity {
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
                                             pedido.setStatus("cancelado");
-                                            startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
+                                            startActivity(new Intent(PedidosRecebidosEmpresaActivity.this, PedidosRecebidosEmpresaActivity.class));
                                             pedido.atualizarStatus();
                                             pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
-                                            Toast.makeText(PedidosActivity.this, "Pedido cancelado",
+                                            Toast.makeText(PedidosRecebidosEmpresaActivity.this, "Pedido cancelado",
                                                     Toast.LENGTH_SHORT).show();
                                             enviarNotificacao("ATENÇÃO", "Seu pedido foi cancelado");
                                         }
@@ -196,7 +182,7 @@ public class PedidosActivity extends AppCompatActivity {
                 .child(idEmpresa);
 
         Query pedidoPesquisa = pedidosRef.orderByChild("status")
-                .equalTo("confirmado");
+                .equalTo("recebido");
 
         pedidoPesquisa.addValueEventListener(new ValueEventListener() {
             @Override
@@ -263,7 +249,7 @@ public class PedidosActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<NotificacaoDados> call, Response<NotificacaoDados> response) {
                             if(response.isSuccessful()){
-                                Toast.makeText(PedidosActivity.this, "Pedido confirmado"
+                                Toast.makeText(PedidosRecebidosEmpresaActivity.this, "Pedido confirmado"
                                         , Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -285,5 +271,4 @@ public class PedidosActivity extends AppCompatActivity {
         });
 
     }
-
 }
