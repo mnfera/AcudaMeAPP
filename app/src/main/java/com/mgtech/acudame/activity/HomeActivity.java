@@ -216,6 +216,7 @@ public class HomeActivity extends AppCompatActivity {
         try {
 
             autenticacao.signOut();
+            startActivity(new Intent(HomeActivity.this, AutenticacaoActivity.class));
             finish();
 
         }catch (Exception e) {

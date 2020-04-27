@@ -231,6 +231,7 @@ public class EmpresaActivity extends AppCompatActivity {
         try {
 
             autenticacao.signOut();
+            startActivity(new Intent(EmpresaActivity.this, AutenticacaoActivity.class));
             finish();
 
         }catch (Exception e) {
