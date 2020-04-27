@@ -39,6 +39,8 @@ import com.mgtech.acudame.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
+
 public class EmpresaActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
@@ -49,6 +51,7 @@ public class EmpresaActivity extends AppCompatActivity {
     private String idUsuarioLogado, idPro;
     private int posicaoItem, produtoOpcao;
     private Empresa empresa;
+    private AlertDialog dialog;
 
 
     @Override
@@ -152,6 +155,14 @@ public class EmpresaActivity extends AppCompatActivity {
     }
 
     private void recuperarProdutos(){
+
+        dialog = new SpotsDialog.Builder()
+                .setContext(EmpresaActivity.this)
+                .setMessage("Carregando Dados")
+                .setCancelable(false)
+                .build();
+        dialog.show();
+
         DatabaseReference produtosRef = firebaseRef
                 .child("produtos")
                 .child(idUsuarioLogado);
@@ -163,6 +174,7 @@ public class EmpresaActivity extends AppCompatActivity {
                     produtos.add(ds.getValue(Produto.class));
                 }
                 adapterProduto.notifyDataSetChanged();
+                dialog.dismiss();
             }
 
             @Override
