@@ -13,6 +13,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,7 +95,6 @@ public class CarrinhoActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Carrinho");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // conf recyclerview
         recyclerCarrinho.setLayoutManager(new LinearLayoutManager(this));
@@ -257,6 +259,39 @@ public class CarrinhoActivity extends AppCompatActivity {
         recyclerCarrinho = findViewById(R.id.recyclerCarrinho);
         botaoComprar = findViewById(R.id.buttonComprar);
         botaoExcluir = findViewById(R.id.buttonExcluir);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_carrinho, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menuHome :
+                abrirHome();
+                break;
+            case R.id.menuPedidos :
+                abrirPedidos();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void abrirHome() {
+        startActivity(new Intent(CarrinhoActivity.this, HomeActivity.class));
+        finish();
+    }
+
+    private void abrirPedidos() {
+        startActivity(new Intent(CarrinhoActivity.this, HistoricoPedidosUsuarioActivity.class));
+        finish();
     }
 
     public void alertaSimples(String conteudo, Context context, String titulo){

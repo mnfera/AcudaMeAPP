@@ -26,8 +26,7 @@
             android:name=".activity.PedidosFinalizadosEmpresaActivity"
             android:parentActivityName=".activity.EmpresaActivity" />
         <activity
-            android:name=".activity.CarrinhoActivity"
-            android:parentActivityName=".activity.HomeActivity" />
+            android:name=".activity.CarrinhoActivity" />
         <activity
             android:name=".activity.HistoricoPedidosUsuarioActivity"
             android:parentActivityName=".activity.HomeActivity" />
