@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterProduto;
@@ -321,11 +322,11 @@ public class CardapioActivity extends AppCompatActivity {
     }
 
     private void recuperarPedido() {
+
         DatabaseReference pedidoRef = firebaseRef
                 .child("pedidos_usuario")
                 .child(idEmpresaSelecionada)
                 .child(idUsuarioLogado);
-
 
         pedidoRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -365,10 +366,15 @@ public class CardapioActivity extends AppCompatActivity {
     }
 
     private void recuperarProdutos(){
+
         DatabaseReference produtosRef = firebaseRef
                 .child("produtos")
                 .child(idEmpresaSelecionada);
-        produtosRef.addValueEventListener(new ValueEventListener() {
+
+        Query produtoPesquisa = produtosRef.orderByChild("status")
+                .equalTo("ativo");
+
+        produtoPesquisa.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 produtos.clear();
