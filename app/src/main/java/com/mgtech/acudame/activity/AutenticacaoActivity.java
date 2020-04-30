@@ -44,7 +44,6 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private FirebaseAuth autenticacao;
     final Handler handler = new Handler();
-    private AlertDialog alerta;
     private TextView recuperarSenha;
     private DatabaseReference reference;
 
@@ -124,8 +123,6 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                                                             String tipoUsuario = "U";
                                                             UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
-
-                                                            //abrirTelaPrincipal(tipoUsuario);
 
                                                         }else{
                                                             Toast.makeText(AutenticacaoActivity.this,
@@ -207,9 +204,8 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                                                     abrirTelaPrincipal(tipoUsuario);
 
-                                                    //botaoAcessar.setEnabled(false);
                                                 }else {
-                                                    alertaSimples("Por favor verifique seu endereço de email", getApplicationContext(), "Email não verificado");
+                                                    alertaSimples("Por favor, verifique seu endereço de email", getApplicationContext(), "Email não verificado");
                                                 }
                                             }
 
@@ -260,10 +256,6 @@ public class AutenticacaoActivity extends AppCompatActivity {
             }
         }
     }
-
-    /*private String getTipoUsuario(){
-        return tipoUsuario.isChecked() ? "E" : "U";
-    }*/
 
     private void abrirTelaPrincipal(String tipoUsuario){
         if(tipoUsuario.equals("U")){ // usuario

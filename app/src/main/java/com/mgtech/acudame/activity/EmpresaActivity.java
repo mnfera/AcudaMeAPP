@@ -27,13 +27,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.mgtech.acudame.R;
-import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.adapter.AdapterProdutoEmpresa;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.model.Empresa;
-import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Produto;
 
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class EmpresaActivity extends AppCompatActivity {
     private List<Produto> produtos = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private String idUsuarioLogado, idPro;
-    private int posicaoItem, produtoOpcao;
+    private int produtoOpcao;
     private Empresa empresa;
     private AlertDialog dialog;
 

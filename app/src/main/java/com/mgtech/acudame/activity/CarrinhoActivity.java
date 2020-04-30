@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -26,18 +24,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
-import com.mgtech.acudame.adapter.AdapterPedido;
 import com.mgtech.acudame.adapter.AdapterPedidoUsuario;
 import com.mgtech.acudame.api.NotificacaoService;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
-import com.mgtech.acudame.helper.UsuarioFirebase;
-import com.mgtech.acudame.messenger.MessengerDialog;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Notificacao;
 import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
 import com.google.firebase.database.Query;
-import com.squareup.picasso.Picasso;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -54,12 +48,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CarrinhoActivity extends AppCompatActivity {
 
     private RecyclerView recyclerCarrinho;
-    private AdapterPedido adapterPedido;
     private AdapterPedidoUsuario adapterPedidoUsuario;
     private List<Pedido> pedidos = new ArrayList<>();
     private AlertDialog dialog;
     private DatabaseReference firebaseRef;
-    private String idUsuario, idEmpresaSelecionada, idPedidoSelecionado;
+    private String idEmpresaSelecionada, idPedidoSelecionado;
     private Pedido pedidoSelecionado;
     private Button botaoComprar, botaoExcluir;
     private int metodoPagamento;
@@ -74,7 +67,6 @@ public class CarrinhoActivity extends AppCompatActivity {
         // conf iniciais
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
-        idUsuario = UsuarioFirebase.getIdUsuario();
         baseUrl = "https://fcm.googleapis.com/fcm/";
         retrofit = new Retrofit.Builder()
                 .baseUrl( baseUrl )
@@ -292,13 +284,6 @@ public class CarrinhoActivity extends AppCompatActivity {
     private void abrirPedidos() {
         startActivity(new Intent(CarrinhoActivity.this, HistoricoPedidosUsuarioActivity.class));
         finish();
-    }
-
-    public void alertaSimples(String conteudo, Context context, String titulo){
-        MessengerDialog dialog = new MessengerDialog();
-        dialog.setConteudo(conteudo);
-        dialog.setTitulo(titulo);
-        dialog.show(getSupportFragmentManager(), "exemplo dialog");
     }
 
     public void enviarNotificacaoUsuario(){

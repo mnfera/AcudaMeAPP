@@ -60,7 +60,6 @@ public class PedidosCanceladosEmpresaActivity extends AppCompatActivity {
 
         // recuperar os pedidos
         recuperarPedidos();
-
     }
 
     private void recuperarPedidos() {

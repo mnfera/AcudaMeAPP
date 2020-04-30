@@ -98,12 +98,6 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
-
     private void exibirMensagem(String texto){
         Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
     }
@@ -120,54 +114,54 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
     public void salvarDados(){
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
 
-                        // verifica se os campos foram preenchidos
-                        String nome = editUsuarioNome.getText().toString();
-                        String endereco = editUsuarioEndereco.getText().toString();
-                        String telefone = editUsuarioTelefone.getText().toString();
-                        String numero = editTextUsuarioNumero.getText().toString();
-                        String referencia = editTextUsuarioReferencia.getText().toString();
-                        //Pegando token
-                        String token = task.getResult().getToken();
+                // verifica se os campos foram preenchidos
+                String nome = editUsuarioNome.getText().toString();
+                String endereco = editUsuarioEndereco.getText().toString();
+                String telefone = editUsuarioTelefone.getText().toString();
+                String numero = editTextUsuarioNumero.getText().toString();
+                String referencia = editTextUsuarioReferencia.getText().toString();
+                //Pegando token
+                String token = task.getResult().getToken();
 
-                        if(!nome.isEmpty()) {
-                            if(!endereco.isEmpty()) {
-                                if(!numero.isEmpty()) {
-                                    if (!referencia.isEmpty()) {
+                if(!nome.isEmpty()) {
+                    if(!endereco.isEmpty()) {
+                        if(!numero.isEmpty()) {
+                            if (!referencia.isEmpty()) {
 
-                                        if (!telefone.isEmpty()) {
+                                if (!telefone.isEmpty()) {
 
-                                            usuario.setIdUsuario(idUsuario);
-                                            usuario.setNome(nome);
-                                            usuario.setEndereco(endereco);
-                                            usuario.setNumero(numero);
-                                            usuario.setReferencia(referencia);
-                                            usuario.setTelefone(telefone);
-                                            usuario.setTokenUsuario(token);
-                                            usuario.salvar();
+                                    usuario.setIdUsuario(idUsuario);
+                                    usuario.setNome(nome);
+                                    usuario.setEndereco(endereco);
+                                    usuario.setNumero(numero);
+                                    usuario.setReferencia(referencia);
+                                    usuario.setTelefone(telefone);
+                                    usuario.setTokenUsuario(token);
+                                    usuario.salvar();
 
-                                            exibirMensagem("Dados atualizados com sucesso!");
-                                            finish();
+                                    exibirMensagem("Dados atualizados com sucesso!");
+                                    finish();
 
-                                        } else {
-                                            exibirMensagem("Digite seu telefone");
-                                        }
-                                    } else {
-                                        exibirMensagem("Digite um ponto de referência ou característica");
-                                    }
-                                }else {
-                                    exibirMensagem("Digite um número ou zero para sem número");
+                                } else {
+                                    exibirMensagem("Digite seu telefone");
                                 }
-                            }else {
-                                exibirMensagem("Digite o nome da rua");
+                            } else {
+                                exibirMensagem("Digite um ponto de referência ou característica");
                             }
                         }else {
-                            exibirMensagem("Digite seu nome!");
+                            exibirMensagem("Digite um número ou zero para sem número");
                         }
-
+                    }else {
+                        exibirMensagem("Digite o nome da rua");
                     }
-                });
+                }else {
+                    exibirMensagem("Digite seu nome!");
+                }
+
+            }
+        });
     }
 }

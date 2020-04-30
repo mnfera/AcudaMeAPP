@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +41,6 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
 
     private EditText editEmpresaNome, editEmpresaCategoria,
                     editEmpresaHorario, editEmpresaDias;
-
     private ImageView imagePerfilEmpresa;
     private MaskEditText editEmpresaTelefone;;
     private Button buttonSalvar;
@@ -179,7 +177,6 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
         }else {
             exibirMensagem("Digite um nome para sua empresa");
         }
-
     }
 
     private void exibirMensagem(String texto){
@@ -260,6 +257,4 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
         imagePerfilEmpresa = findViewById(R.id.imagePerfilEmpresa);
         buttonSalvar = findViewById(R.id.buttonSalvar);
     }
-
-
 }

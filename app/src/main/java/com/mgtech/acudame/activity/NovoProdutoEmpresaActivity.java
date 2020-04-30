@@ -10,11 +10,8 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.mgtech.acudame.R;
-import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
-import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Produto;
 
 public class NovoProdutoEmpresaActivity extends AppCompatActivity {
@@ -22,7 +19,6 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity {
     private EditText editProdutoNome, editProdutoDescricao, editProdutoPreco;
     private Switch tipoStatus;
     private Button buttonSalvar;
-    private FirebaseAuth autenticacao;
     private String idUsuarioLogado;
 
     @Override

@@ -28,7 +28,6 @@ import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.messenger.MessengerDialog;
-import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Notificacao;
 import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
@@ -36,7 +35,6 @@ import com.mgtech.acudame.model.Usuario;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;

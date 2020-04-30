@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -16,15 +15,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
-import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Produto;
-import com.santalu.maskedittext.MaskEditText;
-import com.squareup.picasso.Picasso;
-
 import dmax.dialog.SpotsDialog;
 
 public class ConfiguracoesProdutoActivity extends AppCompatActivity {
@@ -32,7 +26,6 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
     private EditText editProdutoNome, editProdutoDescricao, editProdutoPreco;
     private Switch tipoStatus;
     private Button buttonSalvar;
-    private StorageReference storageReference;
     private DatabaseReference firebaseRef;
     private String idEmpresaLogada, idPro;
     private AlertDialog dialog;
@@ -44,7 +37,6 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
 
         // conf iniciais
         inicializarComponentes();
-        storageReference = ConfiguracaoFirebase.getFirebaseStorage();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idEmpresaLogada = UsuarioFirebase.getIdUsuario();
 

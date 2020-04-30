@@ -1,6 +1,6 @@
 package com.mgtech.acudame.activity;
 
-import androidx.annotation.RequiresApi;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,13 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +19,6 @@ import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterPedido;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
-import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.messenger.MessengerDialog;
 import com.mgtech.acudame.model.Pedido;
 
@@ -68,7 +61,6 @@ public class PedidosFinalizadosEmpresaActivity extends AppCompatActivity {
 
         // recuperar os pedidos
         recuperarPedidos();
-
     }
 
     private void recuperarPedidos() {

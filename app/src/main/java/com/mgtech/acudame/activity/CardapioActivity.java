@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -45,8 +44,6 @@ import com.mgtech.acudame.model.Usuario;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -410,68 +407,6 @@ public class CardapioActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void confirmarPedido() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Selecione um método de pagamento");
-
-        CharSequence[] itens = new CharSequence[]{
-                "Dinheiro", "Máquina de cartão"
-        };
-        builder.setSingleChoiceItems(itens, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                metodoPagamento = which;
-            }
-        });
-
-        final EditText editObservacao = new EditText(this);
-        editObservacao.setHint("Digite uma observação como ou troco necessário, por exemplo");
-        builder.setView(editObservacao);
-
-        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                // data/hora atual
-                LocalDateTime agora = LocalDateTime.now();
-
-                // formatar a data
-                DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-                String dataFormatada = formatterData.format(agora);
-
-                // formatar a hora
-                DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-                String horaFormatada = formatterHora.format(agora);
-
-                String observacao = editObservacao.getText().toString();
-                pedidoRecuperado.setMetodoPagamento(metodoPagamento);
-                pedidoRecuperado.setObservacao(observacao);
-                pedidoRecuperado.setStatus("confirmado");
-                pedidoRecuperado.setData(dataFormatada);
-                pedidoRecuperado.setHora(horaFormatada);
-                pedidoRecuperado.confirmar();
-                pedidoRecuperado.criarHistorico();
-                pedidoRecuperado.remover();
-                pedidoRecuperado = null;
-
-                startActivity(new Intent(CardapioActivity.this, HistoricoPedidosUsuarioActivity.class));
-
-            }
-        });
-
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     private void inicializarComponentes() {
