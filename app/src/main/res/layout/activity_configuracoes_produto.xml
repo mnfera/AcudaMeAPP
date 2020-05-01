@@ -50,6 +50,11 @@
             android:inputType="none|numberDecimal"
             android:padding="16dp" />
 
+        <Spinner
+            android:id="@+id/spinnerCategoria"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

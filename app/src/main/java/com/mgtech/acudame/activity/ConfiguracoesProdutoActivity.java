@@ -6,8 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
 
     private EditText editProdutoNome, editProdutoDescricao, editProdutoPreco;
     private Switch tipoStatus;
+    private Spinner spinnerCatogoria;
     private Button buttonSalvar;
     private DatabaseReference firebaseRef;
     private String idEmpresaLogada, idPro;
@@ -51,6 +54,10 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
         toolbar.setTitle("Editar Produto");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // conf spinner
+        String[] lsCategoria = getResources().getStringArray(R.array.lista_categoria);
+        spinnerCatogoria.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, lsCategoria));
 
         buttonSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +112,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
         String nome = editProdutoNome.getText().toString();
         String descricao = editProdutoDescricao.getText().toString();
         String preco = editProdutoPreco.getText().toString();
+        String categoria = spinnerCatogoria.getSelectedItem().toString();
         String status = "ativo";
 
         // verifica estado do switch
@@ -121,6 +129,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
                     produto.setNome(nome);
                     produto.setDescricao(descricao);
                     produto.setPreco(Double.parseDouble(preco));
+                    produto.setCategoria(categoria);
                     produto.setStatus(status);
                     produto.salvar();
                     finish();
@@ -146,5 +155,6 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
         editProdutoPreco = findViewById(R.id.editProdutoPreco);
         tipoStatus = findViewById(R.id.switchStatus);
         buttonSalvar = findViewById(R.id.buttonSalvar);
+        spinnerCatogoria = findViewById(R.id.spinnerCategoria);
     }
 }
