@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,6 +76,12 @@ public class CardapioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cardapio);
 
+        // configurações toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Cardápio");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // conf iniciais
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
@@ -93,11 +100,7 @@ public class CardapioActivity extends AppCompatActivity {
             Picasso.get().load(url).into(imageEmpresaCardapio);
         }
 
-        // configurações toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Cardápio");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         // conf recyclerview
         recyclerProdutosCardapio.setLayoutManager(new LinearLayoutManager(this));

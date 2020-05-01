@@ -11,6 +11,7 @@ public class Produto {
     private String descricao;
     private Double preco;
     private String status = "ativo";
+    private String categoria;
 
     public Produto() {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
@@ -80,5 +81,13 @@ public class Produto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }
