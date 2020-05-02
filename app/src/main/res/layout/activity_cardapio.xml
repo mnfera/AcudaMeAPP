@@ -126,28 +126,30 @@
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:background="@color/colorAccent"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabIndicatorHeight="1.5dp"
+                app:tabMode="fixed"
+                app:tabTextColor="@color/colorPrimary" />
+
+
+            <androidx.viewpager.widget.ViewPager
+                android:layout_below="@+id/appBarLayout"
+                android:id="@+id/viewPage"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:background="@color/colorAccent"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabIndicatorHeight="1.5dp"
-            app:tabMode="fixed"
-            app:tabTextColor="@color/colorPrimary" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerProdutosCardapio"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp" />
     </LinearLayout>
+
 
 </LinearLayout>

@@ -25,8 +25,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.appbar.AppBarLayout;
+
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +36,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterProduto;
+import com.mgtech.acudame.adapter.ViewPagerAdapter;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
@@ -42,6 +45,9 @@ import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Produto;
 import com.mgtech.acudame.model.Usuario;
+import com.mgtech.acudame.viewPager.Bebidas;
+import com.mgtech.acudame.viewPager.Comidas;
+import com.mgtech.acudame.viewPager.Sorvetes;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -58,18 +64,21 @@ public class CardapioActivity extends AppCompatActivity {
     private Empresa empresaSelecionada;
     private AlertDialog dialog;
     private TextView textCarrinhoQtde, textCarrinhoTotal, textVerCarrinho;
-
     private AdapterProduto adapterProduto;
     private List<Produto> produtos = new ArrayList<>();
-    private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private String idEmpresaSelecionada;
     private String idUsuarioLogado;
     private Usuario usuario;
     private Pedido pedidoRecuperado;
+    private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private int qtdItensCarrinho;
     private Double totalCarrinho;
     private int metodoPagamento;
+
+    private ViewPagerAdapter viewPagerAdapter;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +91,12 @@ public class CardapioActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Cardápio");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // conf iniciais
+        //conf iniciais
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
-        // recuperar empresa selecionada
+        //recuperar empresa selecionada
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             empresaSelecionada = (Empresa) bundle.getSerializable("empresa");
@@ -100,74 +109,27 @@ public class CardapioActivity extends AppCompatActivity {
             Picasso.get().load(url).into(imageEmpresaCardapio);
         }
 
-
-
-        // conf recyclerview
-        recyclerProdutosCardapio.setLayoutManager(new LinearLayoutManager(this));
-        recyclerProdutosCardapio.setHasFixedSize(true);
-        adapterProduto = new AdapterProduto(produtos, this);
-        recyclerProdutosCardapio.setAdapter(adapterProduto);
-
-        // conf evento de clique
-        recyclerProdutosCardapio.addOnItemTouchListener(
-                new RecyclerItemClickListener(
-                        this,
-                        recyclerProdutosCardapio,
-                        new RecyclerItemClickListener.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                confirmarQuantidade(position);
-                            }
-
-                            @Override
-                            public void onLongItemClick(View view, int position) {
-
-                            }
-
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            }
-                        }
-                )
-        );
-
-        // recupera os produtos da empresa
-        recuperarProdutos();
+        // recupera os dados do usuário e seus pedidos
         recuperarDadosUsuario();
 
-        textVerCarrinho.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                verCarrinho();
-            }
-        });
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPage);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        /*imageWhatsapp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        viewPagerAdapter.addFragment(new Comidas(idEmpresaSelecionada, idUsuarioLogado), "" );
+        viewPagerAdapter.addFragment(new Bebidas(idEmpresaSelecionada), "" );
+        viewPagerAdapter.addFragment(new Sorvetes(idEmpresaSelecionada), "" );
+        viewPager.setAdapter(viewPagerAdapter);
 
-                PackageManager pm = getPackageManager();
+        tabLayout.setupWithViewPager(viewPager);
 
-                try {
+        tabLayout.getTabAt(0).setIcon(R.drawable.comida);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_conjunto_de_bebidas);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_sorvete);
 
-                    String number = empresaSelecionada.getTelefone();
-                    Intent sendIntent = new Intent("android.intent.action.MAIN");
-                    sendIntent.putExtra("jid", "55" + number + "@s.whatsapp.net");
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Testando");
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-                    sendIntent.setPackage("com.whatsapp");
-                    sendIntent.setType("text/plain");
-                    startActivity(sendIntent);
-
-                }catch (PackageManager.NameNotFoundException e) {
-                    Toast.makeText(CardapioActivity.this, "WhatsApp não instalado!"
-                            , Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });*/
+        tabLayout.getTabAt(0).setText("Comidas");
+        tabLayout.getTabAt(1).setText("Bebidas");
+        tabLayout.getTabAt(2).setText("Sorvetes");
 
         imageCelular.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,107 +154,18 @@ public class CardapioActivity extends AppCompatActivity {
         });
     }
 
-    private void verCarrinho() {
-
-        if(pedidoRecuperado != null) {
-
-            Intent i = new Intent(CardapioActivity.this, CarrinhoActivity.class);
-            i.putExtra("pedido", pedidoRecuperado);
-            startActivity(i);
-
-        }else {
-            Toast.makeText(CardapioActivity.this, "Seu carrinho está vazio!"
-                    , Toast.LENGTH_SHORT).show();
-        }
+    private void inicializarComponentes() {
+        //recyclerProdutosCardapio = findViewById(R.id.recyclerProdutosCardapio);
+        imageEmpresaCardapio = findViewById(R.id.imageEmpresaCardapio);
+        textNomeEmpresaCardapio = findViewById(R.id.textNomeEmpresaCardapio);
+        textTelefoneEmpresaCardapio = findViewById(R.id.textTelefoneEmpresaCardapio);
+        textCarrinhoQtde = findViewById(R.id.textCarrinhoQtd);
+        textCarrinhoTotal = findViewById(R.id.textCarrinhoTotal);
+        textVerCarrinho = findViewById(R.id.textVerCarrinho);
+        imageCelular = findViewById(R.id.imageCelular);
+        imageWhatsapp = findViewById(R.id.imageWhatsapp);
 
     }
-
-    private void confirmarQuantidade(final int posicao) {
-
-        if( usuario == null ){
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Nenhum endereço cadastrado");
-            builder.setMessage("Por favor, cadastre um endereço para fazer um pedido.");
-
-            builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    startActivity(new Intent(CardapioActivity.this, ConfiguracoesUsuarioActivity.class));
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-        }else{
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Quantidade");
-            builder.setMessage("Digite a quantidade");
-
-            final EditText editQuantidade = new EditText(this);
-            editQuantidade.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-            editQuantidade.setText("1");
-
-            builder.setView(editQuantidade);
-
-            builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                     String quantidade = editQuantidade.getText().toString();
-
-                     if(!quantidade.isEmpty()){
-
-                         Produto produtoSelecionado = produtos.get(posicao);
-                         ItemPedido itemPedido = new ItemPedido();
-                         itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
-                         itemPedido.setNomeProduto(produtoSelecionado.getNome());
-                         itemPedido.setPreco(produtoSelecionado.getPreco());
-                         itemPedido.setQuantidade(Integer.parseInt(quantidade));
-
-                         itensCarrinho.add(itemPedido);
-
-                         if(pedidoRecuperado == null) {
-                             pedidoRecuperado = new Pedido(idUsuarioLogado, idEmpresaSelecionada);
-                         }
-
-                         pedidoRecuperado.setNome(usuario.getNome());
-                         pedidoRecuperado.setEndereco(usuario.getEndereco());
-                         pedidoRecuperado.setNomeEmpresa(empresaSelecionada.getNome());
-                         pedidoRecuperado.setNumero(usuario.getNumero());
-                         pedidoRecuperado.setReferencia(usuario.getReferencia());
-                         pedidoRecuperado.setTelEmpresa(empresaSelecionada.getTelefone());
-                         pedidoRecuperado.setTelUsuario(usuario.getTelefone());
-                         pedidoRecuperado.setItens(itensCarrinho);
-                         pedidoRecuperado.salvar();
-
-                         Toast.makeText(CardapioActivity.this, "Pedido adicionado ao carrinho!"
-                                 , Toast.LENGTH_SHORT).show();
-
-                     }else{
-                         Toast.makeText(CardapioActivity.this, "Quantidade está em branco!"
-                         , Toast.LENGTH_SHORT).show();
-                         confirmarQuantidade(posicao);
-                     }
-                }
-            });
-
-            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-
-        }
-
     private void recuperarDadosUsuario() {
 
         dialog = new SpotsDialog.Builder()
@@ -312,6 +185,8 @@ public class CardapioActivity extends AppCompatActivity {
                     usuario = dataSnapshot.getValue(Usuario.class);
                 }
                 recuperarPedido();
+
+                dialog.dismiss();
             }
 
             @Override
@@ -365,33 +240,6 @@ public class CardapioActivity extends AppCompatActivity {
         });
     }
 
-    private void recuperarProdutos(){
-
-        DatabaseReference produtosRef = firebaseRef
-                .child("produtos")
-                .child(idEmpresaSelecionada);
-
-        Query produtoPesquisa = produtosRef.orderByChild("status")
-                .equalTo("ativo");
-
-        produtoPesquisa.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                produtos.clear();
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    produtos.add(ds.getValue(Produto.class));
-                }
-                adapterProduto.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -405,24 +253,10 @@ public class CardapioActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menuPedido :
-                verCarrinho();
+                //verCarrinho();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-    private void inicializarComponentes() {
-        recyclerProdutosCardapio = findViewById(R.id.recyclerProdutosCardapio);
-        imageEmpresaCardapio = findViewById(R.id.imageEmpresaCardapio);
-        textNomeEmpresaCardapio = findViewById(R.id.textNomeEmpresaCardapio);
-        textTelefoneEmpresaCardapio = findViewById(R.id.textTelefoneEmpresaCardapio);
-        textCarrinhoQtde = findViewById(R.id.textCarrinhoQtd);
-        textCarrinhoTotal = findViewById(R.id.textCarrinhoTotal);
-        textVerCarrinho = findViewById(R.id.textVerCarrinho);
-        imageCelular = findViewById(R.id.imageCelular);
-        imageWhatsapp = findViewById(R.id.imageWhatsapp);
-
-    }
-
 }
