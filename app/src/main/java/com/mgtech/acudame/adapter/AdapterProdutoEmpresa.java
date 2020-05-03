@@ -40,7 +40,10 @@ public class AdapterProdutoEmpresa extends RecyclerView.Adapter<AdapterProdutoEm
         holder.nome.setText(produto.getNome());
         holder.descricao.setText(produto.getDescricao());
         holder.valor.setText("R$ " + produto.getPreco());
-        holder.status.setText("Status: "+produto.getStatus().toUpperCase());
+        if(produto.getCategoria() != null) {
+            holder.categoria.setText("Categoria: " + produto.getCategoria().toUpperCase());
+        }
+        holder.status.setText("Status: " + produto.getStatus().toUpperCase());
         switch (produto.getStatus()) {
             case "ativo":
                 holder.status.setTextColor(Color.parseColor("#FF4CAF50"));
@@ -61,6 +64,7 @@ public class AdapterProdutoEmpresa extends RecyclerView.Adapter<AdapterProdutoEm
         TextView nome;
         TextView descricao;
         TextView valor;
+        TextView categoria;
         TextView status;
 
         public MyViewHolder(View itemView) {
@@ -69,6 +73,7 @@ public class AdapterProdutoEmpresa extends RecyclerView.Adapter<AdapterProdutoEm
             nome = itemView.findViewById(R.id.textNomeRefeicao);
             descricao = itemView.findViewById(R.id.textDescricaoRefeicao);
             valor = itemView.findViewById(R.id.textPreco);
+            categoria = itemView.findViewById(R.id.textCategoria);
             status = itemView.findViewById(R.id.textProdutoStatus);
         }
     }
