@@ -77,6 +77,7 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity {
                     produto.setPreco(Double.parseDouble(preco));
                     produto.setCategoria(categoria);
                     produto.setStatus(status);
+                    produto.setStatusCategoria(status, categoria);
                     produto.salvar();
                     finish();
                     exibirMensagem("Produto salvo com sucesso!");

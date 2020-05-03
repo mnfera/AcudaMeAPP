@@ -51,7 +51,6 @@ public class CardapioActivity extends AppCompatActivity {
     private Empresa empresaSelecionada;
     private AlertDialog dialog;
     private TextView textCarrinhoQtde, textCarrinhoTotal, textVerCarrinho;
-    private List<Produto> produtos = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private String idEmpresaSelecionada;
     private String idUsuarioLogado;

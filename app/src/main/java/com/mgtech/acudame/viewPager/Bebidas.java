@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.activity.ConfiguracoesUsuarioActivity;
@@ -280,7 +281,10 @@ public class Bebidas extends Fragment {
                 .child("produtos")
                 .child(idEmpresa);
 
-        produtosRef.addValueEventListener(new ValueEventListener() {
+        Query produtoPesquisa = produtosRef.orderByChild("statusCategoria")
+                .equalTo("ativo_bebida");
+
+        produtoPesquisa.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 produtos.clear();
