@@ -2,44 +2,34 @@ package com.mgtech.acudame.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.adapter.ViewPagerAdapter;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
-import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
@@ -131,6 +121,13 @@ public class CardapioActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText("Bebidas");
         tabLayout.getTabAt(2).setText("Sorvetes");
 
+        textVerCarrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verCarrinho();
+            }
+        });
+
         imageCelular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,7 +152,6 @@ public class CardapioActivity extends AppCompatActivity {
     }
 
     private void inicializarComponentes() {
-        //recyclerProdutosCardapio = findViewById(R.id.recyclerProdutosCardapio);
         imageEmpresaCardapio = findViewById(R.id.imageEmpresaCardapio);
         textNomeEmpresaCardapio = findViewById(R.id.textNomeEmpresaCardapio);
         textTelefoneEmpresaCardapio = findViewById(R.id.textTelefoneEmpresaCardapio);
@@ -185,8 +181,6 @@ public class CardapioActivity extends AppCompatActivity {
                     usuario = dataSnapshot.getValue(Usuario.class);
                 }
                 recuperarPedido();
-
-                dialog.dismiss();
             }
 
             @Override
@@ -253,10 +247,25 @@ public class CardapioActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menuPedido :
-                //verCarrinho();
+                verCarrinho();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void verCarrinho() {
+
+        if(pedidoRecuperado != null) {
+
+            Intent i = new Intent(CardapioActivity.this, CarrinhoActivity.class);
+            i.putExtra("pedido", pedidoRecuperado);
+            startActivity(i);
+
+        }else {
+            Toast.makeText(CardapioActivity.this, "Seu carrinho está vazio!"
+                    , Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

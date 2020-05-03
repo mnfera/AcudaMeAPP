@@ -56,7 +56,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // conf spinner
-        String[] lsCategoria = getResources().getStringArray(R.array.lista_categoria);
+        String[] lsCategoria = getResources().getStringArray(R.array.lista_categoria_produto);
         spinnerCatogoria.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, lsCategoria));
 
         buttonSalvar.setOnClickListener(new View.OnClickListener() {

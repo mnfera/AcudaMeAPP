@@ -42,6 +42,7 @@ import com.mgtech.acudame.model.Produto;
 import com.mgtech.acudame.model.Usuario;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,19 +60,17 @@ public class Comidas extends Fragment {
     private List<Produto> produtos = new ArrayList<>();
     private DatabaseReference databaseReference = ConfiguracaoFirebase.getFirebase();
     private String idEmpresa;
-    private DatabaseReference produtosRef;
+    private DatabaseReference produtosRef, pedidoRef;
     private Pedido pedidoRecuperado;
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private Usuario usuario;
     private Empresa empresa;
     private AlertDialog dialog;
 
-
     public Comidas(String idEmpresa, String idUsuario) {
         this.idEmpresa = idEmpresa;
         this.idUsuario = idUsuario;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,22 +80,24 @@ public class Comidas extends Fragment {
         recyclerProdutosCardapio = view.findViewById(R.id.recyclerProdutosCardapio);
         adapterProduto = new AdapterProduto(produtos, getActivity());
 
-
-        recuperarEmpesa();
-
-        recuperarDadosUsuario();
-
-
         // conf recyclerview
         recyclerProdutosCardapio.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerProdutosCardapio.setHasFixedSize(true);
         adapterProduto.notifyDataSetChanged();
         recyclerProdutosCardapio.setAdapter(adapterProduto);
 
-        //databaseReference = ConfiguracaoFirebase.getFirebase();
-        produtosRef = databaseReference
-                .child("produtos")
-                .child(idEmpresa);
+        // recuperar dados da empresa selecionada
+        recuperarEmpesa();
+
+        // recuperar dados do usuario
+        recuperarDadosUsuario();
+
+        // recuperar produtos
+        recuperarProdutos();
+
+        // recuperar pedido
+        recuperarPedido();
+
 
         // conf evento de clique
         recyclerProdutosCardapio.addOnItemTouchListener(
@@ -128,7 +129,6 @@ public class Comidas extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        recuperarProdutos();
     }
 
     private void recuperarEmpesa() {
@@ -155,13 +155,6 @@ public class Comidas extends Fragment {
 
     private void recuperarDadosUsuario() {
 
-        dialog = new SpotsDialog.Builder()
-                .setContext(getActivity())
-                .setMessage("Carregando Dados")
-                .setCancelable(false)
-                .build();
-        dialog.show();
-
         final DatabaseReference usuariosRef = databaseReference
                 .child("usuarios")
                 .child(idUsuario);
@@ -171,9 +164,32 @@ public class Comidas extends Fragment {
                 if(dataSnapshot.getValue() != null) {
                     usuario = dataSnapshot.getValue(Usuario.class);
                 }
-                //recuperarPedido();
+            }
 
-                dialog.dismiss();
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void recuperarPedido() {
+
+        pedidoRef = databaseReference
+                .child("pedidos_usuario")
+                .child(idEmpresa)
+                .child(idUsuario);
+
+        pedidoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                itensCarrinho = new ArrayList<>();
+
+                if(dataSnapshot.getValue() != null) {
+                    pedidoRecuperado = dataSnapshot.getValue(Pedido.class);
+                    itensCarrinho = pedidoRecuperado.getItens();
+                }
 
             }
 
@@ -271,6 +287,10 @@ public class Comidas extends Fragment {
     }
 
     public void recuperarProdutos(){
+
+        produtosRef = databaseReference
+                .child("produtos")
+                .child(idEmpresa);
 
         produtosRef.addValueEventListener(new ValueEventListener() {
             @Override

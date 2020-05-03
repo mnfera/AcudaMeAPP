@@ -14,9 +14,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string-array name="lista_categoria">
+    <string-array name="lista_categoria_produto">
         <item>comida</item>
         <item>bebida</item>
         <item>sorvete</item>
+    </string-array>
+
+    <string-array name="lista_categoria_empresa">
+        <item>lanchonete</item>
+        <item>restaurante</item>
+        <item>sorveteria</item>
     </string-array>
 </resources>

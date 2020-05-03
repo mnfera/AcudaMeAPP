@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +40,7 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // conf spinner
-        String[] lsCategoria = getResources().getStringArray(R.array.lista_categoria);
+        String[] lsCategoria = getResources().getStringArray(R.array.lista_categoria_produto);
         spinnerCatogoria.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, lsCategoria));
 
         buttonSalvar.setOnClickListener(new View.OnClickListener() {
