@@ -1,15 +1,11 @@
 package com.mgtech.acudame.viewPager;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,30 +19,24 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
-import com.mgtech.acudame.activity.CardapioActivity;
 import com.mgtech.acudame.activity.ConfiguracoesUsuarioActivity;
 import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
-import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Produto;
 import com.mgtech.acudame.model.Usuario;
-import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import dmax.dialog.SpotsDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +55,6 @@ public class Comidas extends Fragment {
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private Usuario usuario;
     private Empresa empresa;
-    private AlertDialog dialog;
 
     public Comidas(String idEmpresa, String idUsuario) {
         this.idEmpresa = idEmpresa;

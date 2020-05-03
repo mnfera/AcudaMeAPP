@@ -17,7 +17,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -26,7 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
-import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.adapter.ViewPagerAdapter;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
@@ -48,13 +46,11 @@ import dmax.dialog.SpotsDialog;
 
 public class CardapioActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerProdutosCardapio;
     private ImageView imageEmpresaCardapio, imageCelular, imageWhatsapp;
     private TextView textNomeEmpresaCardapio, textTelefoneEmpresaCardapio;
     private Empresa empresaSelecionada;
     private AlertDialog dialog;
     private TextView textCarrinhoQtde, textCarrinhoTotal, textVerCarrinho;
-    private AdapterProduto adapterProduto;
     private List<Produto> produtos = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private String idEmpresaSelecionada;
@@ -64,7 +60,6 @@ public class CardapioActivity extends AppCompatActivity {
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private int qtdItensCarrinho;
     private Double totalCarrinho;
-    private int metodoPagamento;
 
     private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
@@ -107,8 +102,8 @@ public class CardapioActivity extends AppCompatActivity {
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         viewPagerAdapter.addFragment(new Comidas(idEmpresaSelecionada, idUsuarioLogado), "" );
-        viewPagerAdapter.addFragment(new Bebidas(idEmpresaSelecionada), "" );
-        viewPagerAdapter.addFragment(new Sorvetes(idEmpresaSelecionada), "" );
+        viewPagerAdapter.addFragment(new Bebidas(idEmpresaSelecionada, idUsuarioLogado), "" );
+        viewPagerAdapter.addFragment(new Sorvetes(idEmpresaSelecionada, idUsuarioLogado), "" );
         viewPager.setAdapter(viewPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
