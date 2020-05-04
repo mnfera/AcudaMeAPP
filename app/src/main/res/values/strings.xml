@@ -25,4 +25,15 @@
         <item>restaurante</item>
         <item>sorveteria</item>
     </string-array>
+
+    <string-array name="items">
+        <item>Chocolate</item>
+        <item>Paçoca</item>
+        <item>MMC</item>
+        <item>Morango</item>
+        <item>Banana</item>
+        <item>Kiwi</item>
+        <item>Rapadura</item>
+    </string-array>
+
 </resources>

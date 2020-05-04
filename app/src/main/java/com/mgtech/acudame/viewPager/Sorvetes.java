@@ -55,6 +55,9 @@ public class Sorvetes extends Fragment {
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private Usuario usuario;
     private Empresa empresa;
+    private String[] listaItens;
+    private boolean[] checkedItens;
+    private ArrayList<Integer> mSeletectItems = new ArrayList<>();
 
     public Sorvetes(String idEmpresa, String idUsuario) {
         this.idEmpresa = idEmpresa;
@@ -64,6 +67,10 @@ public class Sorvetes extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        listaItens = getResources().getStringArray(R.array.items);
+        checkedItens = new boolean[listaItens.length];
+
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_sorvetes, container, false);
         recyclerProdutosCardapio = view.findViewById(R.id.recyclerProdutosCardapio);
@@ -96,7 +103,7 @@ public class Sorvetes extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                confirmarQuantidade(position);
+                                escolherComplementos();
                             }
 
                             @Override
@@ -299,5 +306,59 @@ public class Sorvetes extends Fragment {
 
             }
         });
+    }
+
+    public void escolherComplementos(){
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
+        builder.setTitle("Selecione os itens");
+        builder.setMultiChoiceItems(listaItens, checkedItens, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int position, boolean isChecked) {
+
+                if ( isChecked ){
+                    if( !mSeletectItems.contains( position )){
+                        mSeletectItems.add( position );
+                    }
+                }else  if( mSeletectItems.contains(position) ){
+                    mSeletectItems.remove((Integer) position);
+                }
+            }
+        });
+
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String item = "";
+                for( int i = 0; i < mSeletectItems.size(); i++ ){
+                    item = item + listaItens[mSeletectItems.get(i)];
+                    if( i != mSeletectItems.size() - 1 ){
+                        item = item + ", ";
+                    }
+                }
+                //textView.setText(item);
+            }
+        });
+
+        builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.setNeutralButton("all", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for( int i = 0; i < checkedItens.length; i++ ){
+                    checkedItens[i] = false;
+                    mSeletectItems.clear();
+                }
+            }
+        });
+
+        androidx.appcompat.app.AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

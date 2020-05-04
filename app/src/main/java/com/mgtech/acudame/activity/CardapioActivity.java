@@ -31,7 +31,6 @@ import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
-import com.mgtech.acudame.model.Produto;
 import com.mgtech.acudame.model.Usuario;
 import com.mgtech.acudame.viewPager.Bebidas;
 import com.mgtech.acudame.viewPager.Comidas;
@@ -260,6 +259,5 @@ public class CardapioActivity extends AppCompatActivity {
             Toast.makeText(CardapioActivity.this, "Seu carrinho está vazio!"
                     , Toast.LENGTH_SHORT).show();
         }
-
     }
 }
