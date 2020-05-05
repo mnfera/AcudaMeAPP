@@ -71,65 +71,70 @@ public class ComplementosActivity extends AppCompatActivity {
         // recuperar os complementos
         recuperarComplementos();
 
-        recyclerComplementos.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerComplementos, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
+        recyclerComplementos.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        this,
+                        recyclerComplementos,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
 
-                //posicaoItem = position;
-                AlertDialog.Builder builder = new AlertDialog.Builder(ComplementosActivity.this);
-                builder.setTitle("Selecione uma opção para o complemento");
+                                //posicaoItem = position;
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ComplementosActivity.this);
+                                builder.setTitle("Selecione uma opção para o complemento");
 
-                CharSequence[] itens = new CharSequence[]{
-                        "Editar complemento", "Excluir complemento"
-                };
-                builder.setSingleChoiceItems(itens, 0, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        complementoPosicao = which;
-                    }
-                });
+                                CharSequence[] itens = new CharSequence[]{
+                                        "Editar complemento", "Excluir complemento"
+                                };
+                                builder.setSingleChoiceItems(itens, 0, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        complementoPosicao = which;
+                                    }
+                                });
 
-                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                                    @RequiresApi(api = Build.VERSION_CODES.O)
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                        if(complementoPosicao == 0){
-                            Complemento complemento = complementos.get(position);
-                            idComplemento = complemento.getIdComplemento();
-                            Intent i = new Intent(ComplementosActivity.this, ConfiguracoesComplementoActivity.class);
-                            i.putExtra("complemento", idComplemento);
-                            startActivity(i);
-                        }else{
-                            Complemento complementoSelecionado = complementos.get(position);
-                            complementoSelecionado.removerComplemento();
-                            Toast.makeText(ComplementosActivity.this,
-                                    "Complemento Excluído com sucesso!",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                                        if(complementoPosicao == 0){
+                                            Complemento complemento = complementos.get(position);
+                                            idComplemento = complemento.getIdComplemento();
+                                            Intent i = new Intent(ComplementosActivity.this, ConfiguracoesComplementoActivity.class);
+                                            i.putExtra("complemento", idComplemento);
+                                            startActivity(i);
+                                        }else{
+                                            Complemento complementoSelecionado = complementos.get(position);
+                                            complementoSelecionado.removerComplemento();
+                                            startActivity(new Intent(ComplementosActivity.this, ComplementosActivity.class));
+                                            Toast.makeText(ComplementosActivity.this,
+                                                    "Complemento Excluído com sucesso!",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
 
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
+                                    }
+                                });
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
 
-            @Override
-            public void onLongItemClick(View view, int position) {
+                            @Override
+                            public void onLongItemClick(View view, int position) {
 
-            }
+                            }
 
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-            }
+                            }
         }));
     }
 

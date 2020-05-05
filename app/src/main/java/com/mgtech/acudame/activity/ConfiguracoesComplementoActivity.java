@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
+import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.model.Complemento;
 
@@ -37,6 +38,7 @@ public class ConfiguracoesComplementoActivity extends AppCompatActivity {
 
         // conf iniciais
         inicializarComponentes();
+        firebaseRef = ConfiguracaoFirebase.getFirebase();
         idEmpresa = UsuarioFirebase.getIdUsuario();
 
         // recuperar id do complemento selecionado
@@ -112,6 +114,7 @@ public class ConfiguracoesComplementoActivity extends AppCompatActivity {
             //Inserindo o complemento na tabela do banco
             Complemento complemento = new Complemento();
             complemento.setIdEmpresa(idEmpresa);
+            complemento.setIdComplemento(idComplemento);
             complemento.setNome(nome);
             complemento.setStatus(status);
             complemento.salvarComplemento();

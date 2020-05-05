@@ -119,6 +119,9 @@ public class EmpresaActivity extends AppCompatActivity {
                                         }else{
                                             Produto produtoSelecionado = produtos.get(position);
                                             produtoSelecionado.remover();
+                                            Intent intent = getIntent();
+                                            finish();
+                                            startActivity(intent);
                                             Toast.makeText(EmpresaActivity.this,
                                                     "Produto Excluído com sucesso!",
                                                     Toast.LENGTH_SHORT).show();
