@@ -83,7 +83,12 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
             total += (qtde * preco);
 
             String nome = itemPedido.getNomeProduto();
-            descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + preco + ") \n";
+            String complementos = itemPedido.getComplemento();
+            if(complementos == null) {
+                descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + preco + ") \n";
+            }else {
+                descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + preco + ") \nCom: " + complementos + "\n";
+            }
             numeroItem++;
         }
         descricaoItens += "Total: R$ " + total;

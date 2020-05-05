@@ -95,7 +95,7 @@
         android:id="@+id/textPedidoItens"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1) Filé Cinco Queijos (1 X R$ 16.50)"
+        android:text="1) Filé Cinco Queijos (1 X R$ 16.50)\nCom: Chocolate, Morango"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="bold" />

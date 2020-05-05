@@ -220,6 +220,9 @@ public class EmpresaActivity extends AppCompatActivity {
             case R.id.menuPedidos :
                 abrirPedidos();
                 break;
+            case R.id.menuComplemento :
+                abrirComplementos();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -259,6 +262,10 @@ public class EmpresaActivity extends AppCompatActivity {
 
     private void abrirNovoProduto() {
         startActivity(new Intent(EmpresaActivity.this, NovoProdutoEmpresaActivity.class));
+    }
+
+    private void abrirComplementos() {
+        startActivity(new Intent(EmpresaActivity.this, ComplementosActivity.class));
     }
 
     public void recuperarToken (){

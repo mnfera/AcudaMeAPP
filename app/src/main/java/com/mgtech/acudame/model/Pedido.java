@@ -240,4 +240,5 @@ public class Pedido implements Serializable {
     public void setHora(String hora) {
         this.hora = hora;
     }
+
 }

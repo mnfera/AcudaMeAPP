@@ -8,6 +8,7 @@ public class ItemPedido implements Serializable {
     private String nomeProduto;
     private int quantidade;
     private Double preco;
+    private String complemento;
 
     public ItemPedido() {
     }
@@ -42,5 +43,13 @@ public class ItemPedido implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }

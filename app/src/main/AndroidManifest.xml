@@ -11,7 +11,16 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".adapter.AdapterProdutoEmpresa"></activity>
+        <activity android:name=".activity.ConfiguracoesComplementoActivity"
+            android:parentActivityName=".activity.ComplementosActivity"></activity>
+        <activity
+            android:name=".activity.NovoComplementoActivity"
+            android:parentActivityName=".activity.ComplementosActivity" />
+        <activity android:name=".adapter.AdapterComplementoActivity" />
+        <activity
+            android:name=".activity.ComplementosActivity"
+            android:parentActivityName=".activity.EmpresaActivity" />
+        <activity android:name=".adapter.AdapterProdutoEmpresa" />
         <activity
             android:name=".activity.PedidosRecebidosEmpresaActivity"
             android:parentActivityName=".activity.EmpresaActivity" />
@@ -25,8 +34,7 @@
         <activity
             android:name=".activity.PedidosFinalizadosEmpresaActivity"
             android:parentActivityName=".activity.EmpresaActivity" />
-        <activity
-            android:name=".activity.CarrinhoActivity" />
+        <activity android:name=".activity.CarrinhoActivity" />
         <activity
             android:name=".activity.HistoricoPedidosUsuarioActivity"
             android:parentActivityName=".activity.HomeActivity" />

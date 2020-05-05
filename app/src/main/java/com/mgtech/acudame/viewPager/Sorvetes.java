@@ -58,6 +58,7 @@ public class Sorvetes extends Fragment {
     private String[] listaItens;
     private boolean[] checkedItens;
     private ArrayList<Integer> mSeletectItems = new ArrayList<>();
+    private String complementos;
 
     public Sorvetes(String idEmpresa, String idUsuario) {
         this.idEmpresa = idEmpresa;
@@ -68,6 +69,7 @@ public class Sorvetes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // carregando complementos
         listaItens = getResources().getStringArray(R.array.items);
         checkedItens = new boolean[listaItens.length];
 
@@ -103,7 +105,7 @@ public class Sorvetes extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                escolherComplementos();
+                                escolherComplementos(position);
                             }
 
                             @Override
@@ -308,7 +310,7 @@ public class Sorvetes extends Fragment {
         });
     }
 
-    public void escolherComplementos(){
+    public void escolherComplementos(final int posicao){
 
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
         builder.setTitle("Selecione os itens");
@@ -337,18 +339,67 @@ public class Sorvetes extends Fragment {
                         item = item + ", ";
                     }
                 }
-                //textView.setText(item);
-            }
+                if(item.isEmpty()){
+                    item = "zero adicionais";
+                }
+                if( usuario == null ){
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Nenhum endereço cadastrado");
+                    builder.setMessage("Por favor, cadastre um endereço para fazer um pedido.");
+
+                    builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(getActivity(), ConfiguracoesUsuarioActivity.class));
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
+                }else{
+
+                    String quantidade = "1";
+
+                    Produto produtoSelecionado = produtos.get(posicao);
+                    ItemPedido itemPedido = new ItemPedido();
+                    itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
+                    itemPedido.setNomeProduto(produtoSelecionado.getNome());
+                    itemPedido.setPreco(produtoSelecionado.getPreco());
+                    itemPedido.setQuantidade(Integer.parseInt(quantidade));
+                    itemPedido.setComplemento(item);
+
+                    itensCarrinho.add(itemPedido);
+
+                    if(pedidoRecuperado == null) {
+                        pedidoRecuperado = new Pedido(idUsuario, idEmpresa);
+                    }
+
+                    pedidoRecuperado.setNome(usuario.getNome());
+                    pedidoRecuperado.setEndereco(usuario.getEndereco());
+                    pedidoRecuperado.setNomeEmpresa(empresa.getNome());
+                    pedidoRecuperado.setNumero(usuario.getNumero());
+                    pedidoRecuperado.setReferencia(usuario.getReferencia());
+                    pedidoRecuperado.setTelEmpresa(empresa.getTelefone());
+                    pedidoRecuperado.setTelUsuario(usuario.getTelefone());
+                    pedidoRecuperado.setItens(itensCarrinho);
+                    pedidoRecuperado.salvar();
+
+                    Toast.makeText(getActivity(), "Pedido adicionado ao carrinho!"
+                            , Toast.LENGTH_SHORT).show();
+                    }
+                }
         });
 
-        builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
             }
         });
 
-        builder.setNeutralButton("all", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Limpar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 for( int i = 0; i < checkedItens.length; i++ ){
