@@ -29,6 +29,7 @@ import com.mgtech.acudame.activity.ConfiguracoesUsuarioActivity;
 import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
+import com.mgtech.acudame.model.Complemento;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
@@ -37,6 +38,7 @@ import com.mgtech.acudame.model.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,15 +52,15 @@ public class Sorvetes extends Fragment {
     private List<Produto> produtos = new ArrayList<>();
     private DatabaseReference databaseReference = ConfiguracaoFirebase.getFirebase();
     private String idEmpresa;
-    private DatabaseReference produtosRef, pedidoRef;
+    private DatabaseReference produtosRef, pedidoRef, complementosPesquisa;
     private Pedido pedidoRecuperado;
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private Usuario usuario;
     private Empresa empresa;
     private String[] listaItens;
+    private List<Complemento> complementos = new ArrayList<>();
     private boolean[] checkedItens;
     private ArrayList<Integer> mSeletectItems = new ArrayList<>();
-    private String complementos;
 
     public Sorvetes(String idEmpresa, String idUsuario) {
         this.idEmpresa = idEmpresa;
@@ -68,10 +70,6 @@ public class Sorvetes extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // carregando complementos
-        listaItens = getResources().getStringArray(R.array.items);
-        checkedItens = new boolean[listaItens.length];
 
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_sorvetes, container, false);
@@ -92,6 +90,9 @@ public class Sorvetes extends Fragment {
 
         // recuperar produtos
         recuperarProdutos();
+
+        // recuperar complementos
+        recuperarComplementos();
 
         // recuperar pedido
         recuperarPedido();
@@ -127,6 +128,42 @@ public class Sorvetes extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    private void recuperarComplementos() {
+
+        complementosPesquisa = databaseReference
+                .child("complementos")
+                .child(idEmpresa);
+
+        complementosPesquisa.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                complementos.clear();
+                if (dataSnapshot.getValue() != null) {
+
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Complemento complemento = ds.getValue(Complemento.class);
+                        complementos.add(complemento);
+                    }
+                }
+                // carregando lista de complementos
+                if(complementos.isEmpty()){
+                    listaItens = getResources().getStringArray(R.array.items);
+                }else {
+                    listaItens = new String[complementos.size()];
+                    for (int i = 0; i < complementos.size(); i++) {
+                        listaItens[i] = complementos.get(i).getNome();
+                    }
+                }
+                checkedItens = new boolean[listaItens.length];
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void recuperarEmpesa() {
@@ -291,7 +328,7 @@ public class Sorvetes extends Fragment {
                 .child(idEmpresa);
 
         Query produtoPesquisa = produtosRef.orderByChild("statusCategoria")
-                .equalTo("ativo_sorvete");
+                .equalTo("ativo_Sorvete");
 
         produtoPesquisa.addValueEventListener(new ValueEventListener() {
             @Override
