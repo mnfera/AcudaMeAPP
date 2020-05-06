@@ -53,7 +53,9 @@
         <Spinner
             android:id="@+id/spinnerCategoria"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-1dp"
+            android:background="@drawable/spinner_background"/>
 
         <LinearLayout
             android:layout_width="match_parent"

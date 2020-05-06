@@ -46,14 +46,17 @@
             android:layout_marginTop="-2dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
+            android:padding="16dp"
             android:hint="Preço. Ex.: 10.00"
-            android:inputType="none|numberDecimal"
-            android:padding="16dp" />
+            android:inputType="none|numberDecimal"/>
 
         <Spinner
             android:id="@+id/spinnerCategoria"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-1dp"
+            android:background="@drawable/spinner_background"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"

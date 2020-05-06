@@ -6,9 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -18,12 +19,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
+import com.mgtech.acudame.adapter.AdapterSpinner;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
+import com.mgtech.acudame.model.CostumItem;
 import com.mgtech.acudame.model.Produto;
+
+import java.util.ArrayList;
+
 import dmax.dialog.SpotsDialog;
 
-public class ConfiguracoesProdutoActivity extends AppCompatActivity {
+public class ConfiguracoesProdutoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText editProdutoNome, editProdutoDescricao, editProdutoPreco;
     private Switch tipoStatus;
@@ -32,6 +38,9 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private String idEmpresaLogada, idPro;
     private AlertDialog dialog;
+    private ArrayList<CostumItem> costumItems;
+    private int width = 150;
+    private String categoriaEmpresa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,13 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idEmpresaLogada = UsuarioFirebase.getIdUsuario();
+
+        // conf spinner
+        spinnerCatogoria = findViewById(R.id.spinnerCategoria);
+        costumItems = getCustomList();
+        AdapterSpinner adapterSpinner = new AdapterSpinner(ConfiguracoesProdutoActivity.this, costumItems);
+        spinnerCatogoria.setAdapter(adapterSpinner);
+        spinnerCatogoria.setOnItemSelectedListener(this);
 
         // recuperar id do produto selecionado
         Bundle bundle = getIntent().getExtras();
@@ -55,14 +71,12 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // conf spinner
-        String[] lsCategoria = getResources().getStringArray(R.array.lista_categoria_produto);
-        spinnerCatogoria.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, lsCategoria));
-
         buttonSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 validarDadosProduto();
+                Toast.makeText(getApplicationContext(), categoriaEmpresa + " teste", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -108,11 +122,12 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
 
     private void validarDadosProduto() {
 
+
         // verifica se os campos foram preenchidos
         String nome = editProdutoNome.getText().toString();
         String descricao = editProdutoDescricao.getText().toString();
         String preco = editProdutoPreco.getText().toString();
-        String categoria = spinnerCatogoria.getSelectedItem().toString();
+        String categoria = categoriaEmpresa;
         String status = "ativo";
 
         // verifica estado do switch
@@ -156,6 +171,35 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity {
         editProdutoPreco = findViewById(R.id.editProdutoPreco);
         tipoStatus = findViewById(R.id.switchStatus);
         buttonSalvar = findViewById(R.id.buttonSalvar);
-        spinnerCatogoria = findViewById(R.id.spinnerCategoria);
+
+    }
+
+    private ArrayList<CostumItem> getCustomList() {
+        costumItems = new ArrayList<>();
+        costumItems.add(new CostumItem("Comida", R.drawable.ic_c));
+        costumItems.add(new CostumItem("Bebida", R.drawable.ic_b));
+        costumItems.add(new CostumItem("Sorvete", R.drawable.ic_s));
+        Toast.makeText(this, "gdfgdg", Toast.LENGTH_SHORT).show();
+        return costumItems;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        try {
+            LinearLayout linearLayout = findViewById(R.id.custom);
+            width=linearLayout.getWidth();
+        }catch (Exception e){
+
+        }
+        spinnerCatogoria.setDropDownWidth(width);
+        CostumItem item = (CostumItem) parent.getSelectedItem();
+        categoriaEmpresa = item.getSpinnerItemName();
+        Toast.makeText(this, item.getSpinnerItemName() , Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
+
