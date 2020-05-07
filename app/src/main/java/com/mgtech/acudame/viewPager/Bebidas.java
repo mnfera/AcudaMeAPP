@@ -192,62 +192,67 @@ public class Bebidas extends Fragment {
 
     private void confirmarQuantidade(final int posicao) {
 
-            if( usuario == null ){
+        if( usuario == null ){
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Nenhum endereço cadastrado");
-                builder.setMessage("Por favor, cadastre um endereço para fazer um pedido.");
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Nenhum endereço cadastrado");
+            builder.setMessage("Por favor, cadastre um endereço para fazer um pedido.");
 
-                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(getActivity(), ConfiguracoesUsuarioActivity.class));
-                    }
-                });
+            builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(getActivity(), ConfiguracoesUsuarioActivity.class));
+                }
+            });
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
-            }else{
+        }else{
 
-                final EditText editQuantidade = new EditText(getActivity());
-                editQuantidade.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                editQuantidade.setText("1");
+            final EditText editQuantidade = new EditText(getActivity());
+            editQuantidade.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+            editQuantidade.setText("1");
 
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Quantidade")
+                    .setMessage("Informe a quantidade do produto")
+                    .setCancelable(false)
+                    .setView(editQuantidade)
+                    .setPositiveButton("Confirmar", null)
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Quantidade")
-                        .setMessage("Informe a quantidade do produto")
-                        .setCancelable(false)
-                        .setView(editQuantidade)
-                        .setPositiveButton("Confirmar", null)
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+            final AlertDialog mDialog = builder.create();
+            //Aqui você trata o click do button positive sem que o alertdialog feche em caso de convergência
+            mDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(final DialogInterface dialog) {
+                    Button postive = mDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    postive.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //aqui você trata o evento
+                            if (editQuantidade.getText().length() == 0) {
+                                editQuantidade.setError("Campo obrigatório");
+                                editQuantidade.setFocusable(true);
+                                editQuantidade.requestFocus();
+                            } else {
+                                //Como ao clicar no botão positivo a condição é verificada
+                                //caso esteja tudo certo com o edittext, então chama o seu método
+                                //enviar email
 
-                final AlertDialog mDialog = builder.create();
-                //Aqui você trata o click do button positive sem que o alertdialog feche em caso de convergência
-                mDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(final DialogInterface dialog) {
-                        Button postive = mDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                        postive.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //aqui você trata o evento
-                                if (editQuantidade.getText().length() == 0) {
-                                    editQuantidade.setError("Campo obrigatório");
+                                if(editQuantidade.getText().toString().equals("0")){
+                                    editQuantidade.setError("Digite um valor diferente de 0");
                                     editQuantidade.setFocusable(true);
                                     editQuantidade.requestFocus();
-                                } else {
-                                    //Como ao clicar no botão positivo a condição é verificada
-                                    //caso esteja tudo certo com o edittext, então chama o seu método
-                                    //enviar email
-
+                                }else{
                                     int valor = 0;
+
                                     try {
                                         valor = Integer.parseInt(editQuantidade.getText().toString());
 
@@ -285,12 +290,13 @@ public class Bebidas extends Fragment {
                                     }
                                 }
                             }
-                        });
-                    }
-                });
-                mDialog.show();
-            }
+                        }
+                    });
+                }
+            });
+            mDialog.show();
         }
+    }
 
     public void recuperarProdutos(){
 

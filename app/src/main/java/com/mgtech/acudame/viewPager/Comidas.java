@@ -215,7 +215,6 @@ public class Comidas extends Fragment {
             editQuantidade.setRawInputType(InputType.TYPE_CLASS_NUMBER);
             editQuantidade.setText("1");
 
-
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Quantidade")
                     .setMessage("Informe a quantidade do produto")
@@ -248,41 +247,48 @@ public class Comidas extends Fragment {
                                 //caso esteja tudo certo com o edittext, então chama o seu método
                                 //enviar email
 
-                                int valor = 0;
-                                try {
-                                    valor = Integer.parseInt(editQuantidade.getText().toString());
-
-                                    String quantidade = editQuantidade.getText().toString();
-                                    Produto produtoSelecionado = produtos.get(posicao);
-                                    ItemPedido itemPedido = new ItemPedido();
-                                    itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
-                                    itemPedido.setNomeProduto(produtoSelecionado.getNome());
-                                    itemPedido.setPreco(produtoSelecionado.getPreco());
-                                    itemPedido.setQuantidade(Integer.parseInt(quantidade));
-
-                                    itensCarrinho.add(itemPedido);
-
-                                    if(pedidoRecuperado == null) {
-                                        pedidoRecuperado = new Pedido(idUsuario, idEmpresa);
-                                    }
-
-                                    pedidoRecuperado.setNome(usuario.getNome());
-                                    pedidoRecuperado.setEndereco(usuario.getEndereco());
-                                    pedidoRecuperado.setNomeEmpresa(empresa.getNome());
-                                    pedidoRecuperado.setNumero(usuario.getNumero());
-                                    pedidoRecuperado.setReferencia(usuario.getReferencia());
-                                    pedidoRecuperado.setTelEmpresa(empresa.getTelefone());
-                                    pedidoRecuperado.setTelUsuario(usuario.getTelefone());
-                                    pedidoRecuperado.setItens(itensCarrinho);
-                                    pedidoRecuperado.salvar();
-                                    //No final como já completou a condição pode dar dismiss
-                                    //no alertdialog, pois está tudo ok
-                                    dialog.dismiss();
-
-                                } catch (NumberFormatException e) {
-                                    editQuantidade.setError("Digite somente números");
+                                if(editQuantidade.getText().toString().equals("0")){
+                                    editQuantidade.setError("Digite um valor diferente de 0");
                                     editQuantidade.setFocusable(true);
                                     editQuantidade.requestFocus();
+                                }else{
+                                    int valor = 0;
+
+                                    try {
+                                        valor = Integer.parseInt(editQuantidade.getText().toString());
+
+                                        String quantidade = editQuantidade.getText().toString();
+                                        Produto produtoSelecionado = produtos.get(posicao);
+                                        ItemPedido itemPedido = new ItemPedido();
+                                        itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
+                                        itemPedido.setNomeProduto(produtoSelecionado.getNome());
+                                        itemPedido.setPreco(produtoSelecionado.getPreco());
+                                        itemPedido.setQuantidade(Integer.parseInt(quantidade));
+
+                                        itensCarrinho.add(itemPedido);
+
+                                        if(pedidoRecuperado == null) {
+                                            pedidoRecuperado = new Pedido(idUsuario, idEmpresa);
+                                        }
+
+                                        pedidoRecuperado.setNome(usuario.getNome());
+                                        pedidoRecuperado.setEndereco(usuario.getEndereco());
+                                        pedidoRecuperado.setNomeEmpresa(empresa.getNome());
+                                        pedidoRecuperado.setNumero(usuario.getNumero());
+                                        pedidoRecuperado.setReferencia(usuario.getReferencia());
+                                        pedidoRecuperado.setTelEmpresa(empresa.getTelefone());
+                                        pedidoRecuperado.setTelUsuario(usuario.getTelefone());
+                                        pedidoRecuperado.setItens(itensCarrinho);
+                                        pedidoRecuperado.salvar();
+                                        //No final como já completou a condição pode dar dismiss
+                                        //no alertdialog, pois está tudo ok
+                                        dialog.dismiss();
+
+                                    } catch (NumberFormatException e) {
+                                        editQuantidade.setError("Digite somente números");
+                                        editQuantidade.setFocusable(true);
+                                        editQuantidade.requestFocus();
+                                    }
                                 }
                             }
                         }
