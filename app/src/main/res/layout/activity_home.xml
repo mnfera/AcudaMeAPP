@@ -20,21 +20,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerEmpresas"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
         tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="-10dp"
+            android:layout_gravity="center"
             android:layout_marginTop="40dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/ic_maps_and_location"
-            android:padding="20sp"
             app:layout_constraintHorizontal_bias="0.443"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            app:layout_constraintStart_toStartOf="@id/textCidade"
+            app:layout_constraintTop_toBottomOf="@+id/include"
+            android:layout_marginRight="5dp" />
 
         <TextView
             android:id="@+id/textCidade"
@@ -43,25 +47,15 @@
             android:layout_marginTop="40dp"
             android:layout_marginBottom="32dp"
             android:gravity="center"
+            android:textSize="10dp"
             android:text="JOSÉ DA PENHA - RN"
             android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toTopOf="@+id/recyclerEmpresas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include" />
-
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/line" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerEmpresas"
@@ -69,7 +63,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="139dp"
+        android:layout_marginTop="160dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
@@ -77,5 +71,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/include" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:srcCompat="@drawable/line"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
