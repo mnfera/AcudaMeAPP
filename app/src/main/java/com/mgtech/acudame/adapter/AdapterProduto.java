@@ -35,16 +35,12 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         return new MyViewHolder(itemLista);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         Produto produto = produtos.get(i);
         holder.nome.setText(produto.getNome());
         holder.descricao.setText(produto.getDescricao());
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        BigDecimal bigDecimal = new BigDecimal(decimalFormat.format(produto.getPreco()));
-        holder.valor.setText("R$ " + bigDecimal.setScale(2));
-
+        holder.valor.setText("R$ " + produto.getPreco());
     }
 
     @Override

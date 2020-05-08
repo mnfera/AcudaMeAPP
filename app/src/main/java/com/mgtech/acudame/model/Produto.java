@@ -9,7 +9,7 @@ public class Produto {
     private String idProduto;
     private String nome;
     private String descricao;
-    private Double preco;
+    private String preco;
     private String status = "ativo";
     private String categoria;
     private String statusCategoria;
@@ -68,11 +68,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Double getPreco() {
+    public String getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(String preco) {
         this.preco = preco;
     }
 

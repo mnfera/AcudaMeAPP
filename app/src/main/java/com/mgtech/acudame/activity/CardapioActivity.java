@@ -183,7 +183,7 @@ public class CardapioActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 qtdItensCarrinho = 0;
-                totalCarrinho = 0.0;
+                totalCarrinho = 0.00;
                 itensCarrinho = new ArrayList<>();
 
                 if(dataSnapshot.getValue() != null) {
@@ -193,17 +193,16 @@ public class CardapioActivity extends AppCompatActivity {
                     for(ItemPedido itemPedido: itensCarrinho) {
 
                         int qtde = itemPedido.getQuantidade();
-                        Double preco = itemPedido.getPreco();
+                        Double preco = 3.00;
+                        Toast.makeText(CardapioActivity.this, String.valueOf(itemPedido.getPreco()), Toast.LENGTH_SHORT).show();
 
                         totalCarrinho += (qtde * preco);
                         qtdItensCarrinho += qtde;
                     }
                 }
 
-                DecimalFormat df = new DecimalFormat("0.00");
-
-                textCarrinhoQtde.setText("Qtd: " + String.valueOf(qtdItensCarrinho));
-                textCarrinhoTotal.setText("R$ " + df.format(totalCarrinho));
+                textCarrinhoQtde.setText("Qtd: " + qtdItensCarrinho);
+                textCarrinhoTotal.setText("R$ " + totalCarrinho);
 
                 dialog.dismiss();
             }
@@ -263,13 +262,13 @@ public class CardapioActivity extends AppCompatActivity {
                 .child(idEmpresaSelecionada);
 
         Query produtoComida = produtosRef.orderByChild("categoria")
-                .equalTo("Comida");
+                .equalTo("comida");
 
         Query produtoBebida = produtosRef.orderByChild("categoria")
-                .equalTo("Bebida");
+                .equalTo("bebida");
 
         Query produtoSorvete = produtosRef.orderByChild("categoria")
-                .equalTo("Sorvete");
+                .equalTo("sorvete");
 
         produtoComida.addValueEventListener(new ValueEventListener() {
             @Override

@@ -21,6 +21,8 @@ import com.mgtech.acudame.R;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,11 +77,12 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
         String descricaoItens = "";
 
         int numeroItem = 1;
-        Double total = 0.0;
+        Double total = 0.00;
+
         for( ItemPedido itemPedido : itens ){
 
             int qtde = itemPedido.getQuantidade();
-            Double preco = itemPedido.getPreco();
+            Double preco = Double.valueOf(itemPedido.getPreco());
             total += (qtde * preco);
 
             String nome = itemPedido.getNomeProduto();
@@ -91,6 +94,7 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
             }
             numeroItem++;
         }
+
         descricaoItens += "Total: R$ " + total;
         holder.itens.setText(String.format(descricaoItens));
 

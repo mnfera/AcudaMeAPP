@@ -85,7 +85,7 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity implements Ada
                     produto.setIdUsuario(idUsuarioLogado);
                     produto.setNome(nome);
                     produto.setDescricao(descricao);
-                    produto.setPreco(Double.parseDouble(preco));
+                    produto.setPreco(preco);
                     produto.setCategoria(categoria);
                     produto.setStatus(status);
                     produto.setStatusCategoria(status, categoria);
@@ -128,8 +128,7 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity implements Ada
         }
         spinnerCatogoria.setDropDownWidth(width);
         CostumItem item = (CostumItem) parent.getSelectedItem();
-        Toast.makeText(this, item.getSpinnerItemName() , Toast.LENGTH_SHORT).show();
-        categoriaEmpresa = item.getSpinnerItemName();
+        categoriaEmpresa = item.getSpinnerItemName().toLowerCase();
     }
 
     @Override
@@ -141,7 +140,6 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity implements Ada
         costumItems.add(new CostumItem("Comida", R.drawable.ic_c));
         costumItems.add(new CostumItem("Bebida", R.drawable.ic_b));
         costumItems.add(new CostumItem("Sorvete", R.drawable.ic_s));
-        Toast.makeText(this, "gdfgdg", Toast.LENGTH_SHORT).show();
         return costumItems;
     }
 }

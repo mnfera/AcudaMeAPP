@@ -331,7 +331,7 @@ public class Sorvetes extends Fragment {
                 .child(idEmpresa);
 
         Query produtoPesquisa = produtosRef.orderByChild("statusCategoria")
-                .equalTo("ativo_Sorvete");
+                .equalTo("ativo_sorvete");
 
         produtoPesquisa.addValueEventListener(new ValueEventListener() {
             @Override

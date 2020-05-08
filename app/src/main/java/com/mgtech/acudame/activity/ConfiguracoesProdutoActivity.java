@@ -25,6 +25,8 @@ import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.model.CostumItem;
 import com.mgtech.acudame.model.Produto;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import dmax.dialog.SpotsDialog;
@@ -143,7 +145,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity implements A
                     produto.setIdProduto(idPro);
                     produto.setNome(nome);
                     produto.setDescricao(descricao);
-                    produto.setPreco(Double.parseDouble(preco));
+                    produto.setPreco(preco);
                     produto.setCategoria(categoria);
                     produto.setStatus(status);
                     produto.setStatusCategoria(status, categoria);
@@ -179,7 +181,6 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity implements A
         costumItems.add(new CostumItem("Comida", R.drawable.ic_c));
         costumItems.add(new CostumItem("Bebida", R.drawable.ic_b));
         costumItems.add(new CostumItem("Sorvete", R.drawable.ic_s));
-        Toast.makeText(this, "gdfgdg", Toast.LENGTH_SHORT).show();
         return costumItems;
     }
 
@@ -193,8 +194,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity implements A
         }
         spinnerCatogoria.setDropDownWidth(width);
         CostumItem item = (CostumItem) parent.getSelectedItem();
-        categoriaEmpresa = item.getSpinnerItemName();
-        Toast.makeText(this, item.getSpinnerItemName() , Toast.LENGTH_SHORT).show();
+        categoriaEmpresa = item.getSpinnerItemName().toLowerCase();
     }
 
     @Override

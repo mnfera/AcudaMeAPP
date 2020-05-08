@@ -183,9 +183,7 @@ public class Comidas extends Fragment {
                     pedidoRecuperado = dataSnapshot.getValue(Pedido.class);
                     itensCarrinho = pedidoRecuperado.getItens();
                 }
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -320,8 +318,7 @@ public class Comidas extends Fragment {
                     int valor;
 
                     try{
-                        precoAux = precoAux+".00";
-                        produto.setPreco(Double.valueOf(precoAux));
+                        produto.setPreco(precoAux);
                         produtos.add(produto);
 
                     }catch (Exception e){
