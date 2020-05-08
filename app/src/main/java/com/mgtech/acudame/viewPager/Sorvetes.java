@@ -52,7 +52,7 @@ public class Sorvetes extends Fragment {
     private List<Produto> produtos = new ArrayList<>();
     private DatabaseReference databaseReference = ConfiguracaoFirebase.getFirebase();
     private String idEmpresa;
-    private DatabaseReference produtosRef, pedidoRef, complementosPesquisa;
+    private DatabaseReference produtosRef, pedidoRef, complementosRef;
     private Pedido pedidoRecuperado;
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private Usuario usuario;
@@ -132,9 +132,12 @@ public class Sorvetes extends Fragment {
 
     private void recuperarComplementos() {
 
-        complementosPesquisa = databaseReference
+        complementosRef = databaseReference
                 .child("complementos")
                 .child(idEmpresa);
+
+        Query complementosPesquisa = complementosRef.orderByChild("status")
+                .equalTo("ativo");
 
         complementosPesquisa.addValueEventListener(new ValueEventListener() {
             @Override

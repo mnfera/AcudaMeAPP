@@ -23,6 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.ViewPagerAdapter;
@@ -48,7 +49,7 @@ public class CardapioActivity extends AppCompatActivity {
     private ImageView imageEmpresaCardapio, imageCelular, imageWhatsapp;
     private TextView textNomeEmpresaCardapio, textTelefoneEmpresaCardapio;
     private Empresa empresaSelecionada;
-    private AlertDialog dialog;
+    private AlertDialog dialog, dialog2;
     private TextView textCarrinhoQtde, textCarrinhoTotal, textVerCarrinho;
     private DatabaseReference firebaseRef;
     private String idEmpresaSelecionada;
@@ -58,6 +59,9 @@ public class CardapioActivity extends AppCompatActivity {
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private int qtdItensCarrinho;
     private Double totalCarrinho;
+    private int index = 0;
+    private int comidaIndex = -1, bebidaIndex = -1, sorveteIndex = -1;
+    private boolean comida = false, bebida = false, sorvete = false;
 
     private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
@@ -95,24 +99,8 @@ public class CardapioActivity extends AppCompatActivity {
         // recupera os dados do usuário e seus pedidos
         recuperarDadosUsuario();
 
-        tabLayout = findViewById(R.id.tabLayout);
-        viewPager = findViewById(R.id.viewPage);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        viewPagerAdapter.addFragment(new Comidas(idEmpresaSelecionada, idUsuarioLogado), "" );
-        viewPagerAdapter.addFragment(new Bebidas(idEmpresaSelecionada, idUsuarioLogado), "" );
-        viewPagerAdapter.addFragment(new Sorvetes(idEmpresaSelecionada, idUsuarioLogado), "" );
-        viewPager.setAdapter(viewPagerAdapter);
-
-        tabLayout.setupWithViewPager(viewPager);
-
-        tabLayout.getTabAt(0).setIcon(R.drawable.comida);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_conjunto_de_bebidas);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_sorvete);
-
-        tabLayout.getTabAt(0).setText("Comidas");
-        tabLayout.getTabAt(1).setText("Bebidas");
-        tabLayout.getTabAt(2).setText("Sorvetes");
+        // carregando os dados da viewPager
+        carregarViewPagers();
 
         textVerCarrinho.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,4 +248,120 @@ public class CardapioActivity extends AppCompatActivity {
                     , Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void carregarViewPagers() {
+
+        dialog2 = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Carregando Dados")
+                .setCancelable(false)
+                .build();
+        dialog2.show();
+
+        DatabaseReference produtosRef = firebaseRef
+                .child("produtos")
+                .child(idEmpresaSelecionada);
+
+        Query produtoComida = produtosRef.orderByChild("categoria")
+                .equalTo("Comida");
+
+        Query produtoBebida = produtosRef.orderByChild("categoria")
+                .equalTo("Bebida");
+
+        Query produtoSorvete = produtosRef.orderByChild("categoria")
+                .equalTo("Sorvete");
+
+        produtoComida.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() != null){
+                    comida = true;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+        produtoBebida.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() != null){
+                    bebida = true;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+        produtoSorvete.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() != null){
+                    sorvete = true;
+                }
+
+                // criar e mostrar viewPager
+                criarMostrarViewPager();
+                dialog2.dismiss();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+    }
+
+    private void criarMostrarViewPager() {
+
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPage);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+
+        if(comida == true) {
+            viewPagerAdapter.addFragment(new Comidas(idEmpresaSelecionada, idUsuarioLogado), "" );
+            comidaIndex = index;
+            index++;
+        }
+        if(bebida == true){
+            viewPagerAdapter.addFragment(new Bebidas(idEmpresaSelecionada, idUsuarioLogado), "" );
+            bebidaIndex = index;
+            index++;
+        }
+        if(sorvete == true){
+            viewPagerAdapter.addFragment(new Sorvetes(idEmpresaSelecionada, idUsuarioLogado), "" );
+            sorveteIndex = index;
+            index++;
+        }
+
+        viewPager.setAdapter(viewPagerAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        if(comidaIndex >= 0) {
+            tabLayout.getTabAt(comidaIndex).setIcon(R.drawable.comida);
+            tabLayout.getTabAt(comidaIndex).setText("Comidas");
+        }
+
+        if(bebidaIndex >= 0) {
+            tabLayout.getTabAt(bebidaIndex).setIcon(R.drawable.ic_conjunto_de_bebidas);
+            tabLayout.getTabAt(bebidaIndex).setText("Bebidas");
+        }
+
+        if(sorveteIndex >= 0) {
+            tabLayout.getTabAt(sorveteIndex).setIcon(R.drawable.ic_sorvete);
+            tabLayout.getTabAt(sorveteIndex).setText("Sorvetes");
+        }
+    }
+
 }
