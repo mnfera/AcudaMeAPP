@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.icu.math.BigDecimal;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.model.Produto;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class AdapterProdutoEmpresa extends RecyclerView.Adapter<AdapterProdutoEmpresa.MyViewHolder>{
@@ -39,7 +41,9 @@ public class AdapterProdutoEmpresa extends RecyclerView.Adapter<AdapterProdutoEm
         Produto produto = produtos.get(i);
         holder.nome.setText(produto.getNome());
         holder.descricao.setText(produto.getDescricao());
-        holder.valor.setText("R$ " + produto.getPreco());
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        BigDecimal bigDecimal = new BigDecimal(decimalFormat.format(produto.getPreco()));
+        holder.valor.setText("R$ " + bigDecimal.setScale(2));
         if(produto.getCategoria() != null) {
             holder.categoria.setText("Categoria: " + produto.getCategoria().toUpperCase());
         }

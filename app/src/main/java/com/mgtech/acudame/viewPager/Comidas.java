@@ -36,6 +36,8 @@ import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Produto;
 import com.mgtech.acudame.model.Usuario;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -313,7 +315,19 @@ public class Comidas extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 produtos.clear();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    produtos.add(ds.getValue(Produto.class));
+                    Produto produto = ds.getValue(Produto.class);
+                    String precoAux =  ds.child("preco").getValue().toString();
+                    int valor;
+
+                    try{
+                        precoAux = precoAux+".00";
+                        produto.setPreco(Double.valueOf(precoAux));
+                        produtos.add(produto);
+
+                    }catch (Exception e){
+                        produtos.add(produto);
+                    }
+
                 }
                 adapterProduto.notifyDataSetChanged();
             }

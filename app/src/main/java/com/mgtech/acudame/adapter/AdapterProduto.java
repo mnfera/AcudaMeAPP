@@ -1,17 +1,21 @@
 package com.mgtech.acudame.adapter;
 
 import android.content.Context;
+import android.icu.math.BigDecimal;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.model.Produto;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHolder>{
@@ -31,12 +35,16 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         return new MyViewHolder(itemLista);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         Produto produto = produtos.get(i);
         holder.nome.setText(produto.getNome());
         holder.descricao.setText(produto.getDescricao());
-        holder.valor.setText("R$ " + produto.getPreco());
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        BigDecimal bigDecimal = new BigDecimal(decimalFormat.format(produto.getPreco()));
+        holder.valor.setText("R$ " + bigDecimal.setScale(2));
+
     }
 
     @Override
