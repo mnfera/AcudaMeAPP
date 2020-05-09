@@ -3,10 +3,8 @@ package com.mgtech.acudame.viewPager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,8 +33,6 @@ import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Produto;
 import com.mgtech.acudame.model.Usuario;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -314,16 +309,7 @@ public class Comidas extends Fragment {
                 produtos.clear();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Produto produto = ds.getValue(Produto.class);
-                    String precoAux =  ds.child("preco").getValue().toString();
-                    int valor;
-
-                    try{
-                        produto.setPreco(precoAux);
-                        produtos.add(produto);
-
-                    }catch (Exception e){
-                        produtos.add(produto);
-                    }
+                    produtos.add(produto);
 
                 }
                 adapterProduto.notifyDataSetChanged();

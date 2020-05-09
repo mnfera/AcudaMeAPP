@@ -145,7 +145,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity implements A
                     produto.setIdProduto(idPro);
                     produto.setNome(nome);
                     produto.setDescricao(descricao);
-                    produto.setPreco(preco);
+                    produto.setPreco(Double.parseDouble(preco));
                     produto.setCategoria(categoria);
                     produto.setStatus(status);
                     produto.setStatusCategoria(status, categoria);

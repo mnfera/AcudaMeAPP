@@ -3,13 +3,14 @@ package com.mgtech.acudame.model;
 import com.google.firebase.database.DatabaseReference;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 
+
 public class Produto {
 
     private String idUsuario;
     private String idProduto;
     private String nome;
     private String descricao;
-    private String preco;
+    private Double preco;
     private String status = "ativo";
     private String categoria;
     private String statusCategoria;
@@ -68,11 +69,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public String getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(String preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 

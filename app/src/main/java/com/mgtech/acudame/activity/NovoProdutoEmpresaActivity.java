@@ -85,7 +85,7 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity implements Ada
                     produto.setIdUsuario(idUsuarioLogado);
                     produto.setNome(nome);
                     produto.setDescricao(descricao);
-                    produto.setPreco(preco);
+                    produto.setPreco(Double.parseDouble(preco));
                     produto.setCategoria(categoria);
                     produto.setStatus(status);
                     produto.setStatusCategoria(status, categoria);

@@ -80,11 +80,10 @@ public class AdapterPedidoUsuario extends RecyclerView.Adapter<AdapterPedidoUsua
         int numeroItem = 1;
         Double total = 0.00;
 
-
         for( ItemPedido itemPedido : itens ){
 
             int qtde = itemPedido.getQuantidade();
-            Double preco = Double.valueOf(itemPedido.getPreco());
+            Double preco = itemPedido.getPreco();
             total += (qtde * preco);
 
 

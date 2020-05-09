@@ -193,8 +193,7 @@ public class CardapioActivity extends AppCompatActivity {
                     for(ItemPedido itemPedido: itensCarrinho) {
 
                         int qtde = itemPedido.getQuantidade();
-                        Double preco = 3.00;
-                        Toast.makeText(CardapioActivity.this, String.valueOf(itemPedido.getPreco()), Toast.LENGTH_SHORT).show();
+                        Double preco = itemPedido.getPreco();
 
                         totalCarrinho += (qtde * preco);
                         qtdItensCarrinho += qtde;
