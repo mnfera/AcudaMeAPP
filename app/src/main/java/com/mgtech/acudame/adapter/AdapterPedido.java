@@ -78,6 +78,7 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
 
         int numeroItem = 1;
         Double total = 0.00;
+        DecimalFormat df = new DecimalFormat(",##0.00");
 
         for( ItemPedido itemPedido : itens ){
 
@@ -88,15 +89,15 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
             String nome = itemPedido.getNomeProduto();
             String complementos = itemPedido.getComplemento();
             if(complementos == null) {
-                descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + preco + ") \n";
+                descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + df.format(preco) + ") \n";
             }else {
-                descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + preco + ") \nCom: " + complementos + "\n";
+                descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + df.format(preco) + ") \nCom: " + complementos + "\n";
             }
             numeroItem++;
         }
 
-        descricaoItens += "Total: R$ " + total;
-        holder.itens.setText(String.format(descricaoItens));
+        descricaoItens += "Total: R$ " + df.format(total);
+        holder.itens.setText(descricaoItens);
 
         int metodoPagamento = pedido.getMetodoPagamento();
         String pagamento = metodoPagamento == 0 ? "Dinheiro" : "Máquina cartão" ;

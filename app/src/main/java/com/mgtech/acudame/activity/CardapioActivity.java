@@ -201,7 +201,8 @@ public class CardapioActivity extends AppCompatActivity {
                 }
 
                 textCarrinhoQtde.setText("Qtd: " + qtdItensCarrinho);
-                textCarrinhoTotal.setText("R$ " + totalCarrinho);
+                DecimalFormat df = new DecimalFormat(",##0.00");
+                textCarrinhoTotal.setText("R$ " + df.format(totalCarrinho));
 
                 dialog.dismiss();
             }

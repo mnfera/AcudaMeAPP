@@ -40,7 +40,8 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         Produto produto = produtos.get(i);
         holder.nome.setText(produto.getNome());
         holder.descricao.setText(produto.getDescricao());
-        holder.valor.setText("R$ " + produto.getPreco());
+        DecimalFormat df = new DecimalFormat(",##0.00");
+        holder.valor.setText("R$ " + df.format(produto.getPreco()));
     }
 
     @Override
