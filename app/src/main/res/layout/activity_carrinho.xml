@@ -13,26 +13,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerCarrinho"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <Button
-        android:id="@+id/buttonComprar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Confirmar pedido"
-        android:theme="@style/botaoPadrao" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCarrinho"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp" />
 
-    <Button
-        android:id="@+id/buttonExcluir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Excluir pedido"
-        android:theme="@style/botaoExcluir"/>
+            <Button
+                android:id="@+id/buttonComprar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Confirmar pedido"
+                android:theme="@style/botaoPadrao" />
+
+            <Button
+                android:id="@+id/buttonExcluir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Excluir pedido"
+                android:theme="@style/botaoExcluir"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
