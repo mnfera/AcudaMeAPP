@@ -20,9 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
@@ -150,7 +152,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                                     titulo = "Conta";
                                                 } catch (Exception e) {
                                                     erroExcecao = "ao cadastrar usuário: " + e.getMessage();
-                                                   titulo = "Usuário";
+                                                    titulo = "Usuário";
                                                 }
 
                                                 alertaSimples(erroExcecao, getApplicationContext(), titulo);
@@ -210,7 +212,22 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                             }
 
                                         } else {
-                                            alertaSimples(task.getException().toString(), getApplicationContext(), "Falha ao tentar logar");
+
+                                            String erroExcecao = "";
+
+                                            try {
+                                                throw task.getException();
+                                            } catch (FirebaseAuthInvalidUserException e) {
+                                                erroExcecao = "Não existe esse usuário! Verifique se o e-mail foi digitado corretamente!";
+                                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                                erroExcecao = "A senha está errada!";
+                                            } catch (FirebaseNetworkException e) {
+                                                erroExcecao = "Você está sem internet ou o servidor está fora do ar";
+                                            } catch (Exception e) {
+                                                erroExcecao = "Verificamos que: " + e.getMessage();
+                                            }
+
+                                            alertaSimples(erroExcecao, getApplicationContext(), "Falha ao tentar logar");
                                         }
                                     }
                                 });
