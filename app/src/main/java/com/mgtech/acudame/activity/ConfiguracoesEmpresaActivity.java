@@ -151,6 +151,9 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                     if(!dias.isEmpty()) {
                         if( !telefone.isEmpty()){
 
+                            // deixando a primeira letra da palavra em maiuscula
+                            nome = nome.substring(0,1).toUpperCase().concat(nome.substring(1));
+
                             Empresa empresa = new Empresa();
                             empresa.setIdUsuario(idUsuarioLogado);
                             empresa.setNome(nome);

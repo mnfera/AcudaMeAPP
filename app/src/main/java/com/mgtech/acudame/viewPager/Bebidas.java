@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -282,6 +283,9 @@ public class Bebidas extends Fragment {
                                         //No final como já completou a condição pode dar dismiss
                                         //no alertdialog, pois está tudo ok
                                         dialog.dismiss();
+
+                                        Toast.makeText(getActivity(), "Pedido adicionado ao carrinho!"
+                                                , Toast.LENGTH_SHORT).show();
 
                                     } catch (NumberFormatException e) {
                                         editQuantidade.setError("Digite somente números");

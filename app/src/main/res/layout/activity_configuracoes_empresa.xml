@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
-            android:hint="Nome empresa"
-            android:inputType="none|text"
+            android:hint="Nome da empresa"
+            android:inputType="textCapWords|textCapSentences"
             android:padding="16dp" />
 
         <EditText
@@ -43,8 +43,8 @@
             android:layout_marginTop="-2dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
-            android:hint="Categoria"
-            android:inputType="none|text"
+            android:hint="Categoria. Ex.: pizzaria"
+            android:inputType="textCapWords|textCapSentences"
             android:padding="16dp" />
 
 

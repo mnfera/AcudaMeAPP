@@ -110,6 +110,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void pesquisarEmpresas(String pesquisa) {
+
+        // deixando a primeira letra da palavra em maiuscula
+        if(!pesquisa.isEmpty()){
+            pesquisa = pesquisa.substring(0,1).toUpperCase().concat(pesquisa.substring(1));
+        }
+
         DatabaseReference empresaRef = firebaseRef.child("empresas");
         Query query = empresaRef.orderByChild("nome")
                 .startAt(pesquisa)

@@ -25,7 +25,7 @@
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Nome produto. Ex.: X-Churrasco"
-            android:inputType="none|text"
+            android:inputType="textCapWords|textCapSentences"
             android:padding="16dp" />
 
         <EditText
@@ -36,7 +36,7 @@
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Descrição. Ex.: Filé de carne bovina..."
-            android:inputType="none|text"
+            android:inputType="textCapWords|textCapSentences"
             android:padding="16dp" />
 
         <EditText

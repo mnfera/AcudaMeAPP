@@ -25,7 +25,7 @@
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Nome do complemento. Ex.: Mm's"
-            android:inputType="none|text"
+            android:inputType="textCapWords|textCapSentences"
             android:padding="16dp" />
 
         <LinearLayout
