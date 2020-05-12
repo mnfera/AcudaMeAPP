@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menuSabor"
+        android:icon="@drawable/ic_pizza_black_24dp"
+        android:title="Sabores"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menuComplemento"
         android:icon="@drawable/ic_adicionar_complemento_black_24dp"
         android:title="Complementos"

@@ -24,32 +24,32 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
-import com.mgtech.acudame.adapter.AdapterComplementoActivity;
+import com.mgtech.acudame.adapter.AdapterSabor;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.messenger.MessengerDialog;
-import com.mgtech.acudame.model.Complemento;
+import com.mgtech.acudame.model.Sabor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
-public class ComplementosActivity extends AppCompatActivity {
+public class SaboresActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerComplementos;
-    private AdapterComplementoActivity adapterComplemento;
-    private List<Complemento> complementos = new ArrayList<>();
+    private RecyclerView recyclerSabores;
+    private AdapterSabor adapterSabor;
+    private List<Sabor> sabores = new ArrayList<>();
     private AlertDialog dialog;
     private DatabaseReference firebaseRef;
-    private String idEmpresa, idComplemento;
-    private int complementoPosicao;
+    private String idEmpresa, idSabor;
+    private int saborPosicao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complementos);
+        setContentView(R.layout.activity_sabores);
 
         // conf iniciais
         inicializarComponentes();
@@ -58,38 +58,38 @@ public class ComplementosActivity extends AppCompatActivity {
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Complementos Sorvetes || Açaís");
+        toolbar.setTitle("Sabores das Pizzas");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // conf recyclerview
-        recyclerComplementos.setLayoutManager(new LinearLayoutManager(this));
-        recyclerComplementos.setHasFixedSize(true);
-        adapterComplemento = new AdapterComplementoActivity(complementos, ComplementosActivity.this);
-        recyclerComplementos.setAdapter(adapterComplemento);
+        recyclerSabores.setLayoutManager(new LinearLayoutManager(this));
+        recyclerSabores.setHasFixedSize(true);
+        adapterSabor = new AdapterSabor(sabores, SaboresActivity.this);
+        recyclerSabores.setAdapter(adapterSabor);
 
         // recuperar os complementos
-        recuperarComplementos();
+        recuperarSabores();
 
-        recyclerComplementos.addOnItemTouchListener(
+        recyclerSabores.addOnItemTouchListener(
                 new RecyclerItemClickListener(
                         this,
-                        recyclerComplementos,
+                        recyclerSabores,
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
 
                                 //posicaoItem = position;
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ComplementosActivity.this);
-                                builder.setTitle("Selecione uma opção para o complemento");
+                                AlertDialog.Builder builder = new AlertDialog.Builder(SaboresActivity.this);
+                                builder.setTitle("Selecione uma opção para o sabor");
 
                                 CharSequence[] itens = new CharSequence[]{
-                                        "Editar complemento", "Excluir complemento"
+                                        "Editar o sabor", "Excluir o sabor"
                                 };
                                 builder.setSingleChoiceItems(itens, 0, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        complementoPosicao = which;
+                                        saborPosicao = which;
                                     }
                                 });
 
@@ -98,18 +98,18 @@ public class ComplementosActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        if(complementoPosicao == 0){
-                                            Complemento complemento = complementos.get(position);
-                                            idComplemento = complemento.getIdComplemento();
-                                            Intent i = new Intent(ComplementosActivity.this, ConfiguracoesComplementoActivity.class);
-                                            i.putExtra("complemento", idComplemento);
+                                        if(saborPosicao == 0){
+                                            Sabor sabor = sabores.get(position);
+                                            idSabor = sabor.getIdSabor();
+                                            Intent i = new Intent(SaboresActivity.this, ConfiguracoesSaboresActivity.class);
+                                            i.putExtra("sabor", idSabor);
                                             startActivity(i);
                                         }else{
-                                            Complemento complementoSelecionado = complementos.get(position);
-                                            complementoSelecionado.removerComplemento();
-                                            startActivity(new Intent(ComplementosActivity.this, ComplementosActivity.class));
-                                            Toast.makeText(ComplementosActivity.this,
-                                                    "Complemento Excluído com sucesso!",
+                                            Sabor saborSelecionado = sabores.get(position);
+                                            saborSelecionado.removerSabor();
+                                            startActivity(new Intent(SaboresActivity.this, SaboresActivity.class));
+                                            Toast.makeText(SaboresActivity.this,
+                                                    "Sabor Excluído com sucesso!",
                                                     Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -138,32 +138,32 @@ public class ComplementosActivity extends AppCompatActivity {
         }));
     }
 
-    private void recuperarComplementos() {
+    private void recuperarSabores() {
         dialog = new SpotsDialog.Builder()
                 .setContext(this)
-                .setMessage("Carregando Complementos")
+                .setMessage("Carregando Sabores")
                 .setCancelable(false)
                 .build();
         dialog.show();
 
-        DatabaseReference complementosPesquisa = firebaseRef
-                .child("complementos")
+        DatabaseReference saboresPesquisa = firebaseRef
+                .child("sabores")
                 .child(idEmpresa);
 
-        complementosPesquisa.addValueEventListener(new ValueEventListener() {
+        saboresPesquisa.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                complementos.clear();
+                sabores.clear();
                 if (dataSnapshot.getValue() != null) {
 
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Complemento complemento = ds.getValue(Complemento.class);
-                        complementos.add(complemento);
+                        Sabor sabor = ds.getValue(Sabor.class);
+                        sabores.add(sabor);
                     }
-                    adapterComplemento.notifyDataSetChanged();
+                    adapterSabor.notifyDataSetChanged();
 
                 } else {
-                    alertaSimples("Não há nenhum complemento", getApplicationContext(), "Complementos");
+                    alertaSimples("Não há nenhum sabor de pizza cadastrado", getApplicationContext(), "Sabores");
                 }
                 dialog.dismiss();
             }
@@ -183,7 +183,7 @@ public class ComplementosActivity extends AppCompatActivity {
     }
 
     private void inicializarComponentes() {
-        recyclerComplementos = findViewById(R.id.recyclerComplementos);
+        recyclerSabores = findViewById(R.id.recyclerSabores);
     }
 
     @Override
@@ -199,7 +199,7 @@ public class ComplementosActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menuNovoComplemento :
-                startActivity(new Intent(ComplementosActivity.this, NovoComplementoActivity.class));
+                startActivity(new Intent(SaboresActivity.this, NovoSaborActivity.class));
                 break;
         }
 

@@ -298,7 +298,7 @@ public class Comidas extends Fragment {
         }
     }
 
-    public void recuperarProdutos(){
+    private void recuperarProdutos(){
 
         produtosRef = databaseReference
                 .child("produtos")

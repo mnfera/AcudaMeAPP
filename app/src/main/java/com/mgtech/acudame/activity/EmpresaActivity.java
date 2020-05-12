@@ -62,6 +62,12 @@ public class EmpresaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empresa);
 
+        // conf iniciais
+        inicializarComponentes();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        firebaseRef = ConfiguracaoFirebase.getFirebase();
+        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
         //Anuncio
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -72,11 +78,6 @@ public class EmpresaActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         anuncio.loadAd(adRequest);
 
-        // conf iniciais
-        inicializarComponentes();
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        firebaseRef = ConfiguracaoFirebase.getFirebase();
-        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
         //Salvando token da empresa
         recuperarToken ();
@@ -242,6 +243,9 @@ public class EmpresaActivity extends AppCompatActivity {
             case R.id.menuComplemento :
                 abrirComplementos();
                 break;
+            case R.id.menuSabor :
+                abrirSabores();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -285,6 +289,10 @@ public class EmpresaActivity extends AppCompatActivity {
 
     private void abrirComplementos() {
         startActivity(new Intent(EmpresaActivity.this, ComplementosActivity.class));
+    }
+
+    private void abrirSabores() {
+        startActivity(new Intent(EmpresaActivity.this, SaboresActivity.class));
     }
 
     public void recuperarToken (){

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".adapter.AdapterSabor">
+
+    <TextView
+        android:id="@+id/textNomeSabor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calafrango: Calabresa e Frango"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textSaborStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Status: Ativo"
+        android:textSize="14sp" />
+
+    <include layout="@layout/divisor" />
+
+</LinearLayout>

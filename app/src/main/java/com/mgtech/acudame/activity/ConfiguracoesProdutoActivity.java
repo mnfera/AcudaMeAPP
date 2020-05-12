@@ -181,6 +181,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity implements A
         costumItems.add(new CostumItem("Comida", R.drawable.ic_c));
         costumItems.add(new CostumItem("Bebida", R.drawable.ic_b));
         costumItems.add(new CostumItem("Sorvete", R.drawable.ic_s));
+        costumItems.add(new CostumItem("Pizza", R.drawable.ic_pizza_black_24dp));
         return costumItems;
     }
 

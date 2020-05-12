@@ -55,7 +55,6 @@ public class Bebidas extends Fragment {
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
     private Usuario usuario;
     private Empresa empresa;
-    static final int ACTIVITY_2_REQUEST = 1;
 
 
     public Bebidas(String idEmpresa, String idUsuario) {

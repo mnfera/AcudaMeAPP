@@ -35,6 +35,7 @@ import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Usuario;
 import com.mgtech.acudame.viewPager.Bebidas;
 import com.mgtech.acudame.viewPager.Comidas;
+import com.mgtech.acudame.viewPager.Pizzas;
 import com.mgtech.acudame.viewPager.Sorvetes;
 import com.squareup.picasso.Picasso;
 
@@ -60,8 +61,8 @@ public class CardapioActivity extends AppCompatActivity {
     private int qtdItensCarrinho;
     private Double totalCarrinho;
     private int index = 0;
-    private int comidaIndex = -1, bebidaIndex = -1, sorveteIndex = -1;
-    private boolean comida = false, bebida = false, sorvete = false;
+    private int comidaIndex = -1, pizzaIndex = -1, bebidaIndex = -1, sorveteIndex = -1;
+    private boolean comida = false, pizza = false, bebida = false, sorvete = false;
 
     private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
@@ -264,6 +265,9 @@ public class CardapioActivity extends AppCompatActivity {
         Query produtoComida = produtosRef.orderByChild("categoria")
                 .equalTo("comida");
 
+        Query produtoPizza = produtosRef.orderByChild("categoria")
+                .equalTo("pizza");
+
         Query produtoBebida = produtosRef.orderByChild("categoria")
                 .equalTo("bebida");
 
@@ -276,6 +280,21 @@ public class CardapioActivity extends AppCompatActivity {
 
                 if (dataSnapshot.getValue() != null){
                     comida = true;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+        produtoPizza.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() != null){
+                    pizza = true;
                 }
             }
             @Override
@@ -332,6 +351,11 @@ public class CardapioActivity extends AppCompatActivity {
             comidaIndex = index;
             index++;
         }
+        if(pizza == true) {
+            viewPagerAdapter.addFragment(new Pizzas(idEmpresaSelecionada, idUsuarioLogado), "" );
+            pizzaIndex = index;
+            index++;
+        }
         if(bebida == true){
             viewPagerAdapter.addFragment(new Bebidas(idEmpresaSelecionada, idUsuarioLogado), "" );
             bebidaIndex = index;
@@ -350,6 +374,11 @@ public class CardapioActivity extends AppCompatActivity {
         if(comidaIndex >= 0) {
             tabLayout.getTabAt(comidaIndex).setIcon(R.drawable.comida);
             tabLayout.getTabAt(comidaIndex).setText("Comidas");
+        }
+
+        if(pizzaIndex >= 0) {
+            tabLayout.getTabAt(pizzaIndex).setIcon(R.drawable.ic_pizzas);
+            tabLayout.getTabAt(pizzaIndex).setText("Pizzas");
         }
 
         if(bebidaIndex >= 0) {
