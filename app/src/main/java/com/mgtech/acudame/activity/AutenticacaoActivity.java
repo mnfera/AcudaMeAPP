@@ -301,9 +301,9 @@ public class AutenticacaoActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "exemplo dialog");
     }
 
-    public void recuperarSenha(){
+    public void recuperarSenha(String gmail){
 
-        autenticacao.sendPasswordResetEmail(campoEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        autenticacao.sendPasswordResetEmail(gmail).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
@@ -318,6 +318,8 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
     //Função para capturar o email do usário para a recuperação da senha
     public void recuperarEmail(){
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Recuperar senha");
         builder.setMessage("Por favor, digite seu email cadastrado no sistema");
@@ -326,27 +328,52 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
         builder.setView(email);
 
-        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+        builder.setCancelable(false)
+                .setView(email)
+                .setPositiveButton("Confirmar", null)
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        final AlertDialog mDialog = builder.create();
+
+        mDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onShow(DialogInterface dialog) {
+                Button postive = mDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                postive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //aqui você trata o evento
+                        if (email.getText().length() == 0) {
+                            email.setError("Campo não pode ficar em branco!");
+                            email.setFocusable(true);
+                            email.requestFocus();
+                        } else {
+                                if(!validateEmailFormat(email.getText().toString())){
+                                    email.setError("Email inválido");
+                                    email.setFocusable(true);
+                                    email.requestFocus();
+                                }else{
+                                    dialog.dismiss();
+                                    recuperarSenha(email.getText().toString());
 
-                if(!email.getText().toString().isEmpty()){
-                    recuperarSenha();
-                }else{
-
-                }
+                                }
+                        }
+                    }
+                });
             }
         });
-
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        mDialog.show();
     }
 
+    private boolean validateEmailFormat(final String email) {
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            return true;
+        }
+        return false;
+    }
 }
