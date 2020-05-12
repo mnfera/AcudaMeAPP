@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class AdapterSpinner extends ArrayAdapter {
 
-    public AdapterSpinner(@NonNull Context context, ArrayList<CostumItem> costumItems) {
+    public AdapterSpinner(@NonNull Context context, @Deprecated ArrayList<CostumItem> costumItems) {
         super(context, 0, costumItems);
     }
 

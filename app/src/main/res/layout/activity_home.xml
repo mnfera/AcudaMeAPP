@@ -66,17 +66,23 @@
         android:id="@+id/recyclerEmpresas"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
         android:layout_marginTop="154dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/include" />
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/homeAnuncio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:adSize="BANNER"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerEmpresas"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

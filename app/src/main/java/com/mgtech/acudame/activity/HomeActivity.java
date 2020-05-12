@@ -14,6 +14,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     private List<Empresa> empresas = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private AlertDialog dialog;
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,16 @@ public class HomeActivity extends AppCompatActivity {
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -205,6 +221,7 @@ public class HomeActivity extends AppCompatActivity {
     private void inicializarComponentes() {
         searchView = findViewById(R.id.materialSearchView);
         recyclerEmpresas = findViewById(R.id.recyclerEmpresas);
+        anuncio = findViewById(R.id.homeAnuncio);
     }
 
     private void deslogarUsuario() {

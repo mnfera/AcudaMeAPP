@@ -18,6 +18,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -50,12 +55,22 @@ public class EmpresaActivity extends AppCompatActivity {
     private int produtoOpcao;
     private Empresa empresa;
     private AlertDialog dialog;
-
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empresa);
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // conf iniciais
         inicializarComponentes();
@@ -188,6 +203,7 @@ public class EmpresaActivity extends AppCompatActivity {
 
     private void inicializarComponentes() {
         recyclerProdutos = findViewById(R.id.recyclerProdutos);
+        anuncio = findViewById(R.id.empresaAnuncio);
     }
 
     @Override
