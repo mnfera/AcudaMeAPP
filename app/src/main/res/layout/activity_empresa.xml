@@ -20,13 +20,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include" />
+        app:layout_constraintTop_toTopOf="@+id/include">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/empresaAnuncio"
@@ -34,9 +36,54 @@
         android:layout_height="wrap_content"
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerProdutos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerProdutos" />
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/floatingActionsMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints"
+        app:fab_addButtonColorNormal="@color/vermelhoEscuro"
+        app:fab_addButtonColorPressed="@color/vermelhoEscuro"
+        app:fab_addButtonPlusIconColor="@android:color/white"
+        app:fab_labelStyle="@style/custom_Fab">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_actionPizza"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:fab_colorNormal="@color/vermelhoEscuro"
+            app:fab_colorPressed="@color/branco_modificado"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_pizzas"
+            app:fab_title="Adicionar nova pizza"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_actionComplemento"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:fab_colorNormal="@color/vermelhoEscuro"
+            app:fab_colorPressed="@color/branco_modificado"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_sorvetenew"
+            app:fab_title="Adicionar novo complemento"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_actionProduto"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:fab_colorNormal="@color/vermelhoEscuro"
+            app:fab_colorPressed="@color/branco_modificado"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_add_white"
+            app:fab_title="Adicionar novo produto"/>
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

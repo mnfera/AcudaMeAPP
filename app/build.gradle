@@ -75,5 +75,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
 
+    //Correção para spinner
     implementation 'com.android.support:multidex:1.0.3'
+
+    //Botão flutuante
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
 }

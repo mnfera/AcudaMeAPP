@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -56,6 +57,7 @@ public class EmpresaActivity extends AppCompatActivity {
     private Empresa empresa;
     private AlertDialog dialog;
     private AdView anuncio;
+    private FloatingActionButton fab_actionProduto, fab_actionComplemento, fab_actionPizza;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +171,27 @@ public class EmpresaActivity extends AppCompatActivity {
                         }
                 )
         );
+
+        fab_actionProduto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirNovoProduto();
+            }
+        });
+
+        fab_actionPizza.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirSabores();
+            }
+        });
+
+        fab_actionComplemento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirComplementos();
+            }
+        });
     }
 
     private void recuperarProdutos(){
@@ -205,6 +228,10 @@ public class EmpresaActivity extends AppCompatActivity {
     private void inicializarComponentes() {
         recyclerProdutos = findViewById(R.id.recyclerProdutos);
         anuncio = findViewById(R.id.empresaAnuncio);
+        fab_actionProduto = findViewById(R.id.fab_actionProduto);
+        fab_actionComplemento = findViewById(R.id.fab_actionComplemento);
+        fab_actionPizza = findViewById(R.id.fab_actionPizza);
+
     }
 
     @Override
