@@ -269,18 +269,18 @@ public class Pizzas extends Fragment {
     public void escolherComplementos(final int posicao){
 
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
-        builder.setTitle("Selecione os sabores da pizza");
+        builder.setTitle("Selecione os sabores da Pizza:\nAté 2 (dois) sabores");
         builder.setMultiChoiceItems(listaItens, checkedItens, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int position, boolean isChecked) {
 
-                if ( isChecked ){
-                    if( !mSeletectItems.contains( position )){
-                        mSeletectItems.add( position );
+                    if (isChecked) {
+                        if (!mSeletectItems.contains(position)) {
+                            mSeletectItems.add(position);
+                        }
+                    } else if (mSeletectItems.contains(position)) {
+                        mSeletectItems.remove((Integer) position);
                     }
-                }else  if( mSeletectItems.contains(position) ){
-                    mSeletectItems.remove((Integer) position);
-                }
             }
         });
 
@@ -289,124 +289,134 @@ public class Pizzas extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                for( int i = 0; i < mSeletectItems.size(); i++ ){
-                    item = item + listaItens[mSeletectItems.get(i)];
-                    if( i != mSeletectItems.size() - 1 ){
-                        item = item + ", ";
-                    }
-                }
-                if(item.isEmpty()){
-                    item = "zero adicionais";
-                }
-                if( usuario == null ){
+                if(!mSeletectItems.isEmpty() && mSeletectItems.size() <= 2) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Nenhum endereço cadastrado");
-                    builder.setMessage("Por favor, cadastre um endereço para fazer um pedido.");
-
-                    builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(getActivity(), ConfiguracoesUsuarioActivity.class));
+                    for (int i = 0; i < mSeletectItems.size(); i++) {
+                        item = item + listaItens[mSeletectItems.get(i)];
+                        if (i != mSeletectItems.size() - 1) {
+                            item = item + " e ";
                         }
-                    });
+                    }
+                    if (usuario == null) {
 
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Nenhum endereço cadastrado");
+                        builder.setMessage("Por favor, cadastre um endereço para fazer um pedido.");
 
-                }else{
+                        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(getActivity(), ConfiguracoesUsuarioActivity.class));
+                            }
+                        });
 
-                    final EditText editQuantidade = new EditText(getActivity());
-                    editQuantidade.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                    editQuantidade.setText("1");
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Quantidade")
-                            .setMessage("Informe a quantidade do produto")
-                            .setCancelable(false)
-                            .setView(editQuantidade)
-                            .setPositiveButton("Confirmar", null)
-                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
+                    } else {
 
-                    final AlertDialog mDialog = builder.create();
-                    //Aqui você trata o click do button positive sem que o alertdialog feche em caso de convergência
-                    String finalItem = item;
-                    String finalItem1 = item;
-                    mDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                        @Override
-                        public void onShow(final DialogInterface dialog) {
-                            Button postive = mDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                            postive.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    //aqui você trata o evento
-                                    if (editQuantidade.getText().length() == 0) {
-                                        editQuantidade.setError("Campo obrigatório");
-                                        editQuantidade.setFocusable(true);
-                                        editQuantidade.requestFocus();
-                                    } else {
-                                        //Como ao clicar no botão positivo a condição é verificada
-                                        //caso esteja tudo certo com o edittext, então chama o seu método
-                                        //enviar email
+                        final EditText editQuantidade = new EditText(getActivity());
+                        editQuantidade.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+                        editQuantidade.setText("1");
 
-                                        if(editQuantidade.getText().toString().equals("0")){
-                                            editQuantidade.setError("Digite um valor diferente de 0");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Quantidade")
+                                .setMessage("Informe a quantidade do produto")
+                                .setCancelable(false)
+                                .setView(editQuantidade)
+                                .setPositiveButton("Confirmar", null)
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        final AlertDialog mDialog = builder.create();
+                        //Aqui você trata o click do button positive sem que o alertdialog feche em caso de convergência
+                        String finalItem = item;
+                        String finalItem1 = item;
+                        mDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(final DialogInterface dialog) {
+                                Button postive = mDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                                postive.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //aqui você trata o evento
+                                        if (editQuantidade.getText().length() == 0) {
+                                            editQuantidade.setError("Campo obrigatório");
                                             editQuantidade.setFocusable(true);
                                             editQuantidade.requestFocus();
-                                        }else{
-                                            int valor = 0;
+                                        } else {
+                                            //Como ao clicar no botão positivo a condição é verificada
+                                            //caso esteja tudo certo com o edittext, então chama o seu método
+                                            //enviar email
 
-                                            try {
-                                                valor = Integer.parseInt(editQuantidade.getText().toString());
-
-                                                String quantidade = editQuantidade.getText().toString();
-                                                Produto produtoSelecionado = produtos.get(posicao);
-                                                ItemPedido itemPedido = new ItemPedido();
-                                                itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
-                                                itemPedido.setNomeProduto(produtoSelecionado.getNome());
-                                                itemPedido.setPreco(produtoSelecionado.getPreco());
-                                                itemPedido.setQuantidade(Integer.parseInt(quantidade));
-                                                itemPedido.setComplemento(item);
-
-                                                itensCarrinho.add(itemPedido);
-
-                                                if(pedidoRecuperado == null) {
-                                                    pedidoRecuperado = new Pedido(idUsuario, idEmpresa);
-                                                }
-
-                                                pedidoRecuperado.setNome(usuario.getNome());
-                                                pedidoRecuperado.setEndereco(usuario.getEndereco());
-                                                pedidoRecuperado.setNomeEmpresa(empresa.getNome());
-                                                pedidoRecuperado.setNumero(usuario.getNumero());
-                                                pedidoRecuperado.setReferencia(usuario.getReferencia());
-                                                pedidoRecuperado.setTelEmpresa(empresa.getTelefone());
-                                                pedidoRecuperado.setTelUsuario(usuario.getTelefone());
-                                                pedidoRecuperado.setItens(itensCarrinho);
-                                                pedidoRecuperado.salvar();
-                                                //No final como já completou a condição pode dar dismiss
-                                                //no alertdialog, pois está tudo ok
-                                                dialog.dismiss();
-
-                                                Toast.makeText(getActivity(), "Pedido adicionado ao carrinho!"
-                                                        , Toast.LENGTH_SHORT).show();
-
-                                            } catch (NumberFormatException e) {
-                                                editQuantidade.setError("Digite somente números");
+                                            if (editQuantidade.getText().toString().equals("0")) {
+                                                editQuantidade.setError("Digite um valor diferente de 0");
                                                 editQuantidade.setFocusable(true);
                                                 editQuantidade.requestFocus();
+                                            } else {
+                                                int valor = 0;
+
+                                                try {
+                                                    valor = Integer.parseInt(editQuantidade.getText().toString());
+
+                                                    String quantidade = editQuantidade.getText().toString();
+                                                    Produto produtoSelecionado = produtos.get(posicao);
+                                                    ItemPedido itemPedido = new ItemPedido();
+                                                    itemPedido.setIdProduto(produtoSelecionado.getIdProduto());
+                                                    itemPedido.setNomeProduto(produtoSelecionado.getNome());
+                                                    itemPedido.setPreco(produtoSelecionado.getPreco());
+                                                    itemPedido.setQuantidade(Integer.parseInt(quantidade));
+                                                    itemPedido.setSabor(item);
+
+                                                    itensCarrinho.add(itemPedido);
+
+                                                    if (pedidoRecuperado == null) {
+                                                        pedidoRecuperado = new Pedido(idUsuario, idEmpresa);
+                                                    }
+
+                                                    pedidoRecuperado.setNome(usuario.getNome());
+                                                    pedidoRecuperado.setEndereco(usuario.getEndereco());
+                                                    pedidoRecuperado.setNomeEmpresa(empresa.getNome());
+                                                    pedidoRecuperado.setNumero(usuario.getNumero());
+                                                    pedidoRecuperado.setReferencia(usuario.getReferencia());
+                                                    pedidoRecuperado.setTelEmpresa(empresa.getTelefone());
+                                                    pedidoRecuperado.setTelUsuario(usuario.getTelefone());
+                                                    pedidoRecuperado.setItens(itensCarrinho);
+                                                    pedidoRecuperado.salvar();
+                                                    //No final como já completou a condição pode dar dismiss
+                                                    //no alertdialog, pois está tudo ok
+                                                    dialog.dismiss();
+
+                                                    Toast.makeText(getActivity(), "Pedido adicionado ao carrinho!"
+                                                            , Toast.LENGTH_SHORT).show();
+
+                                                } catch (NumberFormatException e) {
+                                                    editQuantidade.setError("Digite somente números");
+                                                    editQuantidade.setFocusable(true);
+                                                    editQuantidade.requestFocus();
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            });
-                        }
-                    });
-                    mDialog.show();
+                                });
+                            }
+                        });
+                        mDialog.show();
+                    }
+                }else if (mSeletectItems.isEmpty()){
+                    exibirMensagem("Selecione pelo menos um sabor!");
+                    dialog.dismiss();
+                }else{
+                    for( int i = 0; i < checkedItens.length; i++ ){
+                        checkedItens[i] = false;
+                        mSeletectItems.clear();
+                    }
+                    exibirMensagem("Selecione no máximo 2 sabores!");
+                    dialog.dismiss();
                 }
             }
         });
@@ -430,5 +440,9 @@ public class Pizzas extends Fragment {
 
         androidx.appcompat.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void exibirMensagem(String texto){
+        Toast.makeText(getActivity(), texto, Toast.LENGTH_SHORT).show();
     }
 }

@@ -261,17 +261,8 @@ public class EmpresaActivity extends AppCompatActivity {
             case R.id.menuPedidosCancelados :
                 abrirPedidosCancelados();
                 break;
-            case R.id.menuNovoProduto :
-                abrirNovoProduto();
-                break;
             case R.id.menuPedidos :
                 abrirPedidos();
-                break;
-            case R.id.menuComplemento :
-                abrirComplementos();
-                break;
-            case R.id.menuSabor :
-                abrirSabores();
                 break;
         }
 

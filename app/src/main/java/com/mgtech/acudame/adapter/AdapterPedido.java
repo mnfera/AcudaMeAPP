@@ -88,10 +88,15 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
 
             String nome = itemPedido.getNomeProduto();
             String complementos = itemPedido.getComplemento();
-            if(complementos == null) {
-                descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + df.format(preco) + ") \n";
+            String sabores = itemPedido.getSabor();
+            if(sabores == null) {
+                if (complementos == null) {
+                    descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + df.format(preco) + ") \n";
+                }else {
+                    descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + df.format(preco) + ") \nCom: " + complementos + "\n";
+                }
             }else {
-                descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + df.format(preco) + ") \nCom: " + complementos + "\n";
+                descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + df.format(preco) + ") \nDe: " + sabores + "\n";
             }
             numeroItem++;
         }
