@@ -67,7 +67,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentTitle( titulo )
                 .setContentText( corpo )
                 .setSmallIcon( R.drawable.ic_delivery)
-                .setColor(R.color.vermelhoEscuro)
+                //.setColor(R.color.vermelhoEscuro)
                 .setSound( som )
                 .setAutoCancel( true )
                 .setContentIntent( pendingIntent );

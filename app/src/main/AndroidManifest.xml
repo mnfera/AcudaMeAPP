@@ -17,7 +17,10 @@
         <activity android:name=".activity.ConfiguracoesSaboresActivity"
             android:parentActivityName=".activity.SaboresActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
         <activity
             android:name=".activity.SaboresActivity"
             android:parentActivityName=".activity.EmpresaActivity"
