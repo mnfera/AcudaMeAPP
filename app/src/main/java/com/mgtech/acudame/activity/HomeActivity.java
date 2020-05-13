@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,17 +20,23 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterEmpresa;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
+import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.model.Empresa;
+import com.mgtech.acudame.model.Usuario;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -47,15 +54,23 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private AlertDialog dialog;
     private AdView anuncio;
+    private Usuario usuario;
+    private String token;
+    private String idUsuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //Pegando token
+        recuperarToken();
+
+        //conf inicias
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
         //Anuncio
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -244,6 +259,21 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(HomeActivity.this, HistoricoPedidosUsuarioActivity.class));
     }
 
+    public void recuperarToken(){
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
 
+                        //token
+                         token = task.getResult().getToken();
+
+                        usuario = new Usuario();
+                        usuario.setTokenUsuario(token);
+                        usuario.setIdUsuario(idUsuarioLogado);
+                        usuario.salvarTokenUsuario();
+                    }
+                });
+    }
 
 }

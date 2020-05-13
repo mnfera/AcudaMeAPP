@@ -20,7 +20,20 @@ public class Usuario {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
         DatabaseReference usuarioRef = firebaseRef.child("usuarios")
                 .child(getIdUsuario());
-        usuarioRef.setValue(this);
+        usuarioRef.child("idUsuario").setValue(getIdUsuario());
+        usuarioRef.child("endereco").setValue(getEndereco());
+        usuarioRef.child("nome").setValue(getNome());
+        usuarioRef.child("numero").setValue(getNumero());
+        usuarioRef.child("referencia").setValue(getReferencia());
+        usuarioRef.child("telefone").setValue(getTelefone());
+
+    }
+
+    public void salvarTokenUsuario() {
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference usuarioRef = firebaseRef.child("usuarios")
+                .child(getIdUsuario());
+        usuarioRef.child("tokenUsuario").setValue(getTokenUsuario());
     }
 
     public String getTelefone() { return telefone; }
