@@ -298,7 +298,7 @@ public class Sorvetes extends Fragment {
                 if(item.isEmpty()){
                     item = "zero adicionais";
                 }
-                if( usuario == null ){
+                if( usuario.getEndereco() == null ){
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Nenhum endereço cadastrado");

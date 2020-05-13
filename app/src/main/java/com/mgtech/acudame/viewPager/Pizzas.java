@@ -297,7 +297,7 @@ public class Pizzas extends Fragment {
                             item = item + " e ";
                         }
                     }
-                    if (usuario == null) {
+                    if (usuario.getEndereco() == null) {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle("Nenhum endereço cadastrado");

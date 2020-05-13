@@ -261,7 +261,7 @@ public class PedidosActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<NotificacaoDados> call, Response<NotificacaoDados> response) {
                             if(response.isSuccessful()){
-                                Toast.makeText(PedidosActivity.this, "Pedido confirmado"
+                                Toast.makeText(PedidosActivity.this, "token" + token
                                         , Toast.LENGTH_SHORT).show();
                             }
                         }

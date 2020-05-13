@@ -192,7 +192,7 @@ public class Bebidas extends Fragment {
 
     private void confirmarQuantidade(final int posicao) {
 
-        if( usuario == null ){
+        if( usuario.getEndereco() == null ){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Nenhum endereço cadastrado");
