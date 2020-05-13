@@ -46,10 +46,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent intent = null;
 
-        if(corpo.equals("Seu pedido foi finalizado")) {
+        if(corpo.equals("Seu pedido foi recebido pela empresa e está sendo preparado")){
 
             intent = new Intent(this, HistoricoPedidosUsuarioActivity.class);
 
+        }
+
+        if(corpo.equals("Seu pedido foi/será entregue e finalizado")){
+
+            intent = new Intent(this, HistoricoPedidosUsuarioActivity.class);
+
+        }
+
+        if(corpo.equals("Seu pedido foi cancelado")){
+
+            intent = new Intent(this, HistoricoPedidosUsuarioActivity.class);
 
         }
 
