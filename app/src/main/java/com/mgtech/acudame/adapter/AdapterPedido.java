@@ -21,7 +21,6 @@ import com.mgtech.acudame.R;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;

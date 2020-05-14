@@ -28,7 +28,6 @@ import com.mgtech.acudame.activity.ConfiguracoesUsuarioActivity;
 import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
-import com.mgtech.acudame.model.Complemento;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
@@ -39,7 +38,6 @@ import com.mgtech.acudame.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
-import dmax.dialog.SpotsDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -333,9 +331,7 @@ public class Pizzas extends Fragment {
                                 });
 
                         final AlertDialog mDialog = builder.create();
-                        //Aqui você trata o click do button positive sem que o alertdialog feche em caso de convergência
-                        String finalItem = item;
-                        String finalItem1 = item;
+
                         mDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                             @Override
                             public void onShow(final DialogInterface dialog) {

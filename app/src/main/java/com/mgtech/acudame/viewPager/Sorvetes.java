@@ -3,10 +3,8 @@ package com.mgtech.acudame.viewPager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -334,9 +332,7 @@ public class Sorvetes extends Fragment {
                             });
 
                     final AlertDialog mDialog = builder.create();
-                    //Aqui você trata o click do button positive sem que o alertdialog feche em caso de convergência
-                    String finalItem = item;
-                    String finalItem1 = item;
+
                     mDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                         @Override
                         public void onShow(final DialogInterface dialog) {
