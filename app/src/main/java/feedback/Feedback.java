@@ -69,7 +69,6 @@ public class Feedback extends AppCompatActivity {
         String emailUsuario = autenticacao.getCurrentUser().getEmail().trim();
         final String subject = "Feedback";
         final String body = menssagenUsuario;
-        Toast.makeText(Feedback.this, emailUsuario, Toast.LENGTH_SHORT).show();
 
         if(!isOnline()) {
             Toast.makeText(getApplicationContext(), "Não estava online para enviar e-mail!", Toast.LENGTH_SHORT).show();
