@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mgtech.acudame">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,13 +17,16 @@
         android:screenOrientation="fullSensor"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ConfiguracoesSaboresActivity"
+
+        <activity
+            android:name="feedback.Feedback"
+            android:parentActivityName=".activity.HomeActivity" />
+
+        <activity
+            android:name=".activity.ConfiguracoesSaboresActivity"
             android:parentActivityName=".activity.SaboresActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
-
-        </activity>
-
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.SaboresActivity"
             android:parentActivityName=".activity.EmpresaActivity"
@@ -152,11 +158,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4438181443019044~6061159786"/>
+            android:value="ca-app-pub-4438181443019044~6061159786" />
     </application>
-
 
 </manifest>

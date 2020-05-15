@@ -1,5 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -32,6 +34,10 @@
     <style name="custom_Fab">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="HintTextStyle" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>

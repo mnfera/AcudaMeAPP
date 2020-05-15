@@ -27,7 +27,10 @@
         android:id="@+id/menuPedidosCancelados"
         android:title="Pedidos Cancelados"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/menuFaleconosco"
+        android:title="Fale conosco"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menuSair"
         android:title="Sair"

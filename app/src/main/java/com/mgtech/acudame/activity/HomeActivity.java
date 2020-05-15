@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
+import feedback.Feedback;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -228,6 +229,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menuHistoricoPedidos :
                 abrirHistoricoPedidos();
                 break;
+            case R.id.menuFaleconosco :
+                abrirHistoricoFeedback();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -257,6 +261,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private void abrirHistoricoPedidos() {
         startActivity(new Intent(HomeActivity.this, HistoricoPedidosUsuarioActivity.class));
+    }
+
+    private void abrirHistoricoFeedback() {
+        startActivity(new Intent(HomeActivity.this, Feedback.class));
     }
 
     public void recuperarToken(){
