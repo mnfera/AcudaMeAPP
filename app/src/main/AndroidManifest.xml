@@ -20,7 +20,8 @@
 
         <activity
             android:name="feedback.Feedback"
-            android:parentActivityName=".activity.HomeActivity" />
+            android:parentActivityName=".activity.HomeActivity"
+            android:launchMode="singleTop"/>
 
         <activity
             android:name=".activity.ConfiguracoesSaboresActivity"
