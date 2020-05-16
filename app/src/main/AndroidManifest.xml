@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="feedback.Feedback"
+            android:name="com.mgtech.acudame.feedback.Feedback"
             android:parentActivityName=".activity.HomeActivity"
             android:launchMode="singleTop"/>
 

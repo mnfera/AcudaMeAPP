@@ -1,4 +1,4 @@
-package feedback;
+package com.mgtech.acudame.feedback;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,9 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +23,6 @@ import com.mgtech.acudame.R;
 import com.mgtech.acudame.activity.AutenticacaoActivity;
 import com.mgtech.acudame.activity.ConfiguracoesUsuarioActivity;
 import com.mgtech.acudame.activity.HistoricoPedidosUsuarioActivity;
-import com.mgtech.acudame.activity.HomeActivity;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 

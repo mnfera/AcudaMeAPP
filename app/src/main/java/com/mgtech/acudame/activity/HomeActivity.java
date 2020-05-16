@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
-import feedback.Feedback;
+import com.mgtech.acudame.feedback.Feedback;
 
 public class HomeActivity extends AppCompatActivity {
 
