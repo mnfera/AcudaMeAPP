@@ -14,6 +14,11 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +48,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity implements A
     private ArrayList<CostumItem> costumItems;
     private int width = 150;
     private String categoriaEmpresa;
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,16 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity implements A
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idEmpresaLogada = UsuarioFirebase.getIdUsuario();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // conf spinner
         spinnerCatogoria = findViewById(R.id.spinnerCategoria);
@@ -173,6 +189,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity implements A
         editProdutoPreco = findViewById(R.id.editProdutoPreco);
         tipoStatus = findViewById(R.id.switchStatus);
         buttonSalvar = findViewById(R.id.buttonSalvar);
+        anuncio = findViewById(R.id.confProdutoAnuncio);
 
     }
 

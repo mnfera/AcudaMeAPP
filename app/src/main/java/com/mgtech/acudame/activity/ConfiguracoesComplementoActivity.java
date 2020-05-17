@@ -11,6 +11,11 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +35,7 @@ public class ConfiguracoesComplementoActivity extends AppCompatActivity {
     private String idEmpresa, idComplemento;
     private DatabaseReference firebaseRef;
     private AlertDialog dialog;
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,16 @@ public class ConfiguracoesComplementoActivity extends AppCompatActivity {
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idEmpresa = UsuarioFirebase.getIdUsuario();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // recuperar id do complemento selecionado
         Bundle bundle = getIntent().getExtras();
@@ -135,5 +151,6 @@ public class ConfiguracoesComplementoActivity extends AppCompatActivity {
         editComplementoNome = findViewById(R.id.editComplementoNome);
         tipoStatus = findViewById(R.id.switchStatus);
         buttonSalvar = findViewById(R.id.buttonSalvar);
+        anuncio = findViewById(R.id.confComplementoAnuncio);
     }
 }

@@ -19,6 +19,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +50,7 @@ public class ComplementosActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private String idEmpresa, idComplemento;
     private int complementoPosicao;
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,16 @@ public class ComplementosActivity extends AppCompatActivity {
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idEmpresa = UsuarioFirebase.getIdUsuario();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -184,6 +200,7 @@ public class ComplementosActivity extends AppCompatActivity {
 
     private void inicializarComponentes() {
         recyclerComplementos = findViewById(R.id.recyclerComplementos);
+        anuncio = findViewById(R.id.complementosAnuncio);
     }
 
     @Override

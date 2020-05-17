@@ -16,6 +16,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,6 +61,7 @@ public class PedidosActivity extends AppCompatActivity {
     private int posicaoItem;
     private Retrofit retrofit;
     private String baseUrl;
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,16 @@ public class PedidosActivity extends AppCompatActivity {
                 .baseUrl( baseUrl )
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -225,6 +241,7 @@ public class PedidosActivity extends AppCompatActivity {
 
     private void inicializarComponentes() {
         recyclerPedidos = findViewById(R.id.recyclerPedidos);
+        anuncio = findViewById(R.id.pedidosAnuncio);
     }
 
     public void alertaSimples(String conteudo, Context context, String titulo){

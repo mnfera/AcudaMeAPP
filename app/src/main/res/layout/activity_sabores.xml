@@ -16,7 +16,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerSabores"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="590dp"
         android:layout_margin="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/saboresAnuncio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+    </LinearLayout>
 
 </LinearLayout>

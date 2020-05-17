@@ -18,6 +18,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -50,6 +55,7 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
     private String idUsuarioLogado;
     private String urlImagemSelecionada = "";
     private AlertDialog dialog;
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,16 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -259,5 +275,6 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
         editEmpresaTelefone = findViewById(R.id.editTelefone);
         imagePerfilEmpresa = findViewById(R.id.imagePerfilEmpresa);
         buttonSalvar = findViewById(R.id.buttonSalvar);
+        anuncio = findViewById(R.id.confEmpresaAnuncio);
     }
 }

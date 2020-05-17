@@ -13,6 +13,11 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterSpinner;
 import com.mgtech.acudame.helper.UsuarioFirebase;
@@ -31,6 +36,7 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity implements Ada
     private int width = 150;
     private String idUsuarioLogado;
     private String categoriaEmpresa;
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,16 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity implements Ada
         // conf iniciais
         inicializarComponentes();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -116,6 +132,7 @@ public class NovoProdutoEmpresaActivity extends AppCompatActivity implements Ada
         tipoStatus = findViewById(R.id.switchStatus);
         buttonSalvar = findViewById(R.id.buttonSalvar);
         spinnerCatogoria = findViewById(R.id.spinnerCategoria);
+        anuncio = findViewById(R.id.novoProdutoAnuncio);
     }
 
     @Override
