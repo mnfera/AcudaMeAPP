@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
     private List<Empresa> empresas = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private AlertDialog dialog;
-    private AdView anuncio;
+    private AdView anuncioHome;
     private Usuario usuario;
     private String token;
     private String idUsuarioLogado;
@@ -67,12 +67,6 @@ public class HomeActivity extends AppCompatActivity {
         //Pegando token
         recuperarToken();
 
-        //conf inicias
-        inicializarComponentes();
-        firebaseRef = ConfiguracaoFirebase.getFirebase();
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
-
         //Anuncio
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -80,8 +74,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //conf inicias
+        inicializarComponentes();
+        firebaseRef = ConfiguracaoFirebase.getFirebase();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
         AdRequest adRequest = new AdRequest.Builder().build();
-        anuncio.loadAd(adRequest);
+        anuncioHome.loadAd(adRequest);
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -240,7 +240,7 @@ public class HomeActivity extends AppCompatActivity {
     private void inicializarComponentes() {
         searchView = findViewById(R.id.materialSearchView);
         recyclerEmpresas = findViewById(R.id.recyclerEmpresas);
-        anuncio = findViewById(R.id.homeAnuncio);
+        anuncioHome = findViewById(R.id.homeAnuncio);
     }
 
     private void deslogarUsuario() {

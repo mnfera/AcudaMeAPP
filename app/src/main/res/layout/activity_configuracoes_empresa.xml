@@ -89,7 +89,7 @@
             android:layout_marginTop="7dp"
             android:layout_height="wrap_content"
             app:adSize="BANNER"
-            app:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+            app:adUnitId="@string/anuncio_Admob"/>
 
         <Button
             android:id="@+id/buttonSalvar"

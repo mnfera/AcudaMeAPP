@@ -133,7 +133,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
                 app:adSize="BANNER"
-                app:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+                app:adUnitId="@string/anuncio_Admob"/>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
