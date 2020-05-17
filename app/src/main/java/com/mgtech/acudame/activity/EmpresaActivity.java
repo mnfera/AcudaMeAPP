@@ -34,6 +34,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.adapter.AdapterProdutoEmpresa;
+import com.mgtech.acudame.feedback.Feedback;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
@@ -249,6 +250,9 @@ public class EmpresaActivity extends AppCompatActivity {
             case R.id.menuSair :
                 deslogarUsuario();
                 break;
+            case R.id.menuFaleconosco :
+                abrirFaleConosco();
+                break;
             case R.id.menuConfiguracoes :
                 abrirConfiguracoes();
                 break;
@@ -311,6 +315,10 @@ public class EmpresaActivity extends AppCompatActivity {
 
     private void abrirSabores() {
         startActivity(new Intent(EmpresaActivity.this, SaboresActivity.class));
+    }
+
+    private void abrirFaleConosco() {
+        startActivity(new Intent(EmpresaActivity.this, Feedback.class));
     }
 
     public void recuperarToken (){

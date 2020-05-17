@@ -9,9 +9,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,9 +17,6 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.mgtech.acudame.R;
-import com.mgtech.acudame.activity.AutenticacaoActivity;
-import com.mgtech.acudame.activity.ConfiguracoesUsuarioActivity;
-import com.mgtech.acudame.activity.HistoricoPedidosUsuarioActivity;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.helper.UsuarioFirebase;
 
@@ -102,50 +96,4 @@ public class Feedback extends AppCompatActivity {
         enviar = findViewById(R.id.buttonEnviar);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_usuario, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menuSair :
-                deslogarUsuario();
-                break;
-            case R.id.menuConfiguracoes :
-                abrirConfiguracoes();
-                break;
-            case R.id.menuHistoricoPedidos :
-                abrirHistoricoPedidos();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void deslogarUsuario() {
-        try {
-
-            autenticacao.signOut();
-            startActivity(new Intent(Feedback.this, AutenticacaoActivity.class));
-            finish();
-
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void abrirConfiguracoes() {
-        startActivity(new Intent(Feedback.this, ConfiguracoesUsuarioActivity.class));
-    }
-
-    private void abrirHistoricoPedidos() {
-        startActivity(new Intent(Feedback.this, HistoricoPedidosUsuarioActivity.class));
-    }
 }
