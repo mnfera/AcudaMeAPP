@@ -16,7 +16,7 @@ import com.mgtech.acudame.model.CostumItem;
 
 import java.util.ArrayList;
 
-public class AdapterSpinner extends ArrayAdapter {
+public class AdapterSpinner extends ArrayAdapter<CostumItem> {
 
     public AdapterSpinner(@NonNull Context context, @Deprecated ArrayList<CostumItem> costumItems) {
         super(context, 0, costumItems);

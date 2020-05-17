@@ -16,7 +16,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     //Construtor
     public ViewPagerAdapter(@NonNull FragmentManager fm) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     @NonNull
