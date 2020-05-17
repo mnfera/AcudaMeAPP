@@ -18,10 +18,11 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/vermelhoEscuro"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerEmpresas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
@@ -32,12 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginBottom="1dp"
-            android:background="@drawable/ic_maps_and_location"
-            android:padding="15dp"
+            android:background="@drawable/ic_interfa"
+            android:padding="-10dp"
             app:layout_constraintHorizontal_bias="0.443"
             app:layout_constraintStart_toStartOf="@id/textCidade"
             app:layout_constraintTop_toBottomOf="@+id/include" />
@@ -46,39 +44,23 @@
             android:id="@+id/textCidade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="1dp"
             android:gravity="center"
             android:text="JOSÉ DA PENHA - RN"
-            android:textColor="@color/colorAccent"
-            android:textSize="13dp"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerEmpresas"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            android:textColor="@android:color/white"
+            android:textSize="13dp" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerEmpresas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:srcCompat="@drawable/line"
-        tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerEmpresas"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/homeAnuncio"
