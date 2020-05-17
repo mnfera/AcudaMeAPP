@@ -14,6 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.mgtech.acudame.R;
@@ -27,6 +32,7 @@ public class Feedback extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private EditText menssagem, email, senha;
     private Button enviar;
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,16 @@ public class Feedback extends AppCompatActivity {
                 enviarEmail();
             }
         });
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
     }
 
     @SuppressLint("LongLogTag")
@@ -94,6 +110,7 @@ public class Feedback extends AppCompatActivity {
     private void inicializarComponentes() {
         menssagem = findViewById(R.id.camp_menssagem);
         enviar = findViewById(R.id.buttonEnviar);
+        anuncio = findViewById(R.id.feedbackAnuncio);
     }
 
 }

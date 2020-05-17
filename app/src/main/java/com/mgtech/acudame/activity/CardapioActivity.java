@@ -19,6 +19,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,6 +68,7 @@ public class CardapioActivity extends AppCompatActivity {
     private int index = 0;
     private int comidaIndex = -1, pizzaIndex = -1, bebidaIndex = -1, sorveteIndex = -1;
     private boolean comida = false, pizza = false, bebida = false, sorvete = false;
+    private AdView anuncio;
 
     private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
@@ -83,6 +89,16 @@ public class CardapioActivity extends AppCompatActivity {
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         //recuperar empresa selecionada
         Bundle bundle = getIntent().getExtras();
@@ -142,6 +158,7 @@ public class CardapioActivity extends AppCompatActivity {
         textVerCarrinho = findViewById(R.id.textVerCarrinho);
         imageCelular = findViewById(R.id.imageCelular);
         imageWhatsapp = findViewById(R.id.imageWhatsapp);
+        anuncio = findViewById(R.id.cardapioAnuncio);
 
     }
     private void recuperarDadosUsuario() {

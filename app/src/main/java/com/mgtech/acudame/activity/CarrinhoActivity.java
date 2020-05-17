@@ -19,6 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,6 +63,8 @@ public class CarrinhoActivity extends AppCompatActivity {
     private int metodoPagamento;
     private Retrofit retrofit;
     private String baseUrl;
+    private AdView anuncio;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +79,16 @@ public class CarrinhoActivity extends AppCompatActivity {
                 .baseUrl( baseUrl )
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // recuperar pedido selecionado
         Bundle bundle = getIntent().getExtras();
@@ -251,6 +268,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         recyclerCarrinho = findViewById(R.id.recyclerCarrinho);
         botaoComprar = findViewById(R.id.buttonComprar);
         botaoExcluir = findViewById(R.id.buttonExcluir);
+        anuncio = findViewById(R.id.carrinhoAnuncio);
     }
 
     @Override
