@@ -28,9 +28,11 @@ import java.util.List;
 public class AdapterPedidoUsuario extends RecyclerView.Adapter<AdapterPedidoUsuario.MyViewHolderUser> {
 
     private List<Pedido> pedidos;
-    private final Context context;
+    private Context context;
 
-    public AdapterPedidoUsuario(List<Pedido> pedidos, final Context context) {
+    public AdapterPedidoUsuario(){}
+
+    public AdapterPedidoUsuario(List<Pedido> pedidos, Context context) {
         this.pedidos = pedidos;
         this.context = context;
     }

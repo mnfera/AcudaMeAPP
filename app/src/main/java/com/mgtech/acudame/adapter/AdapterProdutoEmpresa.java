@@ -21,6 +21,10 @@ public class AdapterProdutoEmpresa extends RecyclerView.Adapter<AdapterProdutoEm
     private List<Produto> produtos;
     private Context context;
 
+    public AdapterProdutoEmpresa(){
+
+    }
+
     public AdapterProdutoEmpresa(List<Produto> produtos, Context context) {
         this.produtos = produtos;
         this.context = context;
@@ -28,9 +32,9 @@ public class AdapterProdutoEmpresa extends RecyclerView.Adapter<AdapterProdutoEm
 
     @NonNull
     @Override
-    public AdapterProdutoEmpresa.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_adapter_produto_empresa, parent, false);
-        return new AdapterProdutoEmpresa.MyViewHolder(itemLista);
+        return new MyViewHolder(itemLista);
     }
 
     @Override

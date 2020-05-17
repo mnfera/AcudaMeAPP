@@ -20,6 +20,8 @@ public class AdapterSabor extends RecyclerView.Adapter<AdapterSabor.MyViewHolder
     private List<Sabor> sabores;
     private Context context;
 
+    public AdapterSabor(){}
+
     public AdapterSabor(List<Sabor> sabores, Context context) {
         this.sabores = sabores;
         this.context = context;
@@ -27,9 +29,9 @@ public class AdapterSabor extends RecyclerView.Adapter<AdapterSabor.MyViewHolder
 
     @NonNull
     @Override
-    public AdapterSabor.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_sabor, parent, false);
-        return new AdapterSabor.MyViewHolder(itemLista);
+        return new MyViewHolder(itemLista);
     }
 
     @Override

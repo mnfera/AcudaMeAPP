@@ -20,6 +20,8 @@ public class AdapterComplementoActivity extends RecyclerView.Adapter<AdapterComp
     private List<Complemento> complementos;
     private Context context;
 
+    public AdapterComplementoActivity(){}
+
     public AdapterComplementoActivity(List<Complemento> complementos, Context context) {
         this.complementos = complementos;
         this.context = context;
@@ -27,9 +29,9 @@ public class AdapterComplementoActivity extends RecyclerView.Adapter<AdapterComp
 
     @NonNull
     @Override
-    public AdapterComplementoActivity.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_complemento, parent, false);
-        return new AdapterComplementoActivity.MyViewHolder(itemLista);
+        return new MyViewHolder(itemLista);
     }
 
     @Override
