@@ -121,7 +121,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                                     public void onComplete(@NonNull Task<Void> task) {
 
                                                         if(task.isSuccessful()){
-                                                            alertaSimples("Cadastro realizado com sucesso! Por favor, verifique seu email!", getApplicationContext(), "Cadastro");
+                                                            alertaSimples("Cadastro realizado com sucesso! Por favor, verifique seu e-mail (inclusive sua caixa de spam) e clique no link enviado!", getApplicationContext(), "Cadastro");
 
                                                             String tipoUsuario = "U";
                                                             UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
@@ -207,7 +207,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                                     abrirTelaPrincipal(tipoUsuario);
 
                                                 }else {
-                                                    alertaSimples("Por favor, verifique seu endereço de email", getApplicationContext(), "Email não verificado");
+                                                    alertaSimples("Por favor, verifique seu endereço de e-mail", getApplicationContext(), "E-mail não verificado");
                                                 }
                                             }
 
