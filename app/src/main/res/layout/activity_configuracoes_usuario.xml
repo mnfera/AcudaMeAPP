@@ -73,6 +73,18 @@
             android:padding="16dp"
             app:met_mask="(##) #####-####"/>
 
+
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/confUsuarioAnuncio"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="7dp"
+                android:layout_height="wrap_content"
+                app:adSize="BANNER"
+                app:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+
         <Button
             android:id="@+id/buttonSalvar"
             android:layout_width="match_parent"

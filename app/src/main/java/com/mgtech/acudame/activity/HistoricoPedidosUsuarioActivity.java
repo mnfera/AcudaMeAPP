@@ -9,6 +9,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +39,8 @@ public class HistoricoPedidosUsuarioActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private DatabaseReference firebaseRef;
     private String idUsuario;
+    private AdView anuncio;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,16 @@ public class HistoricoPedidosUsuarioActivity extends AppCompatActivity {
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuario = UsuarioFirebase.getIdUsuario();
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -105,6 +122,7 @@ public class HistoricoPedidosUsuarioActivity extends AppCompatActivity {
 
     private void inicializarComponentes() {
         recyclerHistoricoPedidos = findViewById(R.id.recyclerHistoricoPedidos);
+        anuncio = findViewById(R.id.histUsuarioAnuncio);
     }
 
     public void alertaSimples(String conteudo, Context context, String titulo){

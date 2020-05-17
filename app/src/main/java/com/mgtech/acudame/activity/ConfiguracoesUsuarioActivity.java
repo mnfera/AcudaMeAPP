@@ -11,6 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +42,7 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private AlertDialog dialog;
     private Usuario usuario = new Usuario();
+    private AdView anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,16 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
                 salvarDados();
             }
         });
+
+        //Anuncio
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        anuncio.loadAd(adRequest);
 
         // Recuperar dados da empresa
         recuperarDadosUsuario();
@@ -109,6 +125,7 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
         editUsuarioTelefone = findViewById(R.id.editUsuarioTelefone);
         editTextUsuarioNumero = findViewById(R.id.editUsuarioNumero);
         editTextUsuarioReferencia = findViewById(R.id.editUsuarioReferencia);
+        anuncio = findViewById(R.id.confUsuarioAnuncio);
     }
 
     public void salvarDados(){
