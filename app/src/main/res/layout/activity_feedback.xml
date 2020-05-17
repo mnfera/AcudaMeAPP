@@ -52,7 +52,7 @@
             android:id="@+id/buttonEnviar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enviar menssagem"
+            android:text="Enviar email"
             android:theme="@style/botaoPadrao" />
 
     </LinearLayout>

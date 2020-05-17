@@ -126,10 +126,12 @@
         <activity
             android:name=".activity.EmpresaActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.HomeActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.AutenticacaoActivity"

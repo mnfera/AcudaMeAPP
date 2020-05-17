@@ -250,7 +250,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                         // Do something after 5s = 5000ms
                        botaoAcessar.setClickable(true);
                     }
-                }, 1500);
+                }, 500);
             }
         });
 
