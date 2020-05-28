@@ -15,6 +15,7 @@ public class Empresa implements Serializable {
     private String dias;
     private String telefone;
     private String tokenEmpresa;
+    private Boolean status;
 
     public Empresa() {
     }
@@ -37,6 +38,14 @@ public class Empresa implements Serializable {
         DatabaseReference empresaRef = firebaseRef.child("empresas")
                 .child(getIdUsuario());
         empresaRef.child("tokenEmpresa").setValue(getTokenEmpresa());
+    }
+
+    public void atualizarStatusEmpresa() {
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference empresaRef = firebaseRef.child("empresas")
+                .child(getIdUsuario());
+        empresaRef.child("status").setValue(getStatus());
+
     }
 
     public String getTelefone() { return telefone; }
@@ -94,4 +103,12 @@ public class Empresa implements Serializable {
     public String getTokenEmpresa() {return tokenEmpresa;}
 
     public void setTokenEmpresa(String tokenEmpresa) {this.tokenEmpresa = tokenEmpresa;}
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }

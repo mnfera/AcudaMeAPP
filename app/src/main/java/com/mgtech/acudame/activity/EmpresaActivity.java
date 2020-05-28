@@ -10,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -40,6 +42,7 @@ import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Produto;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +62,9 @@ public class EmpresaActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private AdView anuncio;
     private FloatingActionButton fab_actionProduto, fab_actionComplemento, fab_actionPizza;
+    private TextView textStatus;
+    private Button buttonStatus;
+    private Boolean status = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +87,8 @@ public class EmpresaActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         anuncio.loadAd(adRequest);
 
-
         //Salvando token da empresa
         recuperarToken ();
-
-
 
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -97,6 +100,9 @@ public class EmpresaActivity extends AppCompatActivity {
         recyclerProdutos.setHasFixedSize(true);
         adapterProduto = new AdapterProdutoEmpresa(produtos, this);
         recyclerProdutos.setAdapter(adapterProduto);
+
+        // recupera os dados da empresa
+        recuperarDadosEmpresa();
 
         // recupera os produtos da empresa
         recuperarProdutos();
@@ -173,6 +179,32 @@ public class EmpresaActivity extends AppCompatActivity {
                 )
         );
 
+        // add evento do clique no botao status
+        buttonStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(status){
+                    //atualizando o status
+                    empresa = new Empresa();
+                    empresa.setStatus(false);
+                    empresa.setIdUsuario(idUsuarioLogado);
+                    empresa.atualizarStatusEmpresa();
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }else {
+                    //atualizando o status
+                    empresa = new Empresa();
+                    empresa.setStatus(true);
+                    empresa.setIdUsuario(idUsuarioLogado);
+                    empresa.atualizarStatusEmpresa();
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            }
+        });
+
         fab_actionProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,12 +258,42 @@ public class EmpresaActivity extends AppCompatActivity {
 
     }
 
+    private void recuperarDadosEmpresa() {
+
+        DatabaseReference empresaRef = firebaseRef
+                .child("empresas")
+                .child(idUsuarioLogado);
+        empresaRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() != null){
+                    empresa = dataSnapshot.getValue(Empresa.class);
+                    if(empresa.getStatus()){
+                        textStatus.setText("Sua Empresa Está: " + "ABERTA");
+                        buttonStatus.setText("FECHAR");
+                    }else {
+                        textStatus.setText("Sua Empresa Está: " + "FECHADA");
+                        status = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     private void inicializarComponentes() {
         recyclerProdutos = findViewById(R.id.recyclerProdutos);
         anuncio = findViewById(R.id.empresaAnuncio);
         fab_actionProduto = findViewById(R.id.fab_actionProduto);
         fab_actionComplemento = findViewById(R.id.fab_actionComplemento);
         fab_actionPizza = findViewById(R.id.fab_actionPizza);
+        textStatus = findViewById(R.id.textEmpresaStatus);
+        buttonStatus = findViewById(R.id.buttonEmpresaStatus);
 
     }
 
