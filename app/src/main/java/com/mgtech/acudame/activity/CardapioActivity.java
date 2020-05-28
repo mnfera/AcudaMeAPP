@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -53,7 +54,7 @@ import dmax.dialog.SpotsDialog;
 public class CardapioActivity extends AppCompatActivity {
 
     private ImageView imageEmpresaCardapio, imageCelular, imageWhatsapp;
-    private TextView textNomeEmpresaCardapio, textTelefoneEmpresaCardapio;
+    private TextView textNomeEmpresaCardapio, textTelefoneEmpresaCardapio, textStatusEmpresaCardapio;
     private Empresa empresaSelecionada;
     private AlertDialog dialog, dialog2;
     private TextView textCarrinhoQtde, textCarrinhoTotal, textVerCarrinho;
@@ -108,6 +109,14 @@ public class CardapioActivity extends AppCompatActivity {
             textNomeEmpresaCardapio.setText(empresaSelecionada.getNome());
             textTelefoneEmpresaCardapio.setText(empresaSelecionada.getTelefone());
             idEmpresaSelecionada = empresaSelecionada.getIdUsuario();
+            if(empresaSelecionada.getStatus() != null) {
+                if (empresaSelecionada.getStatus()) {
+                    textStatusEmpresaCardapio.setTextColor(Color.parseColor("#FF4CAF50"));
+                } else {
+                    textStatusEmpresaCardapio.setText("FECHADO");
+                    textStatusEmpresaCardapio.setTextColor(Color.parseColor("#FFF44336"));
+                }
+            }
 
             String url = empresaSelecionada.getUrlImagem();
             Picasso.get().load(url).into(imageEmpresaCardapio);
@@ -159,6 +168,7 @@ public class CardapioActivity extends AppCompatActivity {
         imageCelular = findViewById(R.id.imageCelular);
         imageWhatsapp = findViewById(R.id.imageWhatsapp);
         anuncio = findViewById(R.id.cardapioAnuncio);
+        textStatusEmpresaCardapio = findViewById(R.id.textStatusEmpresaCardapio);
 
     }
     private void recuperarDadosUsuario() {

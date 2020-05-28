@@ -3,6 +3,7 @@ package com.mgtech.acudame.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -268,12 +269,15 @@ public class EmpresaActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue() != null){
                     empresa = dataSnapshot.getValue(Empresa.class);
-                    if(empresa.getStatus()){
-                        textStatus.setText("Sua Empresa Está: " + "ABERTA");
-                        buttonStatus.setText("FECHAR");
-                    }else {
-                        textStatus.setText("Sua Empresa Está: " + "FECHADA");
-                        status = false;
+                    if(empresa.getStatus() != null) {
+                        if (empresa.getStatus()) {
+                            textStatus.setText("Sua Empresa Está: " + "ABERTA");
+                        } else {
+                            textStatus.setText("Sua Empresa Está: " + "FECHADA");
+                            buttonStatus.setText("ABRIR");
+                            buttonStatus.setBackgroundColor(Color.parseColor("#FF4CAF50"));
+                            status = false;
+                        }
                     }
                 }
             }

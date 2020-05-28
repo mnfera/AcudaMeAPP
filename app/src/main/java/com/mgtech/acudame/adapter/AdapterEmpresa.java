@@ -1,5 +1,6 @@
 package com.mgtech.acudame.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,15 @@ public class AdapterEmpresa extends RecyclerView.Adapter<AdapterEmpresa.MyViewHo
         holder.categoria.setText(empresa.getCategoria() + " - ");
         holder.dias.setText(empresa.getDias());
         holder.horario.setText(empresa.getHorario() + " Hrs");
+        if(empresa.getStatus() != null) {
+            if (empresa.getStatus()) {
+                holder.status.setText("ABERTO");
+                holder.status.setTextColor(Color.parseColor("#FF4CAF50"));
+            } else {
+                holder.status.setText("FECHADO");
+                holder.status.setTextColor(Color.parseColor("#FFF44336"));
+            }
+        }
 
         //Carregar imagem
         String urlImagem = empresa.getUrlImagem();
@@ -56,6 +66,7 @@ public class AdapterEmpresa extends RecyclerView.Adapter<AdapterEmpresa.MyViewHo
         TextView categoria;
         TextView dias;
         TextView horario;
+        TextView status;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -65,6 +76,7 @@ public class AdapterEmpresa extends RecyclerView.Adapter<AdapterEmpresa.MyViewHo
             dias = itemView.findViewById(R.id.textDiasEmpresa);
             horario = itemView.findViewById(R.id.textHorarioEmpresa);
             imagemEmpresa = itemView.findViewById(R.id.imageEmpresa);
+            status = itemView.findViewById(R.id.textStatusEmpresa);
         }
     }
 }
