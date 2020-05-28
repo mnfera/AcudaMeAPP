@@ -219,15 +219,20 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                                 throw task.getException();
                                             } catch (FirebaseAuthInvalidUserException e) {
                                                 erroExcecao = "Não existe esse usuário! Verifique se o e-mail foi digitado corretamente!";
+                                                dialog.dismiss();
                                             } catch (FirebaseAuthInvalidCredentialsException e) {
                                                 erroExcecao = "A senha está errada!";
+                                                dialog.dismiss();
                                             } catch (FirebaseNetworkException e) {
                                                 erroExcecao = "Você está sem internet ou o servidor está fora do ar";
+                                                dialog.dismiss();
                                             } catch (Exception e) {
                                                 erroExcecao = "Verificamos que: " + e.getMessage();
+                                                dialog.dismiss();
                                             }
 
                                             alertaSimples(erroExcecao, getApplicationContext(), "Falha ao tentar logar");
+                                            dialog.dismiss();
                                         }
                                     }
                                 });
@@ -238,12 +243,14 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                         } else {
                             alertaSimples("Senha é obrigatória!", getApplicationContext(), "Campo Senha está vazio");
+                            dialog.dismiss();
                         }
                     } else {
                         alertaSimples("Email é obrigatório!", getApplicationContext(), "Campo Email está vazio");
+                        dialog.dismiss();
                     }
 
-                    dialog.dismiss();
+                    //dialog.dismiss();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
