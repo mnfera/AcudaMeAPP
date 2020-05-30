@@ -34,8 +34,8 @@
             android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageEmpresaCardapio"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:src="@drawable/perfil" />
 
             <LinearLayout
@@ -46,6 +46,17 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textStatusEmpresaCardapio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:background="@drawable/arte_situacoa"
+                    android:textStyle="bold"
+                    android:text="ABERTO"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
                     android:id="@+id/textNomeEmpresaCardapio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,6 +64,7 @@
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -84,16 +96,9 @@
                         android:clickable="true"
                         android:src="@drawable/logowhatsapp" />
 
-                    <TextView
-                        android:id="@+id/textStatusEmpresaCardapio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="8dp"
-                        android:text="ABERTO"
-                        android:textColor="#000000" />
-
                 </LinearLayout>
+
+
 
             </LinearLayout>
 
@@ -105,34 +110,98 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/colorAccent"
+            android:background="@drawable/arte_situacoa"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textVerCarrinho"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Ver Carrinho"
-                android:clickable="true"
-                android:textColor="@android:color/white" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textCarrinhoQtd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="qtd: 0"
-                android:textColor="@android:color/white" />
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/ic_shopping_cart_black_24dp"
+                    tools:ignore="VectorDrawableCompat" />
 
-            <TextView
-                android:id="@+id/textCarrinhoTotal"
+
+            </LinearLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="R$ 0.00"
-                android:textColor="@android:color/white" />
+                android:gravity="left">
+
+                <TextView
+                    android:id="@+id/textVerCarrinho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="left|clip_vertical"
+                    android:padding="8dp"
+                    android:text="CARRINHO" android:textColor="@android:color/white" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/button_Ver_Carrinho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:textSize="12dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/botao_ver_carrinho"
+                    android:text="VER" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/textCarrinhoQtd"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/arte_itens"
+                    android:gravity="center"
+                    android:textSize="12dp"
+                    android:text="ITENS: 0"
+                    android:textColor="@color/colorAccent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/textCarrinhoTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/arte_itens"
+                    android:gravity="center"
+                    android:textSize="12dp"
+                    android:text="R$ 0.00"
+                    android:textColor="@color/colorAccent" />
+
+            </LinearLayout>
+
+
+
         </LinearLayout>
 
             <com.google.android.gms.ads.AdView
@@ -154,7 +223,8 @@
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabIndicatorHeight="1.5dp"
                 app:tabMode="fixed"
-                app:tabTextColor="@color/colorPrimary" />
+                app:tabTextColor="@color/colorPrimary"
+                app:tabTextAppearance="@style/MineCustomTabText"/>
 
 
             <androidx.viewpager.widget.ViewPager
@@ -162,7 +232,7 @@
                 android:id="@+id/viewPage"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

@@ -271,6 +271,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         anuncio = findViewById(R.id.carrinhoAnuncio);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
