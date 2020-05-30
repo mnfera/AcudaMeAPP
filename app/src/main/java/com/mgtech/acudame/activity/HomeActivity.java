@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         anuncioHome.loadAd(adRequest);
 
         // configurações toolbar
