@@ -7,11 +7,39 @@
     android:orientation="vertical"
     tools:context=".activity.CardapioActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="end">
+
+            <Button
+                android:id="@+id/button_Confirmar_Pedido"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="16dp"
+                android:textSize="12dp"
+                android:padding="5dp"
+                android:clickable="true"
+                android:layout_gravity="center"
+                android:background="@drawable/arte_situacoa"
+                android:gravity="center"
+                android:text="Confirmar Pedido"
+                android:textColor="@color/branco_modificado" />
+
+        </LinearLayout>
+
+
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +77,8 @@
                     android:id="@+id/textStatusEmpresaCardapio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
+                    android:padding="3dp"
                     android:gravity="center"
                     android:background="@drawable/arte_situacoa"
                     android:textStyle="bold"

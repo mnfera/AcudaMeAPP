@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,18 +72,17 @@ public class CardapioActivity extends AppCompatActivity {
     private int comidaIndex = -1, pizzaIndex = -1, bebidaIndex = -1, sorveteIndex = -1;
     private boolean comida = false, pizza = false, bebida = false, sorvete = false;
     private AdView anuncio;
-
+    private Button button_Confirmar_Pedido;
     private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cardapio);
 
         // configurações toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Cardápio");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -111,10 +112,10 @@ public class CardapioActivity extends AppCompatActivity {
             idEmpresaSelecionada = empresaSelecionada.getIdUsuario();
             if(empresaSelecionada.getStatus() != null) {
                 if (empresaSelecionada.getStatus()) {
-                    textStatusEmpresaCardapio.setTextColor(Color.parseColor("#FF4CAF50"));
+                    textStatusEmpresaCardapio.setTextColor(Color.parseColor("#f1f1f1"));
                 } else {
                     textStatusEmpresaCardapio.setText("FECHADO");
-                    textStatusEmpresaCardapio.setTextColor(Color.parseColor("#FFF44336"));
+                    textStatusEmpresaCardapio.setTextColor(Color.parseColor("#f1f1f1"));
                 }
             }
 
@@ -148,6 +149,13 @@ public class CardapioActivity extends AppCompatActivity {
             }
         });
 
+        button_Confirmar_Pedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verCarrinho();
+            }
+        });
+
         imageWhatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,7 +177,7 @@ public class CardapioActivity extends AppCompatActivity {
         imageWhatsapp = findViewById(R.id.imageWhatsapp);
         anuncio = findViewById(R.id.cardapioAnuncio);
         textStatusEmpresaCardapio = findViewById(R.id.textStatusEmpresaCardapio);
-
+        button_Confirmar_Pedido = findViewById(R.id.button_Confirmar_Pedido);
     }
     private void recuperarDadosUsuario() {
 
@@ -228,7 +236,7 @@ public class CardapioActivity extends AppCompatActivity {
                     }
                 }
 
-                textCarrinhoQtde.setText("Qtd: " + qtdItensCarrinho);
+                textCarrinhoQtde.setText("Itens: " + qtdItensCarrinho);
                 DecimalFormat df = new DecimalFormat(",##0.00");
                 textCarrinhoTotal.setText("R$ " + df.format(totalCarrinho));
 
@@ -242,6 +250,7 @@ public class CardapioActivity extends AppCompatActivity {
         });
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -261,6 +270,9 @@ public class CardapioActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+     */
 
     private void verCarrinho() {
 
@@ -395,8 +407,13 @@ public class CardapioActivity extends AppCompatActivity {
         }
 
         viewPager.setAdapter(viewPagerAdapter);
-
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getResources().getDisplayMetrics();
+
+        ViewGroup.LayoutParams params = tabLayout.getLayoutParams();
+        //Change the height in 'Pixels'
+        params.height = 155;
+        tabLayout.setLayoutParams(params);
 
         if(comidaIndex >= 0) {
             tabLayout.getTabAt(comidaIndex).setIcon(R.drawable.comida);
