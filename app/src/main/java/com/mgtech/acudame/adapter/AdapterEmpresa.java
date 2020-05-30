@@ -35,10 +35,11 @@ public class AdapterEmpresa extends RecyclerView.Adapter<AdapterEmpresa.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         Empresa empresa = empresas.get(i);
         holder.nomeEmpresa.setText(empresa.getNome());
-        holder.categoria.setText(empresa.getCategoria() + " - ");
+        holder.categoria.setText(empresa.getCategoria() + " -");
         holder.dias.setText(empresa.getDias());
         holder.horario.setText(empresa.getHorario() + " Hrs");
         if(empresa.getStatus() != null) {
+
             if (empresa.getStatus()) {
                 holder.status.setText("ABERTO");
                 holder.status.setTextColor(Color.parseColor("#FF4CAF50"));
