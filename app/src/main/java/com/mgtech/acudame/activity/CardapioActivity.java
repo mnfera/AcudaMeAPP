@@ -76,6 +76,8 @@ public class CardapioActivity extends AppCompatActivity {
     private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Button button_Ver_Carrinho;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +131,7 @@ public class CardapioActivity extends AppCompatActivity {
         // carregando os dados da viewPager
         carregarViewPagers();
 
-        textVerCarrinho.setOnClickListener(new View.OnClickListener() {
+        button_Ver_Carrinho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 verCarrinho();
@@ -172,7 +174,7 @@ public class CardapioActivity extends AppCompatActivity {
         textTelefoneEmpresaCardapio = findViewById(R.id.textTelefoneEmpresaCardapio);
         textCarrinhoQtde = findViewById(R.id.textCarrinhoQtd);
         textCarrinhoTotal = findViewById(R.id.textCarrinhoTotal);
-        textVerCarrinho = findViewById(R.id.textVerCarrinho);
+        button_Ver_Carrinho = findViewById(R.id.button_Ver_Carrinho);
         imageCelular = findViewById(R.id.imageCelular);
         imageWhatsapp = findViewById(R.id.imageWhatsapp);
         anuncio = findViewById(R.id.cardapioAnuncio);
