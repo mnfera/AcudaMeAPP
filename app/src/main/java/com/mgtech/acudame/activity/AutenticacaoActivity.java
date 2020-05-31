@@ -174,13 +174,6 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                             } else { //login
 
-                            /*final ProgressDialog progressDialog = new ProgressDialog(AutenticacaoActivity.this,
-                                    R.style.Theme_AppCompat_Light_DarkActionBar);
-                            progressDialog.setIndeterminate(true);
-                            progressDialog.setMessage("Autenticando...");
-                            progressDialog.show();*/
-
-
                                 autenticacao.signInWithEmailAndPassword(
                                         email, senha
                                 ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -242,8 +235,6 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-
-                                //progressDialog.dismiss();
 
                             }
 
