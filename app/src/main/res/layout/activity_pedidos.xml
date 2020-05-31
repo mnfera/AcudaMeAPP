@@ -16,7 +16,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        android:layout_marginRight="5dp">
 
         <TextView
             android:id="@+id/textPedidoAtencao"
@@ -26,6 +28,17 @@
             android:text="ATENÇÃO: clique duas vezes no ícone do telefone/Whatsapp para abrir.\nAperte e segure no pedido para ver as opções." />
 
     </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/pedidosAnuncio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:adSize="FULL_BANNER"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        app:adUnitId="@string/anuncio_Admob"/>
+
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -41,13 +54,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp" />
 
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/pedidosAnuncio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:adSize="BANNER"
-                app:adUnitId="@string/anuncio_Admob"/>
 
         </LinearLayout>
     </ScrollView>
