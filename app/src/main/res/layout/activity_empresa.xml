@@ -6,6 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".activity.EmpresaActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/vermelhoEscuro"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerEmpresas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="left|center"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/textEmpresaStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sua Empresa Está: ABERTA"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textColor="@color/branco_modificado" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/buttonEmpresaStatus"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:background="@drawable/botao_status_empresa"
+                android:text="FECHAR"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
     <include
         android:id="@+id/include"
         layout="@layout/toolbar"
@@ -19,14 +71,10 @@
         android:id="@+id/recyclerProdutos"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include">
+        app:layout_constraintTop_toBottomOf="@+id/empresaAnuncio">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -34,13 +82,11 @@
         android:id="@+id/empresaAnuncio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:adSize="BANNER"
+        app:adSize="FULL_BANNER"
         app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerProdutos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/floatingActionsMenu"
@@ -87,34 +133,7 @@
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-    <TextView
-        android:id="@+id/textEmpresaStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Sua Empresa Está: ABERTA"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/empresaAnuncio"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
 
-    <Button
-        android:id="@+id/buttonEmpresaStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/botao_status_empresa"
-        android:text="FECHAR"
-        android:textSize="10sp"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/empresaAnuncio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

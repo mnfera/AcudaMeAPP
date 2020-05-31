@@ -197,31 +197,31 @@
             <LinearLayout
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/textCarrinhoQtd"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:layout_marginLeft="8dp"
                     android:background="@drawable/arte_itens"
                     android:gravity="center"
-                    android:textSize="12dp"
                     android:text="ITENS: 0"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12dp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_marginLeft="8dp">
 
                 <TextView
                     android:id="@+id/textCarrinhoTotal"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:layout_marginLeft="8dp"
                     android:background="@drawable/arte_itens"
                     android:gravity="center"
                     android:textSize="12dp"
