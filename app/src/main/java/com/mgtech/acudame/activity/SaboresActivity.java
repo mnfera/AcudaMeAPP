@@ -127,6 +127,7 @@ public class SaboresActivity extends AppCompatActivity {
                                             Toast.makeText(SaboresActivity.this,
                                                     "Sabor Excluído com sucesso!",
                                                     Toast.LENGTH_SHORT).show();
+                                            finish();
                                         }
                                     }
                                 });

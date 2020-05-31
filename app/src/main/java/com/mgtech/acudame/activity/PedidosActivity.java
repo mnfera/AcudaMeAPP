@@ -147,6 +147,7 @@ public class PedidosActivity extends AppCompatActivity {
                                             Toast.makeText(PedidosActivity.this, "Pedido Recebido",
                                                     Toast.LENGTH_SHORT).show();
                                             enviarNotificacao("ATENÇÃO", "Seu pedido foi recebido pela empresa e está sendo preparado");
+                                            finish();
 
                                         }else if(pedidoEntrega == 1){
                                             Pedido pedido = pedidos.get(posicaoItem);
@@ -159,6 +160,7 @@ public class PedidosActivity extends AppCompatActivity {
                                             Toast.makeText(PedidosActivity.this, "Pedido finalizado",
                                                     Toast.LENGTH_SHORT).show();
                                             enviarNotificacao("ATENÇÃO", "Seu pedido foi/será entregue e finalizado");
+                                            finish();
 
                                         }else{
                                             Pedido pedido = pedidos.get(posicaoItem);
@@ -171,6 +173,7 @@ public class PedidosActivity extends AppCompatActivity {
                                             Toast.makeText(PedidosActivity.this, "Pedido cancelado",
                                                     Toast.LENGTH_SHORT).show();
                                             enviarNotificacao("ATENÇÃO", "Seu pedido foi cancelado");
+                                            finish();
                                         }
                                     }
                                 });

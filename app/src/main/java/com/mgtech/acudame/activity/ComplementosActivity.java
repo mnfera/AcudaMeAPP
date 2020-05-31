@@ -127,6 +127,7 @@ public class ComplementosActivity extends AppCompatActivity {
                                             Toast.makeText(ComplementosActivity.this,
                                                     "Complemento Excluído com sucesso!",
                                                     Toast.LENGTH_SHORT).show();
+                                            finish();
                                         }
                                     }
                                 });

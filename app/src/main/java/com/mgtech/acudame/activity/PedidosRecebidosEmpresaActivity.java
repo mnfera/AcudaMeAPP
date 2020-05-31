@@ -158,6 +158,7 @@ public class PedidosRecebidosEmpresaActivity extends AppCompatActivity {
                                     Toast.makeText(PedidosRecebidosEmpresaActivity.this, "Pedido cancelado",
                                             Toast.LENGTH_SHORT).show();
                                     enviarNotificacao("ATENÇÃO", "Seu pedido foi cancelado");
+                                    finish();
                                 }
                             }
                         });
@@ -263,10 +264,7 @@ public class PedidosRecebidosEmpresaActivity extends AppCompatActivity {
                     call.enqueue(new Callback<NotificacaoDados>() {
                         @Override
                         public void onResponse(Call<NotificacaoDados> call, Response<NotificacaoDados> response) {
-                            if(response.isSuccessful()){
-                                Toast.makeText(PedidosRecebidosEmpresaActivity.this, "Pedido confirmado"
-                                        , Toast.LENGTH_SHORT).show();
-                            }
+
                         }
 
                         @Override

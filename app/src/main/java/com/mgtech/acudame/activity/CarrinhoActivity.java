@@ -144,6 +144,7 @@ public class CarrinhoActivity extends AppCompatActivity {
                                 , Toast.LENGTH_SHORT).show();
 
                         startActivity(new Intent(CarrinhoActivity.this, HistoricoPedidosUsuarioActivity.class));
+                        finish();
 
                     }
                 });
@@ -254,6 +255,8 @@ public class CarrinhoActivity extends AppCompatActivity {
 
                 //enviar notificação do pedido
                 enviarNotificacaoUsuario();
+
+                finish();
 
             }
         });
