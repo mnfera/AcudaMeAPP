@@ -94,7 +94,7 @@ public class ConfiguracoesProdutoActivity extends AppCompatActivity implements A
             public void onClick(View v) {
 
                 validarDadosProduto();
-                Toast.makeText(getApplicationContext(), categoriaEmpresa + " teste", Toast.LENGTH_SHORT).show();
+
             }
         });
 

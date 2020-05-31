@@ -253,9 +253,6 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     urlImagemSelecionada = uri.toString();
-                                    Toast.makeText(ConfiguracoesEmpresaActivity.this,urlImagemSelecionada
-                                            ,
-                                            Toast.LENGTH_SHORT).show();
                                 }
                             });
 
