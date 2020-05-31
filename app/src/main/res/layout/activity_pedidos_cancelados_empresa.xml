@@ -13,6 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/pedidosCanceladosAnuncio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:adSize="BANNER"
+        android:layout_marginTop="5dp"
+        app:adUnitId="@string/anuncio_Admob"/>
+
+
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -26,14 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp" />
-
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/pedidosCanceladosAnuncio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:adSize="BANNER"
-                app:adUnitId="@string/anuncio_Admob"/>
 
         </LinearLayout>
     </ScrollView>
