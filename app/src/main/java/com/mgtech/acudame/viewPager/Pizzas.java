@@ -108,7 +108,27 @@ public class Pizzas extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                escolherComplementos(position);
+                                if(empresa.getStatus() != null) {
+                                    if (empresa.getStatus() == false) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setTitle("Empresa FECHADA!");
+                                        builder.setMessage("Você não pode adicionar itens ao carrinho pois a empresa está FECHADA. Se desejar," +
+                                                " aperte no botão de ligar ou de falar via WhatsAPP com a empresa.");
+                                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        AlertDialog alertDialog = builder.create();
+                                        alertDialog.show();
+                                    } else {
+                                        escolherComplementos(position);
+                                    }
+                                }else {
+                                    escolherComplementos(position);
+                                }
                             }
 
                             @Override

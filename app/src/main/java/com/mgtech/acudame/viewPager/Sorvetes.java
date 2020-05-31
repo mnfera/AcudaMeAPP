@@ -1,6 +1,7 @@
 package com.mgtech.acudame.viewPager;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,10 +25,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mgtech.acudame.R;
+import com.mgtech.acudame.activity.CardapioActivity;
 import com.mgtech.acudame.activity.ConfiguracoesUsuarioActivity;
 import com.mgtech.acudame.adapter.AdapterProduto;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
+import com.mgtech.acudame.messenger.MessengerDialog;
 import com.mgtech.acudame.model.Complemento;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.ItemPedido;
@@ -106,7 +109,27 @@ public class Sorvetes extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                escolherComplementos(position);
+                                if(empresa.getStatus() != null) {
+                                    if (empresa.getStatus() == false) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setTitle("Empresa FECHADA!");
+                                        builder.setMessage("Você não pode adicionar itens ao carrinho pois a empresa está FECHADA. Se desejar," +
+                                                " aperte no botão de ligar ou de falar via WhatsAPP com a empresa.");
+                                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        AlertDialog alertDialog = builder.create();
+                                        alertDialog.show();
+                                    } else {
+                                        escolherComplementos(position);
+                                    }
+                                }else {
+                                    escolherComplementos(position);
+                                }
                             }
 
                             @Override

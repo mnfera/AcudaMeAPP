@@ -97,7 +97,27 @@ public class Bebidas extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                confirmarQuantidade(position);
+                                if(empresa.getStatus() != null) {
+                                    if (empresa.getStatus() == false) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setTitle("Empresa FECHADA!");
+                                        builder.setMessage("Você não pode adicionar itens ao carrinho pois a empresa está FECHADA. Se desejar," +
+                                                " aperte no botão de ligar ou de falar via WhatsAPP com a empresa.");
+                                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        AlertDialog alertDialog = builder.create();
+                                        alertDialog.show();
+                                    } else {
+                                        confirmarQuantidade(position);
+                                    }
+                                }else {
+                                    confirmarQuantidade(position);
+                                }
                             }
 
                             @Override
