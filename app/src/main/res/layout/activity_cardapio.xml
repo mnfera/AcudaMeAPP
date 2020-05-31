@@ -146,12 +146,13 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     android:padding="0dp"
                     app:srcCompat="@drawable/ic_shopping_cart_black_24dp"
@@ -163,6 +164,8 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="2dp"
                 android:gravity="left">
 
                 <TextView
@@ -172,7 +175,8 @@
                     android:clickable="true"
                     android:gravity="left|clip_vertical"
                     android:padding="8dp"
-                    android:text="CARRINHO" android:textColor="@android:color/white" />
+                    android:text="CARRINHO"
+                    android:textColor="@android:color/white" />
 
             </RelativeLayout>
 
@@ -185,48 +189,49 @@
                     android:id="@+id/button_Ver_Carrinho"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:textSize="12dp"
                     android:layout_gravity="center"
                     android:background="@drawable/botao_ver_carrinho"
-                    android:text="VER" />
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="VER"
+                    android:textSize="12dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/textCarrinhoQtd"
-                    android:layout_width="match_parent"
+                    android:layout_width="70dp"
                     android:layout_height="25dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:background="@drawable/arte_itens"
                     android:gravity="center"
-                    android:text="ITENS: 0"
+                    android:text="Itens: 0"
                     android:textColor="@color/colorAccent"
                     android:textSize="12dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginLeft="8dp">
+                android:layout_marginRight="5dp"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/textCarrinhoTotal"
-                    android:layout_width="match_parent"
+                    android:layout_width="70dp"
                     android:layout_height="25dp"
                     android:background="@drawable/arte_itens"
                     android:gravity="center"
-                    android:textSize="12dp"
                     android:text="R$ 0.00"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12dp" />
 
             </LinearLayout>
 

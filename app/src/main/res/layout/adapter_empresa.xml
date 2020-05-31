@@ -21,8 +21,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageEmpresa"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="69dp"
+                android:layout_height="69dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/perfil" />
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:text="China in box"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -52,16 +52,21 @@
                         android:id="@+id/textCategoriaEmpresa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chinesa" />
+                        android:text="Chinesa"
+                        android:textSize="13sp"/>
 
-                    <TextView
-                        android:id="@+id/textHorarioEmpresa"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="- 18 - 23 hrs" />
+
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_gravity="left"
+                    android:id="@+id/textHorarioEmpresa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:textSize="13sp"
+                    android:text="Horário: 18 - 23 hrs"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -72,7 +77,8 @@
                         android:id="@+id/textDiasEmpresa2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dias funcionamento: " />
+                        android:text="Dias funcionamento: "
+                        android:textSize="13sp"/>
 
                     <TextView
                         android:id="@+id/textDiasEmpresa"
@@ -93,6 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="0dp"
+                        android:textSize="13sp"
                         android:text="O estabelecimento está: " />
 
                     <TextView
