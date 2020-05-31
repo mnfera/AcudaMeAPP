@@ -181,6 +181,9 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
                             empresa.salvar();
 
                             finish();
+                            Toast.makeText(ConfiguracoesEmpresaActivity.this,
+                                    "Informações salvas com sucesso!",
+                                    Toast.LENGTH_SHORT).show();
                         }else{
                             exibirMensagem("Digite seu telefone");
                         }

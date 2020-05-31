@@ -38,9 +38,11 @@ import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
 import com.google.firebase.database.Query;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
@@ -224,22 +226,25 @@ public class CarrinhoActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 // data/hora atual
-                LocalDateTime agora = LocalDateTime.now();
+                //LocalDateTime agora = LocalDateTime.now();
+                Date dataHoraAtual = new Date();
 
-                // formatar a data
-                DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-                String dataFormatada = formatterData.format(agora);
+                // formatar a data e hora
+                String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
+                String hora = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+                //DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+                //String dataFormatada = formatterData.format(agora);
 
                 // formatar a hora
-                DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-                String horaFormatada = formatterHora.format(agora);
+                //DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+                //String horaFormatada = formatterHora.format(agora);
 
                 String observacao = editObservacao.getText().toString();
                 pedidoSelecionado.setMetodoPagamento(metodoPagamento);
                 pedidoSelecionado.setObservacao(observacao);
                 pedidoSelecionado.setStatus("confirmado");
-                pedidoSelecionado.setData(dataFormatada);
-                pedidoSelecionado.setHora(horaFormatada);
+                pedidoSelecionado.setData(data);
+                pedidoSelecionado.setHora(hora);
                 pedidoSelecionado.confirmar();
                 pedidoSelecionado.criarHistorico();
                 pedidoSelecionado.remover();

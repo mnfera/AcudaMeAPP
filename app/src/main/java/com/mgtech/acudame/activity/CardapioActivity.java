@@ -125,11 +125,11 @@ public class CardapioActivity extends AppCompatActivity {
             Picasso.get().load(url).into(imageEmpresaCardapio);
         }
 
-        // recupera os dados do usuário e seus pedidos
-        recuperarDadosUsuario();
-
         // carregando os dados da viewPager
         carregarViewPagers();
+
+        // recupera os dados do usuário e seus pedidos
+        recuperarDadosUsuario();
 
         button_Ver_Carrinho.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -370,7 +370,7 @@ public class CardapioActivity extends AppCompatActivity {
 
                 // criar e mostrar viewPager
                 criarMostrarViewPager();
-                dialog2.dismiss();
+                //dialog2.dismiss();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -387,22 +387,22 @@ public class CardapioActivity extends AppCompatActivity {
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
 
-        if(comida == true) {
+        if(comida) {
             viewPagerAdapter.addFragment(new Comidas(idEmpresaSelecionada, idUsuarioLogado), "" );
             comidaIndex = index;
             index++;
         }
-        if(pizza == true) {
+        if(pizza) {
             viewPagerAdapter.addFragment(new Pizzas(idEmpresaSelecionada, idUsuarioLogado), "" );
             pizzaIndex = index;
             index++;
         }
-        if(bebida == true){
+        if(bebida){
             viewPagerAdapter.addFragment(new Bebidas(idEmpresaSelecionada, idUsuarioLogado), "" );
             bebidaIndex = index;
             index++;
         }
-        if(sorvete == true){
+        if(sorvete){
             viewPagerAdapter.addFragment(new Sorvetes(idEmpresaSelecionada, idUsuarioLogado), "" );
             sorveteIndex = index;
             index++;
@@ -436,6 +436,8 @@ public class CardapioActivity extends AppCompatActivity {
             tabLayout.getTabAt(sorveteIndex).setIcon(R.drawable.ic_sorvete);
             tabLayout.getTabAt(sorveteIndex).setText("Sorvetes");
         }
+
+        dialog2.dismiss();
     }
 
 }
