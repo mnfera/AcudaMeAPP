@@ -38,6 +38,8 @@ import com.mgtech.acudame.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -264,7 +266,7 @@ public class Pizzas extends Fragment {
         });
     }
 
-    public void escolherComplementos(final int posicao){
+    private void escolherComplementos(final int posicao){
 
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
         builder.setTitle("Selecione os sabores da Pizza:\nAté 2 (dois) sabores");

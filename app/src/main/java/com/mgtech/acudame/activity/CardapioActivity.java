@@ -40,6 +40,7 @@ import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.ItemPedido;
 import com.mgtech.acudame.model.Pedido;
+import com.mgtech.acudame.model.Produto;
 import com.mgtech.acudame.model.Usuario;
 import com.mgtech.acudame.viewPager.Bebidas;
 import com.mgtech.acudame.viewPager.Comidas;
@@ -58,7 +59,7 @@ public class CardapioActivity extends AppCompatActivity {
     private ImageView imageEmpresaCardapio, imageCelular, imageWhatsapp;
     private TextView textNomeEmpresaCardapio, textTelefoneEmpresaCardapio, textStatusEmpresaCardapio;
     private Empresa empresaSelecionada;
-    private AlertDialog dialog, dialog2;
+    private AlertDialog dialog, dialog2, dialog3;
     private TextView textCarrinhoQtde, textCarrinhoTotal, textVerCarrinho;
     private DatabaseReference firebaseRef;
     private String idEmpresaSelecionada;
@@ -77,6 +78,7 @@ public class CardapioActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Button button_Ver_Carrinho;
+    private List<Produto> produtos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +128,7 @@ public class CardapioActivity extends AppCompatActivity {
         }
 
         // carregando os dados da viewPager
-        carregarViewPagers();
+        recuperarProdutos();
 
         // recupera os dados do usuário e seus pedidos
         recuperarDadosUsuario();
@@ -252,30 +254,6 @@ public class CardapioActivity extends AppCompatActivity {
         });
     }
 
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_cardapio, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menuPedido :
-                verCarrinho();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-     */
-
     private void verCarrinho() {
 
         if(pedidoRecuperado != null) {
@@ -290,94 +268,53 @@ public class CardapioActivity extends AppCompatActivity {
         }
     }
 
-    private void carregarViewPagers() {
+    private void recuperarProdutos(){
 
-        dialog2 = new SpotsDialog.Builder()
-                .setContext(this)
+        dialog3 = new SpotsDialog.Builder()
+                .setContext(CardapioActivity.this)
                 .setMessage("Carregando Dados")
                 .setCancelable(false)
                 .build();
-        dialog2.show();
+        dialog3.show();
 
         DatabaseReference produtosRef = firebaseRef
                 .child("produtos")
                 .child(idEmpresaSelecionada);
-
-        Query produtoComida = produtosRef.orderByChild("categoria")
-                .equalTo("comida");
-
-        Query produtoPizza = produtosRef.orderByChild("categoria")
-                .equalTo("pizza");
-
-        Query produtoBebida = produtosRef.orderByChild("categoria")
-                .equalTo("bebida");
-
-        Query produtoSorvete = produtosRef.orderByChild("categoria")
-                .equalTo("sorvete");
-
-        produtoComida.addValueEventListener(new ValueEventListener() {
+        produtosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot.getValue() != null){
-                    comida = true;
+                produtos.clear();
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    produtos.add(ds.getValue(Produto.class));
                 }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-
-        produtoPizza.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot.getValue() != null){
-                    pizza = true;
+                if(!produtos.isEmpty()) {
+                    for (int i = 0; i < produtos.size(); i++) {
+                        switch (produtos.get(i).getCategoria()) {
+                            case "comida":
+                                comida = true;
+                                break;
+                            case "bebida":
+                                bebida = true;
+                                break;
+                            case "pizza":
+                                pizza = true;
+                                break;
+                            case "sorvete":
+                                sorvete = true;
+                                break;
+                        }
+                    }
                 }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-
-        produtoBebida.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot.getValue() != null){
-                    bebida = true;
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-
-        produtoSorvete.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot.getValue() != null){
-                    sorvete = true;
-                }
-
                 // criar e mostrar viewPager
                 criarMostrarViewPager();
-                //dialog2.dismiss();
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
         });
+
     }
 
     private void criarMostrarViewPager() {
@@ -385,7 +322,6 @@ public class CardapioActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPage);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
 
         if(comida) {
             viewPagerAdapter.addFragment(new Comidas(idEmpresaSelecionada, idUsuarioLogado), "" );
@@ -437,7 +373,7 @@ public class CardapioActivity extends AppCompatActivity {
             tabLayout.getTabAt(sorveteIndex).setText("Sorvetes");
         }
 
-        dialog2.dismiss();
+        dialog3.dismiss();
     }
 
 }

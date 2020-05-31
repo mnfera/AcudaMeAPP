@@ -187,6 +187,34 @@ public class Comidas extends Fragment {
         });
     }
 
+    private void recuperarProdutos(){
+
+        produtosRef = databaseReference
+                .child("produtos")
+                .child(idEmpresa);
+
+        Query produtoPesquisa = produtosRef.orderByChild("statusCategoria")
+                .equalTo("ativo_comida");
+
+        produtoPesquisa.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                produtos.clear();
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    Produto produto = ds.getValue(Produto.class);
+                    produtos.add(produto);
+
+                }
+                adapterProduto.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void confirmarQuantidade(final int posicao) {
 
         if( usuario.getEndereco() == null ){
@@ -296,33 +324,5 @@ public class Comidas extends Fragment {
             });
             mDialog.show();
         }
-    }
-
-    private void recuperarProdutos(){
-
-        produtosRef = databaseReference
-                .child("produtos")
-                .child(idEmpresa);
-
-        Query produtoPesquisa = produtosRef.orderByChild("statusCategoria")
-                .equalTo("ativo_comida");
-
-        produtoPesquisa.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                produtos.clear();
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    Produto produto = ds.getValue(Produto.class);
-                    produtos.add(produto);
-
-                }
-                adapterProduto.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 }

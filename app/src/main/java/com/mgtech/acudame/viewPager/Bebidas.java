@@ -190,6 +190,32 @@ public class Bebidas extends Fragment {
         });
     }
 
+    private void recuperarProdutos(){
+
+        produtosRef = databaseReference
+                .child("produtos")
+                .child(idEmpresa);
+
+        Query produtoPesquisa = produtosRef.orderByChild("statusCategoria")
+                .equalTo("ativo_bebida");
+
+        produtoPesquisa.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                produtos.clear();
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    produtos.add(ds.getValue(Produto.class));
+                }
+                adapterProduto.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void confirmarQuantidade(final int posicao) {
 
         if( usuario.getEndereco() == null ){
@@ -299,31 +325,5 @@ public class Bebidas extends Fragment {
             });
             mDialog.show();
         }
-    }
-
-    public void recuperarProdutos(){
-
-        produtosRef = databaseReference
-                .child("produtos")
-                .child(idEmpresa);
-
-        Query produtoPesquisa = produtosRef.orderByChild("statusCategoria")
-                .equalTo("ativo_bebida");
-
-        produtoPesquisa.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                produtos.clear();
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    produtos.add(ds.getValue(Produto.class));
-                }
-                adapterProduto.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 }

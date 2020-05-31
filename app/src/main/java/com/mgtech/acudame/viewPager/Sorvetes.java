@@ -238,7 +238,7 @@ public class Sorvetes extends Fragment {
         });
     }
 
-    public void recuperarProdutos(){
+    private void recuperarProdutos(){
 
         produtosRef = databaseReference
                 .child("produtos")
@@ -264,7 +264,7 @@ public class Sorvetes extends Fragment {
         });
     }
 
-    public void escolherComplementos(final int posicao){
+    private void escolherComplementos(final int posicao){
 
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
         builder.setTitle("Selecione os itens");
