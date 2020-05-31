@@ -51,6 +51,8 @@
         android:text="Obs: teste"
         android:textSize="14sp" />
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,6 +90,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Status: Pendente"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textPedidoHorario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Realizado às: 00:00"
+        android:maxLength="19"
         android:textSize="14sp" />
 
     <TextView

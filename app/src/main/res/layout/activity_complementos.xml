@@ -13,6 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <com.google.android.gms.ads.AdView
+        android:layout_marginTop="10dp"
+        android:id="@+id/complementosAnuncio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:adSize="FULL_BANNER"
+        android:layout_gravity="center"
+        app:adUnitId="@string/anuncio_Admob"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerComplementos"
         android:layout_width="match_parent"
@@ -25,12 +34,7 @@
         android:layout_gravity="center"
         android:gravity="center">
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/complementosAnuncio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:adSize="BANNER"
-            app:adUnitId="@string/anuncio_Admob"/>
+
 
     </LinearLayout>
 

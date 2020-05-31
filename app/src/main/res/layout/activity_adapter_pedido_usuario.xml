@@ -86,9 +86,19 @@
         android:id="@+id/textPedidoStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginTop="8dp"
         android:text="Status: Pendente"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textPedidoHorario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:maxLength="19"
+        android:layout_marginBottom="8dp"
+        android:text="Realizado às: 00:00"
         android:textSize="18sp" />
 
     <TextView

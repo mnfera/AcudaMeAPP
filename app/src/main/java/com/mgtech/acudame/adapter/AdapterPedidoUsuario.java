@@ -55,6 +55,7 @@ public class AdapterPedidoUsuario extends RecyclerView.Adapter<AdapterPedidoUsua
         holder.referencia.setText("Referência: "+pedido.getReferencia());
         holder.observacao.setText( "Obs.: "+ pedido.getObservacao() );
         holder.telefone.setText(pedido.getTelEmpresa());
+        holder.horario.setText("Realizado às: " + pedido.getHora());
         holder.status.setText("Status: "+pedido.getStatus().toUpperCase());
         switch (pedido.getStatus()) {
             case "pendente":
@@ -158,6 +159,7 @@ public class AdapterPedidoUsuario extends RecyclerView.Adapter<AdapterPedidoUsua
         TextView observacao;
         TextView telefone;
         TextView status;
+        TextView horario;
         TextView itens;
         ImageView imageCelular;
         ImageView imageWhatsapp;
@@ -174,6 +176,7 @@ public class AdapterPedidoUsuario extends RecyclerView.Adapter<AdapterPedidoUsua
             observacao  = itemView.findViewById(R.id.textPedidoObs);
             telefone    = itemView.findViewById(R.id.textPedidoTelefone);
             status      = itemView.findViewById(R.id.textPedidoStatus);
+            horario      = itemView.findViewById(R.id.textPedidoHorario);
             itens       = itemView.findViewById(R.id.textPedidoItens);
             imageCelular = itemView.findViewById(R.id.imageCelular);
             imageWhatsapp = itemView.findViewById(R.id.imageWhatsapp);
