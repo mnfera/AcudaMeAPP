@@ -125,11 +125,13 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                                                             String tipoUsuario = "U";
                                                             UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
+                                                            dialog.dismiss();
 
                                                         }else{
                                                             Toast.makeText(AutenticacaoActivity.this,
                                                                     task.getException().getMessage(),
                                                                     Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
                                                         }
 
                                                     }
@@ -144,15 +146,19 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                                 } catch (FirebaseAuthWeakPasswordException e) {
                                                     erroExcecao = "Digite uma senha mais forte!";
                                                     titulo = "Senha";
+                                                    dialog.dismiss();
                                                 } catch (FirebaseAuthInvalidCredentialsException e) {
                                                     erroExcecao = "E-mail inválido! Informe um e-mail válido!";
                                                     titulo = "Email";
+                                                    dialog.dismiss();
                                                 } catch (FirebaseAuthUserCollisionException e) {
                                                     erroExcecao = "Esta conta já foi cadastrada";
                                                     titulo = "Conta";
+                                                    dialog.dismiss();
                                                 } catch (Exception e) {
                                                     erroExcecao = "ao cadastrar usuário: " + e.getMessage();
                                                     titulo = "Usuário";
+                                                    dialog.dismiss();
                                                 }
 
                                                 alertaSimples(erroExcecao, getApplicationContext(), titulo);
