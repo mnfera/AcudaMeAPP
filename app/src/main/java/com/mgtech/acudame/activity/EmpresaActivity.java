@@ -191,9 +191,9 @@ public class EmpresaActivity extends AppCompatActivity {
                     empresa.setIdUsuario(idUsuarioLogado);
                     empresa.atualizarStatusEmpresa();
                     finish();
-                    overridePendingTransition( 0, 0);
+                    //overridePendingTransition( 0, 0);
                     startActivity(getIntent());
-                    overridePendingTransition( 0, 0);
+                    //overridePendingTransition( 0, 0);
                 }else {
                     //atualizando o status
                     empresa = new Empresa();
@@ -201,9 +201,9 @@ public class EmpresaActivity extends AppCompatActivity {
                     empresa.setIdUsuario(idUsuarioLogado);
                     empresa.atualizarStatusEmpresa();
                     finish();
-                    overridePendingTransition( 0, 0);
+                    //overridePendingTransition( 0, 0);
                     startActivity(getIntent());
-                    overridePendingTransition( 0, 0);
+                    //overridePendingTransition( 0, 0);
                 }
             }
         });
