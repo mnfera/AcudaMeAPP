@@ -258,6 +258,9 @@ public class CarrinhoActivity extends AppCompatActivity {
 
                 finish();
 
+                Toast.makeText(CarrinhoActivity.this, "Pedido realizado com sucesso!"
+                        , Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -339,10 +342,7 @@ public class CarrinhoActivity extends AppCompatActivity {
                     call.enqueue(new Callback<NotificacaoDados>() {
                         @Override
                         public void onResponse(Call<NotificacaoDados> call, Response<NotificacaoDados> response) {
-                            if(response.isSuccessful()){
-                                Toast.makeText(CarrinhoActivity.this, "Pedido realizado com sucesso!"
-                                        , Toast.LENGTH_SHORT).show();
-                            }
+
                         }
 
                         @Override
