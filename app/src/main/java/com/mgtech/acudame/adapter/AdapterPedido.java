@@ -116,7 +116,7 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
                 Uri uri = Uri.parse("tel:" + pedido.getTelUsuario());
                 Intent intent = new Intent(Intent.ACTION_CALL, uri);
                 if (ActivityCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions((Activity) context.getApplicationContext(), new String[]{Manifest.permission.CALL_PHONE}, 1);
+                    ActivityCompat.requestPermissions((Activity) view.getContext(), new String[]{Manifest.permission.CALL_PHONE}, 1);
                     return;
                 }
                 context.startActivity(intent);

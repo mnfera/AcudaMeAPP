@@ -152,7 +152,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                                     titulo = "Email";
                                                     dialog.dismiss();
                                                 } catch (FirebaseAuthUserCollisionException e) {
-                                                    erroExcecao = "Esta conta já foi cadastrada";
+                                                    erroExcecao = "Uma conta já foi cadastrada com este e-mail! Se você esqueceu sua senha use a opção de esqueci a senha abaixo do botão ACESSAR";
                                                     titulo = "Conta";
                                                     dialog.dismiss();
                                                 } catch (Exception e) {

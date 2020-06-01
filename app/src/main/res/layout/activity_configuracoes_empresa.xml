@@ -12,94 +12,100 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imagePerfilEmpresa"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/perfil" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <EditText
-            android:id="@+id/editEmpresaNome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_edit_text"
-            android:ems="10"
-            android:hint="Nome da empresa"
-            android:inputType="textCapWords|textCapSentences"
-            android:padding="16dp" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imagePerfilEmpresa"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/perfil" />
 
-        <EditText
-            android:id="@+id/editEmpresaCategoria"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
-            android:background="@drawable/bg_edit_text"
-            android:ems="10"
-            android:hint="Categoria. Ex.: pizzaria"
-            android:inputType="textCapWords|textCapSentences"
-            android:padding="16dp" />
+            <EditText
+                android:id="@+id/editEmpresaNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="Nome da empresa"
+                android:inputType="textCapWords|textCapSentences"
+                android:padding="16dp" />
+
+            <EditText
+                android:id="@+id/editEmpresaCategoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="Categoria. Ex.: pizzaria"
+                android:inputType="textCapWords|textCapSentences"
+                android:padding="16dp" />
 
 
-        <EditText
-            android:id="@+id/editEmpresaDias"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
-            android:background="@drawable/bg_edit_text"
-            android:ems="10"
-            android:hint="Dias de funcionamento. Ex.: Ter a Dom"
-            android:inputType="none|text"
-            android:padding="16dp" />
+            <EditText
+                android:id="@+id/editEmpresaDias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="Dias de funcionamento. Ex.: Ter a Dom"
+                android:inputType="none|text"
+                android:padding="16dp" />
 
-        <EditText
-            android:id="@+id/editEmpresaHorario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
-            android:background="@drawable/bg_edit_text"
-            android:ems="10"
-            android:hint="Horário. Ex.: 18:00 - 22:30"
-            android:inputType="none|text"
-            android:padding="16dp" />
+            <EditText
+                android:id="@+id/editEmpresaHorario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="Horário. Ex.: 18:00 - 22:30"
+                android:inputType="none|text"
+                android:padding="16dp" />
 
-        <com.santalu.maskedittext.MaskEditText
-            android:id="@+id/editTelefone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
-            android:background="@drawable/bg_edit_text"
-            android:ems="10"
-            android:hint="Telefone empresa"
-            android:inputType="phone"
-            android:padding="16dp"
-            app:met_mask="(##) #####-####" />
+            <com.santalu.maskedittext.MaskEditText
+                android:id="@+id/editTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="Telefone empresa"
+                android:inputType="phone"
+                android:padding="16dp"
+                app:met_mask="(##) #####-####" />
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/confEmpresaAnuncio"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="7dp"
-            android:layout_height="wrap_content"
-            app:adSize="BANNER"
-            app:adUnitId="@string/anuncio_Admob"/>
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/confEmpresaAnuncio"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="7dp"
+                android:layout_height="wrap_content"
+                app:adSize="BANNER"
+                app:adUnitId="@string/anuncio_Admob"/>
 
-        <Button
-            android:id="@+id/buttonSalvar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Salvar"
-            android:theme="@style/botaoPadrao" />
+            <Button
+                android:id="@+id/buttonSalvar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Salvar"
+                android:theme="@style/botaoPadrao" />
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>
