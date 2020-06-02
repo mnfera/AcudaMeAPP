@@ -105,6 +105,7 @@ public class EmpresaActivity extends AppCompatActivity {
         // recupera os produtos da empresa
         recuperarProdutos();
 
+
         // add evento de clique no recycler view
         recyclerProdutos.addOnItemTouchListener(
                 new RecyclerItemClickListener(
@@ -184,21 +185,19 @@ public class EmpresaActivity extends AppCompatActivity {
                 if(status){
                     //atualizando o status
                     empresa.setStatus(false);
-                    empresa.setIdUsuario(idUsuarioLogado);
                     finish();
                     overridePendingTransition( 0, 0);
                     startActivity(getIntent());
                     overridePendingTransition( 0, 0);
-                    empresa.atualizarStatusEmpresa();
+                    //empresa.atualizarStatusEmpresa();
                 }else {
                     //atualizando o status
                     empresa.setStatus(true);
-                    empresa.setIdUsuario(idUsuarioLogado);
                     finish();
                     overridePendingTransition( 0, 0);
                     startActivity(getIntent());
                     overridePendingTransition( 0, 0);
-                    empresa.atualizarStatusEmpresa();
+                    //empresa.atualizarStatusEmpresa();
                 }
             }
         });
@@ -283,13 +282,11 @@ public class EmpresaActivity extends AppCompatActivity {
                             status = false;
                         }
                     }
-
-                    //Salvando token da empresa
-                    recuperarToken ();
-
                 }
 
-                dialog2.dismiss();
+                //Salvando token da empresa
+                recuperarToken ();
+
             }
 
             @Override
@@ -405,10 +402,21 @@ public class EmpresaActivity extends AppCompatActivity {
                 //recuperando token
                 String token = instanceIdResult.getToken();
 
-                //salvando
-                empresa.setTokenEmpresa(token);
-                empresa.setIdUsuario(idUsuarioLogado);
-                empresa.salvarTokenEmpresa();
+                if(empresa.getTokenEmpresa() != null) {
+                    if (!empresa.getTokenEmpresa().equals(token)) {
+
+                        //salvando
+                        empresa.setTokenEmpresa(token);
+                        empresa.atualizarTokenEmpresa();
+                    }
+                }else {
+
+                    //salvando
+                    empresa.setTokenEmpresa(token);
+                    empresa.atualizarTokenEmpresa();
+                }
+
+                dialog2.dismiss();
 
             }
         });

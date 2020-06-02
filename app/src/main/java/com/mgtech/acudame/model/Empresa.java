@@ -4,6 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class Empresa implements Serializable {
 
@@ -38,6 +39,31 @@ public class Empresa implements Serializable {
         DatabaseReference empresaRef = firebaseRef.child("empresas")
                 .child(getIdUsuario());
         empresaRef.child("tokenEmpresa").setValue(getTokenEmpresa());
+    }
+
+    public void atualizarTokenEmpresa() {
+
+        HashMap<String, Object> tokenEmpresa = new HashMap<>();
+        tokenEmpresa.put("tokenEmpresa", getTokenEmpresa());
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference empresaRef = firebaseRef
+                .child("empresas")
+                .child(getIdUsuario());
+        empresaRef.updateChildren(tokenEmpresa);
+    }
+
+    public void atualizarStatusEmpresa2() {
+
+        HashMap<String, Object> status = new HashMap<>();
+        status.put("status", getStatus());
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference empresaRef = firebaseRef
+                .child("empresas")
+                .child(getIdUsuario());
+        empresaRef.updateChildren(status);
+
     }
 
     public void atualizarStatusEmpresa() {
