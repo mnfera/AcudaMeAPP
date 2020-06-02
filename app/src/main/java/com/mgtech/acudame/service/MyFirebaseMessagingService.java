@@ -13,27 +13,35 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mgtech.acudame.R;
 import com.mgtech.acudame.activity.HistoricoPedidosUsuarioActivity;
 import com.mgtech.acudame.activity.PedidosActivity;
+import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
+    private FirebaseAuth autenticacao;
 
     @Override
     public void onMessageReceived(RemoteMessage notificacao) {
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        FirebaseUser user = autenticacao.getCurrentUser();
+
+
 
         //Verificação diferente de null
-        if( notificacao != null ){
+        if( notificacao != null && user != null  ){
 
             //Recuperando informações da notificação firebase
             String titulo = notificacao.getNotification().getTitle();
             String corpo = notificacao.getNotification().getBody();
 
 
-            enviarNotificacao(titulo, corpo);
+            //enviarNotificacao(titulo, corpo);
 
         }
 
