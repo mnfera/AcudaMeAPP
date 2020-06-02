@@ -60,7 +60,7 @@ public class EmpresaActivity extends AppCompatActivity {
     private String idUsuarioLogado, idPro;
     private int produtoOpcao;
     private Empresa empresa;
-    private AlertDialog dialog;
+    private AlertDialog dialog, dialog2;
     private AdView anuncio;
     private FloatingActionButton fab_actionProduto, fab_actionComplemento, fab_actionPizza;
     private TextView textStatus;
@@ -186,7 +186,6 @@ public class EmpresaActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(status){
                     //atualizando o status
-                    empresa = new Empresa();
                     empresa.setStatus(false);
                     empresa.setIdUsuario(idUsuarioLogado);
                     empresa.atualizarStatusEmpresa();
@@ -196,7 +195,6 @@ public class EmpresaActivity extends AppCompatActivity {
                     overridePendingTransition( 0, 0);
                 }else {
                     //atualizando o status
-                    empresa = new Empresa();
                     empresa.setStatus(true);
                     empresa.setIdUsuario(idUsuarioLogado);
                     empresa.atualizarStatusEmpresa();
@@ -263,6 +261,13 @@ public class EmpresaActivity extends AppCompatActivity {
 
     private void recuperarDadosEmpresa() {
 
+        dialog2 = new SpotsDialog.Builder()
+                .setContext(EmpresaActivity.this)
+                .setMessage("Carregando Dados")
+                .setCancelable(false)
+                .build();
+        dialog2.show();
+
         DatabaseReference empresaRef = firebaseRef
                 .child("empresas")
                 .child(idUsuarioLogado);
@@ -282,6 +287,7 @@ public class EmpresaActivity extends AppCompatActivity {
                         }
                     }
                 }
+                dialog2.dismiss();
             }
 
             @Override
@@ -398,7 +404,6 @@ public class EmpresaActivity extends AppCompatActivity {
                 String token = instanceIdResult.getToken();
 
                 //salvando
-                empresa = new Empresa();
                 empresa.setTokenEmpresa(token);
                 empresa.setIdUsuario(idUsuarioLogado);
                 empresa.salvarTokenEmpresa();
