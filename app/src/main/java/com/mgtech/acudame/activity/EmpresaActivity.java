@@ -88,9 +88,6 @@ public class EmpresaActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         anuncio.loadAd(adRequest);
 
-        //Salvando token da empresa
-        recuperarToken ();
-
         // configurações toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Acuda-me || Empresa");
@@ -188,20 +185,20 @@ public class EmpresaActivity extends AppCompatActivity {
                     //atualizando o status
                     empresa.setStatus(false);
                     empresa.setIdUsuario(idUsuarioLogado);
-                    empresa.atualizarStatusEmpresa();
                     finish();
                     overridePendingTransition( 0, 0);
                     startActivity(getIntent());
                     overridePendingTransition( 0, 0);
+                    empresa.atualizarStatusEmpresa();
                 }else {
                     //atualizando o status
                     empresa.setStatus(true);
                     empresa.setIdUsuario(idUsuarioLogado);
-                    empresa.atualizarStatusEmpresa();
                     finish();
                     overridePendingTransition( 0, 0);
                     startActivity(getIntent());
                     overridePendingTransition( 0, 0);
+                    empresa.atualizarStatusEmpresa();
                 }
             }
         });
@@ -286,7 +283,12 @@ public class EmpresaActivity extends AppCompatActivity {
                             status = false;
                         }
                     }
+
+                    //Salvando token da empresa
+                    recuperarToken ();
+
                 }
+
                 dialog2.dismiss();
             }
 
