@@ -141,39 +141,40 @@ public class PedidosActivity extends AppCompatActivity {
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
                                             pedido.setStatus("recebido");
+                                            finish();
                                             startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
                                             pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
                                             Toast.makeText(PedidosActivity.this, "Pedido Recebido",
                                                     Toast.LENGTH_SHORT).show();
                                             enviarNotificacao("ATENÇÃO", "Seu pedido foi recebido pela empresa e está sendo preparado");
-                                            finish();
 
                                         }else if(pedidoEntrega == 1){
                                             Pedido pedido = pedidos.get(posicaoItem);
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
                                             pedido.setStatus("finalizado");
+                                            finish();
                                             startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
                                             pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
                                             Toast.makeText(PedidosActivity.this, "Pedido finalizado",
                                                     Toast.LENGTH_SHORT).show();
                                             enviarNotificacao("ATENÇÃO", "Seu pedido foi/será entregue e finalizado");
-                                            finish();
 
                                         }else{
                                             Pedido pedido = pedidos.get(posicaoItem);
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
                                             pedido.setStatus("cancelado");
+                                            finish();
                                             startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
                                             pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
                                             Toast.makeText(PedidosActivity.this, "Pedido cancelado",
                                                     Toast.LENGTH_SHORT).show();
                                             enviarNotificacao("ATENÇÃO", "Seu pedido foi cancelado");
-                                            finish();
+
                                         }
                                     }
                                 });
