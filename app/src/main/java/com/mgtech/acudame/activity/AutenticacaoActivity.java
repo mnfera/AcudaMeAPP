@@ -270,7 +270,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
             String tipoUsuario = usuarioAtual.getDisplayName();
 
             if (tipoUsuario == null) {
-                throw new AssertionError("Tipo do usuário é nulo. Feche o app e tente entrar novamente com seu e-mail e senha");
+                throw new AssertionError("Tipo do usuário é nulo! Feche o app e tente entrar novamente com seu e-mail e senha");
             }
             if (tipoUsuario.equals("E")) {
                 abrirTelaPrincipal(tipoUsuario);
