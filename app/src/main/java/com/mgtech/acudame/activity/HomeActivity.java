@@ -38,6 +38,7 @@ import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Usuario;
+import com.mgtech.acudame.token.TokenEmpresa;
 import com.mgtech.acudame.token.TokenUsuario;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -278,12 +279,40 @@ public class HomeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
 
                         //token
-                         token = task.getResult().getToken();
+                        token = task.getResult().getToken();
 
-                        TokenUsuario tokenUsuario = new TokenUsuario();
-                        tokenUsuario.setToken(token);
-                        tokenUsuario.setIdUsuario(idUsuarioLogado);
-                        tokenUsuario.salvarTokenUsuario();
+                        //recuperar token usuario
+                        DatabaseReference usuarioRef = firebaseRef
+                                .child("tokenUsuarios")
+                                .child(idUsuarioLogado)
+                                .child("token");
+                        usuarioRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                if(dataSnapshot.exists()){
+                                    String token2 = dataSnapshot.getValue().toString();
+
+                                    if(token.equals(token2)){
+
+                                    }else{
+                                        String token = dataSnapshot.getValue().toString();
+                                        TokenUsuario tokenUsuario = new TokenUsuario();
+                                        tokenUsuario.setToken(token);
+                                        tokenUsuario.setIdUsuario(idUsuarioLogado);
+                                        tokenUsuario.salvarTokenUsuario();
+                                    }
+                                }
+
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 });
     }

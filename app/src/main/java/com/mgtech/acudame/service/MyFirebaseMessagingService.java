@@ -29,14 +29,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage notificacao) {
-        super.onMessageReceived(notificacao);
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         FirebaseUser user = autenticacao.getCurrentUser();
 
 
         //Verificação diferente de null
-        if( notificacao != null && user != null && notificacao.getData().isEmpty())
+        if( notificacao != null && user != null )
         {
 
             //Recuperando informações da notificação firebase
