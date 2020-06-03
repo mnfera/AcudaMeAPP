@@ -268,6 +268,9 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
             String tipoUsuario = usuarioAtual.getDisplayName();
 
+            if (tipoUsuario == null) {
+                throw new AssertionError("Tipo do usuário é nulo. Feche o app e tente entrar novamente com seu e-mail e senha");
+            }
             if (tipoUsuario.equals("E")) {
                 abrirTelaPrincipal(tipoUsuario);
             } else {
@@ -279,11 +282,15 @@ public class AutenticacaoActivity extends AppCompatActivity {
     }
 
     private void abrirTelaPrincipal(String tipoUsuario){
+
         if(tipoUsuario.equals("U")){ // usuario
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
-        }else { // empresa
+        }else if(tipoUsuario.equals("E")) { // empresa
             startActivity(new Intent(getApplicationContext(), EmpresaActivity.class));
+            finish();
+        }else {
+            startActivity(new Intent(getApplicationContext(), AutenticacaoActivity.class));
             finish();
         }
 
