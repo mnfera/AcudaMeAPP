@@ -11,7 +11,6 @@ public class Usuario {
     private String numero;
     private String referencia;
     private String telefone;
-    private String tokenUsuario;
 
     public Usuario() {
     }
@@ -29,12 +28,7 @@ public class Usuario {
 
     }
 
-    public void salvarTokenUsuario() {
-        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
-        DatabaseReference usuarioRef = firebaseRef.child("usuarios")
-                .child(getIdUsuario());
-        usuarioRef.child("tokenUsuario").setValue(getTokenUsuario());
-    }
+
 
     public String getTelefone() { return telefone; }
 
@@ -78,7 +72,5 @@ public class Usuario {
 
     public void setReferencia(String referencia) { this.referencia = referencia; }
 
-    public String getTokenUsuario() {return tokenUsuario;}
 
-    public void setTokenUsuario(String tokenUsuario) {this.tokenUsuario = tokenUsuario;}
 }

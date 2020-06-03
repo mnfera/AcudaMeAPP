@@ -38,6 +38,7 @@ import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Usuario;
+import com.mgtech.acudame.token.TokenUsuario;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -65,8 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //Pegando token
-        recuperarToken();
+
 
         //Anuncio
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -80,6 +80,9 @@ public class HomeActivity extends AppCompatActivity {
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
+        //Pegando token
+        recuperarToken();
 
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         anuncioHome.loadAd(adRequest);
@@ -277,10 +280,10 @@ public class HomeActivity extends AppCompatActivity {
                         //token
                          token = task.getResult().getToken();
 
-                        usuario = new Usuario();
-                        usuario.setTokenUsuario(token);
-                        usuario.setIdUsuario(idUsuarioLogado);
-                        usuario.salvarTokenUsuario();
+                        TokenUsuario tokenUsuario = new TokenUsuario();
+                        tokenUsuario.setToken(token);
+                        tokenUsuario.setIdUsuario(idUsuarioLogado);
+                        tokenUsuario.salvarTokenUsuario();
                     }
                 });
     }

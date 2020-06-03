@@ -37,6 +37,7 @@ import com.mgtech.acudame.model.Notificacao;
 import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
 import com.mgtech.acudame.model.Usuario;
+import com.mgtech.acudame.token.TokenUsuario;
 
 
 import java.util.ArrayList;
@@ -259,15 +260,15 @@ public class PedidosActivity extends AppCompatActivity {
 
         //recuperar token usuario
         DatabaseReference usuarioRef = firebaseRef
-                .child("usuarios")
-                .child(idUsu);
+                .child("tokenUsuarios")
+                .child(idUsu)
+                .child("token");
         usuarioRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() != null){
-                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                if(dataSnapshot.exists()){
+                    String token = dataSnapshot.getValue().toString();
                     String to;
-                    String token = usuario.getTokenUsuario();
 
                     to = token;
 

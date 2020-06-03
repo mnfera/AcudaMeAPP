@@ -3,7 +3,6 @@ package com.mgtech.acudame.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,7 +27,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,7 +44,7 @@ import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Produto;
-import com.squareup.picasso.Picasso;
+import com.mgtech.acudame.token.TokenEmpresa;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,7 @@ public class EmpresaActivity extends AppCompatActivity {
     private TextView textStatus;
     private Button buttonStatus;
     private Boolean status = true;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,9 @@ public class EmpresaActivity extends AppCompatActivity {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
+        //Recuperra token
+        recuperarToken();
 
         //Anuncio
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -182,6 +187,8 @@ public class EmpresaActivity extends AppCompatActivity {
         buttonStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if(status){
                     //atualizando o status
                     empresa.setStatus(false);
@@ -189,7 +196,7 @@ public class EmpresaActivity extends AppCompatActivity {
                     overridePendingTransition( 0, 0);
                     startActivity(getIntent());
                     overridePendingTransition( 0, 0);
-                    //empresa.atualizarStatusEmpresa();
+                    empresa.atualizarStatusEmpresa();
                 }else {
                     //atualizando o status
                     empresa.setStatus(true);
@@ -197,7 +204,7 @@ public class EmpresaActivity extends AppCompatActivity {
                     overridePendingTransition( 0, 0);
                     startActivity(getIntent());
                     overridePendingTransition( 0, 0);
-                    //empresa.atualizarStatusEmpresa();
+                    empresa.atualizarStatusEmpresa();
                 }
             }
         });
@@ -284,8 +291,7 @@ public class EmpresaActivity extends AppCompatActivity {
                     }
                 }
 
-                //Salvando token da empresa
-                recuperarToken ();
+                dialog2.dismiss();
 
             }
 
@@ -394,31 +400,22 @@ public class EmpresaActivity extends AppCompatActivity {
         startActivity(new Intent(EmpresaActivity.this, Feedback.class));
     }
 
-    public void recuperarToken (){
+    public void recuperarToken(){
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                //recuperando token
-                String token = instanceIdResult.getToken();
+                        //token
+                        token = task.getResult().getToken();
 
-                if(empresa.getTokenEmpresa() != null) {
-                    if (!empresa.getTokenEmpresa().equals(token)) {
-
-                        //salvando
-                        empresa.setTokenEmpresa(token);
-                        empresa.atualizarTokenEmpresa();
+                        TokenEmpresa tokenEmpresa = new TokenEmpresa();
+                        tokenEmpresa.setToken(token);
+                        tokenEmpresa.setIdEmpresa(idUsuarioLogado);
+                        tokenEmpresa.salvarTokenEmpresa();
                     }
-                }else {
-
-                    //salvando
-                    empresa.setTokenEmpresa(token);
-                    empresa.atualizarTokenEmpresa();
-                }
-
-                dialog2.dismiss();
-
-            }
-        });
+                });
     }
+
+
 }

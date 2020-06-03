@@ -25,23 +25,27 @@ import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private FirebaseAuth autenticacao;
+    private String data = "";
 
     @Override
     public void onMessageReceived(RemoteMessage notificacao) {
+        super.onMessageReceived(notificacao);
+
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         FirebaseUser user = autenticacao.getCurrentUser();
 
 
-
         //Verificação diferente de null
-        if( notificacao != null && user != null  ){
+        if( notificacao != null && user != null && notificacao.getData().isEmpty())
+        {
 
             //Recuperando informações da notificação firebase
+            data = notificacao.getData().toString();
             String titulo = notificacao.getNotification().getTitle();
             String corpo = notificacao.getNotification().getBody();
 
 
-            //enviarNotificacao(titulo, corpo);
+            enviarNotificacao(titulo, corpo);
 
         }
 

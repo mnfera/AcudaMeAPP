@@ -156,7 +156,7 @@ public class ConfiguracoesUsuarioActivity extends AppCompatActivity {
                                     usuario.setNumero(numero);
                                     usuario.setReferencia(referencia);
                                     usuario.setTelefone(telefone);
-                                    usuario.setTokenUsuario(token);
+                                    //usuario.setTokenUsuario(token);
                                     usuario.salvar();
 
                                     exibirMensagem("Dados atualizados com sucesso!");

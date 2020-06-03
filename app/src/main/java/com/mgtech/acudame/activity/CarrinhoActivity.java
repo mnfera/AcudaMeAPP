@@ -318,17 +318,17 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     public void enviarNotificacaoUsuario(){
 
-        //recuperar token empresa
-        DatabaseReference empresaRef = firebaseRef
-                .child("empresas")
-                .child(idEmpresaSelecionada);
-        empresaRef.addValueEventListener(new ValueEventListener() {
+        //recuperar token usuario
+        DatabaseReference usuarioRef = firebaseRef
+                .child("tokenEmpresas")
+                .child(idEmpresaSelecionada)
+                .child("token");
+        usuarioRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() != null){
-                    Empresa empresa = dataSnapshot.getValue(Empresa.class);
+                if(dataSnapshot.exists()){
+                    String token = dataSnapshot.getValue().toString();
                     String to;
-                    String token = empresa.getTokenEmpresa();
 
                     to = token;
 
