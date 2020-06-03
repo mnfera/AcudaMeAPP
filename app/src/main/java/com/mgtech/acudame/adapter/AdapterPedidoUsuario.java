@@ -55,7 +55,9 @@ public class AdapterPedidoUsuario extends RecyclerView.Adapter<AdapterPedidoUsua
         holder.referencia.setText("Referência: "+pedido.getReferencia());
         holder.observacao.setText( "Obs.: "+ pedido.getObservacao() );
         holder.telefone.setText(pedido.getTelEmpresa());
-        holder.horario.setText("Realizado às: " + pedido.getHora());
+        if(pedido.getHora() != null) {
+            holder.horario.setText("Realizado às: " + pedido.getHora());
+        }
         holder.status.setText("Status: "+pedido.getStatus().toUpperCase());
         switch (pedido.getStatus()) {
             case "pendente":

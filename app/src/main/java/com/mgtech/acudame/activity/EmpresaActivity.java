@@ -192,19 +192,19 @@ public class EmpresaActivity extends AppCompatActivity {
                 if(status){
                     //atualizando o status
                     empresa.setStatus(false);
+                    empresa.atualizarStatusEmpresa();
                     finish();
                     overridePendingTransition( 0, 0);
                     startActivity(getIntent());
                     overridePendingTransition( 0, 0);
-                    empresa.atualizarStatusEmpresa();
                 }else {
                     //atualizando o status
                     empresa.setStatus(true);
+                    empresa.atualizarStatusEmpresa();
                     finish();
                     overridePendingTransition( 0, 0);
                     startActivity(getIntent());
                     overridePendingTransition( 0, 0);
-                    empresa.atualizarStatusEmpresa();
                 }
             }
         });

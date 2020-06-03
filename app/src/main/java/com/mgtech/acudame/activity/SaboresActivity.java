@@ -124,10 +124,10 @@ public class SaboresActivity extends AppCompatActivity {
                                             Sabor saborSelecionado = sabores.get(position);
                                             saborSelecionado.removerSabor();
                                             startActivity(new Intent(SaboresActivity.this, SaboresActivity.class));
+                                            finish();
                                             Toast.makeText(SaboresActivity.this,
                                                     "Sabor Excluído com sucesso!",
                                                     Toast.LENGTH_SHORT).show();
-                                            finish();
                                         }
                                     }
                                 });

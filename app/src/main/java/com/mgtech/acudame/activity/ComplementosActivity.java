@@ -124,10 +124,10 @@ public class ComplementosActivity extends AppCompatActivity {
                                             Complemento complementoSelecionado = complementos.get(position);
                                             complementoSelecionado.removerComplemento();
                                             startActivity(new Intent(ComplementosActivity.this, ComplementosActivity.class));
+                                            finish();
                                             Toast.makeText(ComplementosActivity.this,
                                                     "Complemento Excluído com sucesso!",
                                                     Toast.LENGTH_SHORT).show();
-                                            finish();
                                         }
                                     }
                                 });

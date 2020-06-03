@@ -36,9 +36,6 @@ import com.mgtech.acudame.messenger.MessengerDialog;
 import com.mgtech.acudame.model.Notificacao;
 import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
-import com.mgtech.acudame.model.Usuario;
-import com.mgtech.acudame.token.TokenUsuario;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,26 +152,28 @@ public class PedidosActivity extends AppCompatActivity {
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
                                             pedido.setStatus("finalizado");
-                                            finish();
-                                            startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
                                             pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
+                                            enviarNotificacao("ATENÇÃO", "Seu pedido foi/será entregue e finalizado");
+                                            startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
+                                            finish();
                                             Toast.makeText(PedidosActivity.this, "Pedido finalizado",
                                                     Toast.LENGTH_SHORT).show();
-                                            enviarNotificacao("ATENÇÃO", "Seu pedido foi/será entregue e finalizado");
+
 
                                         }else{
                                             Pedido pedido = pedidos.get(posicaoItem);
                                             idUsu = pedido.getIdUsuario();
                                             idPed = pedido.getIdPedido();
                                             pedido.setStatus("cancelado");
-                                            finish();
-                                            startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
                                             pedido.atualizarStatus();
                                             pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
+                                            enviarNotificacao("ATENÇÃO", "Seu pedido foi cancelado");
+                                            startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
+                                            finish();
                                             Toast.makeText(PedidosActivity.this, "Pedido cancelado",
                                                     Toast.LENGTH_SHORT).show();
-                                            enviarNotificacao("ATENÇÃO", "Seu pedido foi cancelado");
+
 
                                         }
                                     }
@@ -230,7 +229,7 @@ public class PedidosActivity extends AppCompatActivity {
 
                     adapterPedido.notifyDataSetChanged();
 
-                }else {
+                }else if(!getSupportFragmentManager().isDestroyed()) {
                     alertaSimples("Não há nenhum pedido", getApplicationContext(), "Pedidos ");
                 }
                 dialog.dismiss();

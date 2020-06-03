@@ -1,11 +1,5 @@
 package com.mgtech.acudame.activity;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -36,8 +36,6 @@ import com.mgtech.acudame.messenger.MessengerDialog;
 import com.mgtech.acudame.model.Notificacao;
 import com.mgtech.acudame.model.NotificacaoDados;
 import com.mgtech.acudame.model.Pedido;
-import com.mgtech.acudame.model.Usuario;
-import com.mgtech.acudame.token.TokenUsuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,25 +139,27 @@ public class PedidosRecebidosEmpresaActivity extends AppCompatActivity {
                                     idUsu = pedido.getIdUsuario();
                                     idPed = pedido.getIdPedido();
                                     pedido.setStatus("finalizado");
-                                    startActivity(new Intent(PedidosRecebidosEmpresaActivity.this, PedidosRecebidosEmpresaActivity.class));
                                     pedido.atualizarStatus();
                                     pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
+                                    enviarNotificacao("ATENÇÃO", "Seu pedido foi/será entregue e finalizado");
+                                    startActivity(new Intent(PedidosRecebidosEmpresaActivity.this, PedidosRecebidosEmpresaActivity.class));
+                                    finish();
                                     Toast.makeText(PedidosRecebidosEmpresaActivity.this, "Pedido finalizado",
                                             Toast.LENGTH_SHORT).show();
-                                    enviarNotificacao("ATENÇÃO", "Seu pedido foi/será entregue e finalizado");
 
                                 }else{
                                     Pedido pedido = pedidos.get(posicaoItem);
                                     idUsu = pedido.getIdUsuario();
                                     idPed = pedido.getIdPedido();
                                     pedido.setStatus("cancelado");
-                                    startActivity(new Intent(PedidosRecebidosEmpresaActivity.this, PedidosRecebidosEmpresaActivity.class));
                                     pedido.atualizarStatus();
                                     pedido.atualizarStatusPedidoUsuario(idUsu, idPed);
+                                    enviarNotificacao("ATENÇÃO", "Seu pedido foi cancelado");
+                                    startActivity(new Intent(PedidosRecebidosEmpresaActivity.this, PedidosRecebidosEmpresaActivity.class));
+                                    finish();
                                     Toast.makeText(PedidosRecebidosEmpresaActivity.this, "Pedido cancelado",
                                             Toast.LENGTH_SHORT).show();
-                                    enviarNotificacao("ATENÇÃO", "Seu pedido foi cancelado");
-                                    finish();
+
                                 }
                             }
                         });
@@ -213,7 +213,7 @@ public class PedidosRecebidosEmpresaActivity extends AppCompatActivity {
 
                     adapterPedido.notifyDataSetChanged();
 
-                }else {
+                }else if(!getSupportFragmentManager().isDestroyed()) {
                     alertaSimples("Não há nenhum pedido", getApplicationContext(), "Pedidos ");
                 }
                 dialog.dismiss();
