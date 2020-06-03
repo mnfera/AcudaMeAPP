@@ -162,6 +162,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                                 }
 
                                                 alertaSimples(erroExcecao, getApplicationContext(), titulo);
+                                                dialog.dismiss();
                                             }
                                         }
                                     });

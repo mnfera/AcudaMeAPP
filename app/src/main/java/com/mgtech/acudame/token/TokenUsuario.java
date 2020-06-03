@@ -3,9 +3,12 @@ package com.mgtech.acudame.token;
 import com.google.firebase.database.DatabaseReference;
 import com.mgtech.acudame.helper.ConfiguracaoFirebase;
 
+import java.util.Map;
+
 public class TokenUsuario {
     private String idUsuario;
     private String token;
+
 
 
     public TokenUsuario(){
