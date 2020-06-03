@@ -135,7 +135,9 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.AutenticacaoActivity"
-            android:launchMode="singleTop" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".activity.SplashActivity"
             android:launchMode="singleTop">
