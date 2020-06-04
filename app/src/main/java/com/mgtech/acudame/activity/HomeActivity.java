@@ -85,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
         //Pegando token
         recuperarToken();
 
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         anuncioHome.loadAd(adRequest);
 
         // configurações toolbar
