@@ -280,39 +280,11 @@ public class HomeActivity extends AppCompatActivity {
 
                         //token
                         token = task.getResult().getToken();
+                        TokenUsuario tokenUsuario = new TokenUsuario();
+                        tokenUsuario.setToken(token);
+                        tokenUsuario.setIdUsuario(idUsuarioLogado);
+                        tokenUsuario.salvarTokenUsuario();
 
-                        //recuperar token usuario
-                        DatabaseReference usuarioRef = firebaseRef
-                                .child("tokenUsuarios")
-                                .child(idUsuarioLogado)
-                                .child("token");
-                        usuarioRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                if(dataSnapshot.exists()){
-                                    String token2 = dataSnapshot.getValue().toString();
-
-                                    if(token.equals(token2)){
-
-                                    }else{
-                                        String token = dataSnapshot.getValue().toString();
-                                        TokenUsuario tokenUsuario = new TokenUsuario();
-                                        tokenUsuario.setToken(token);
-                                        tokenUsuario.setIdUsuario(idUsuarioLogado);
-                                        tokenUsuario.salvarTokenUsuario();
-                                    }
-                                }
-
-
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
                     }
                 });
     }
