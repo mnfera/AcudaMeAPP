@@ -10,10 +10,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginBottom="0dp"
         android:background="@color/vermelhoEscuro"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerEmpresas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
@@ -30,11 +28,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sua Empresa Está: ABERTA"
+                android:textColor="@color/branco_modificado"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                android:textColor="@color/branco_modificado" />
+                android:textStyle="bold" />
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -52,8 +49,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
         </LinearLayout>
-
-
 
 
     </LinearLayout>
