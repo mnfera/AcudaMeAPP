@@ -53,7 +53,9 @@ public class AdapterPedidoUsuario extends RecyclerView.Adapter<AdapterPedidoUsua
         holder.endereco.setText( "Endereço: "+pedido.getEndereco() );
         holder.numero.setText("Número: "+pedido.getNumero());
         holder.referencia.setText("Referência: "+pedido.getReferencia());
-        holder.observacao.setText( "Obs.: "+ pedido.getObservacao() );
+        if(pedido.getObservacao() != null){
+            holder.observacao.setText( "Obs.: "+ pedido.getObservacao() );
+        }
         holder.telefone.setText(pedido.getTelEmpresa());
         if(pedido.getHora() != null) {
             holder.horario.setText("Realizado às: " + pedido.getHora());

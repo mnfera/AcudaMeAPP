@@ -171,6 +171,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                                     Toast.makeText(AutenticacaoActivity.this,
                                             "As senhas não são iguais!",
                                             Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
                                 }
 
                             } else { //login
@@ -208,6 +209,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                                                 }else {
                                                     alertaSimples("Por favor, verifique seu endereço de e-mail", getApplicationContext(), "E-mail não verificado");
+                                                    dialog.dismiss();
                                                 }
                                             }
 
