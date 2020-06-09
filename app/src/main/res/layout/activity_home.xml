@@ -63,7 +63,7 @@
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/homeAnuncio"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:adSize="FULL_BANNER"
         app:adUnitId="@string/anuncio_Admob"
