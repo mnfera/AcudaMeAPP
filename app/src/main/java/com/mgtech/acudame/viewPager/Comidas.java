@@ -3,9 +3,12 @@ package com.mgtech.acudame.viewPager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -74,6 +77,9 @@ public class Comidas extends Fragment {
         recyclerProdutosCardapio.setHasFixedSize(true);
         adapterProduto.notifyDataSetChanged();
         recyclerProdutosCardapio.setAdapter(adapterProduto);
+
+        //conf iniciais
+        usuario = new Usuario();
 
         // recuperar dados da empresa selecionada
         recuperarEmpesa();
@@ -345,5 +351,12 @@ public class Comidas extends Fragment {
             });
             mDialog.show();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Sempre recuperar os dados do usuário
+        recuperarDadosUsuario();
     }
 }

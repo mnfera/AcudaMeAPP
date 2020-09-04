@@ -375,5 +375,4 @@ public class CardapioActivity extends AppCompatActivity {
 
         dialog3.dismiss();
     }
-
 }
