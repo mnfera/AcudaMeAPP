@@ -81,6 +81,5 @@ dependencies {
     //Botão flutuante
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 
-
-
+    implementation 'com.github.MdFarhanRaja:SearchableSpinner:1.2'
 }

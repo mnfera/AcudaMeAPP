@@ -8,6 +8,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +48,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
+
 import com.mgtech.acudame.feedback.Feedback;
 
 public class HomeActivity extends AppCompatActivity {
@@ -61,13 +66,16 @@ public class HomeActivity extends AppCompatActivity {
     private Usuario usuario;
     private String token;
     private String idUsuarioLogado;
+    private ArrayList<String> items = new ArrayList<>();
+    private ArrayList<String> itemsCidades = new ArrayList<>();
+    private SpinnerDialog spinnerDialogEstados;
+    private SpinnerDialog spinnerDialogCidades;
+    private ImageView imgFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-
 
         //Anuncio
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -81,6 +89,33 @@ public class HomeActivity extends AppCompatActivity {
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+        initItems();
+
+        spinnerDialogEstados = new SpinnerDialog(HomeActivity.this, items, "Selecione o Estado");
+        spinnerDialogEstados.bindOnSpinerListener(new OnSpinerItemClick() {
+
+            @Override
+            public void onClick(String s, int i) {
+
+                spinnerDialogCidades = new SpinnerDialog(HomeActivity.this, itemsCidades, "Selecione a cidade");
+                spinnerDialogCidades.showSpinerDialog();
+                spinnerDialogCidades.bindOnSpinerListener(new OnSpinerItemClick() {
+                    @Override
+                    public void onClick(String s, int i) {
+                        Toast.makeText(HomeActivity.this, "Cidade : "  + s, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+        });
+
+        imgFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinnerDialogEstados.showSpinerDialog();
+
+            }
+        });
 
         //Pegando token
         recuperarToken();
@@ -246,6 +281,7 @@ public class HomeActivity extends AppCompatActivity {
         searchView = findViewById(R.id.materialSearchView);
         recyclerEmpresas = findViewById(R.id.recyclerEmpresas);
         anuncioHome = findViewById(R.id.homeAnuncio);
+        imgFilter = findViewById(R.id.imgFilter);
     }
 
     private void deslogarUsuario() {
@@ -287,6 +323,16 @@ public class HomeActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void initItems() {
+        items.add("Rio Grande do Norte");
+        items.add("Ceará");
+        items.add("Paraíba");
+        itemsCidades.add("José da Penha");
+        itemsCidades.add("Pau dos Ferros");
+        itemsCidades.add("Major Sales");
+        itemsCidades.add("Luiz Gomes");
     }
 
 }
