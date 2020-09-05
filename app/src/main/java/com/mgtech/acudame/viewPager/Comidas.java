@@ -79,7 +79,7 @@ public class Comidas extends Fragment {
         recyclerProdutosCardapio.setAdapter(adapterProduto);
 
         //conf iniciais
-        usuario = new Usuario();
+        //usuario = new Usuario();
 
         // recuperar dados da empresa selecionada
         recuperarEmpesa();
@@ -179,6 +179,8 @@ public class Comidas extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue() != null) {
                     usuario = dataSnapshot.getValue(Usuario.class);
+                } else{
+                    usuario = new Usuario();
                 }
             }
 

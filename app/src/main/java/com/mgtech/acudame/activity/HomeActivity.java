@@ -109,14 +109,6 @@ public class HomeActivity extends AppCompatActivity {
 
         });
 
-        imgFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                spinnerDialogEstados.showSpinerDialog();
-
-            }
-        });
-
         //Pegando token
         recuperarToken();
 
@@ -335,4 +327,7 @@ public class HomeActivity extends AppCompatActivity {
         itemsCidades.add("Luiz Gomes");
     }
 
+    public void filtro(View view){
+        spinnerDialogEstados.showSpinerDialog();
+    }
 }

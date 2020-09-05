@@ -56,7 +56,8 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="PROCURE UMA CIDADE"
+            android:onClick="filtro"
+            android:text="PROCURE NA SUA CIDADE"
             android:textColor="@android:color/white"
             android:textSize="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -66,15 +67,16 @@
 
         <ImageView
             android:id="@+id/imgFilter"
-            android:layout_width="55px"
-            android:layout_height="55px"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="-1"
+            android:onClick="filtro"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textCidade"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_fi" />
 

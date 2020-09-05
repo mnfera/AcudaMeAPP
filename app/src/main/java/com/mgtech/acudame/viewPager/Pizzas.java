@@ -463,4 +463,11 @@ public class Pizzas extends Fragment {
     private void exibirMensagem(String texto){
         Toast.makeText(getActivity(), texto, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Sempre recuperar os dados do usuário
+        recuperarDadosUsuario();
+    }
 }

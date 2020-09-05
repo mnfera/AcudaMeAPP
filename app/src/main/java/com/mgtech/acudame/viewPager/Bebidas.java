@@ -173,6 +173,8 @@ public class Bebidas extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue() != null) {
                     usuario = dataSnapshot.getValue(Usuario.class);
+                }else{
+                    usuario = new Usuario();
                 }
             }
 
@@ -345,5 +347,11 @@ public class Bebidas extends Fragment {
             });
             mDialog.show();
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Sempre recuperar os dados do usuário
+        recuperarDadosUsuario();
     }
 }
