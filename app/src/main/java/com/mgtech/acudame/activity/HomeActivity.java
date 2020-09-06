@@ -3,12 +3,14 @@ package com.mgtech.acudame.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,7 +42,6 @@ import com.mgtech.acudame.helper.UsuarioFirebase;
 import com.mgtech.acudame.listener.RecyclerItemClickListener;
 import com.mgtech.acudame.model.Empresa;
 import com.mgtech.acudame.model.Usuario;
-import com.mgtech.acudame.token.TokenEmpresa;
 import com.mgtech.acudame.token.TokenUsuario;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -71,6 +72,10 @@ public class HomeActivity extends AppCompatActivity {
     private SpinnerDialog spinnerDialogEstados;
     private SpinnerDialog spinnerDialogCidades;
     private ImageView imgFilter;
+    private TextView textCidade;
+    private static final long MIN_CLICK_INTERVAL=600;
+    private long mLastClickTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,24 +95,6 @@ public class HomeActivity extends AppCompatActivity {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
         initItems();
-
-        spinnerDialogEstados = new SpinnerDialog(HomeActivity.this, items, "Selecione o Estado");
-        spinnerDialogEstados.bindOnSpinerListener(new OnSpinerItemClick() {
-
-            @Override
-            public void onClick(String s, int i) {
-
-                spinnerDialogCidades = new SpinnerDialog(HomeActivity.this, itemsCidades, "Selecione a cidade");
-                spinnerDialogCidades.showSpinerDialog();
-                spinnerDialogCidades.bindOnSpinerListener(new OnSpinerItemClick() {
-                    @Override
-                    public void onClick(String s, int i) {
-                        Toast.makeText(HomeActivity.this, "Cidade : "  + s, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-        });
 
         //Pegando token
         recuperarToken();
@@ -274,6 +261,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerEmpresas = findViewById(R.id.recyclerEmpresas);
         anuncioHome = findViewById(R.id.homeAnuncio);
         imgFilter = findViewById(R.id.imgFilter);
+        textCidade = findViewById(R.id.textCidade);
     }
 
     private void deslogarUsuario() {
@@ -327,7 +315,33 @@ public class HomeActivity extends AppCompatActivity {
         itemsCidades.add("Luiz Gomes");
     }
 
-    public void filtro(View view){
-        spinnerDialogEstados.showSpinerDialog();
+    public final void onClick(View v) {
+        //Evitar clique duplo para não abrir dois alert
+        long currentClickTime=SystemClock.uptimeMillis();
+        long elapsedTime=currentClickTime-mLastClickTime;
+        mLastClickTime=currentClickTime;
+
+        if(elapsedTime<=MIN_CLICK_INTERVAL){
+
+            spinnerDialogEstados = new SpinnerDialog(HomeActivity.this, items, "Selecione o Estado");
+            spinnerDialogEstados.bindOnSpinerListener(new OnSpinerItemClick() {
+
+                @Override
+                public void onClick(String s, int i) {
+
+                    spinnerDialogCidades = new SpinnerDialog(HomeActivity.this, itemsCidades, "Selecione a cidade");
+                    spinnerDialogCidades.showSpinerDialog();
+                    spinnerDialogCidades.bindOnSpinerListener(new OnSpinerItemClick() {
+                        @Override
+                        public void onClick(String s, int i) {
+                            Toast.makeText(HomeActivity.this, "Cidade : "  + s, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+            });
+
+            spinnerDialogEstados.showSpinerDialog();
+        }
     }
 }

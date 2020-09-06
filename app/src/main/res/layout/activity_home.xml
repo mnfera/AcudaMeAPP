@@ -55,7 +55,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:onClick="filtro"
+            android:onClick="onClick"
             android:text="PROCURE NA SUA CIDADE"
             android:textColor="@android:color/white"
             android:textSize="13dp"
@@ -74,7 +74,7 @@
             android:layout_marginBottom="8dp"
             android:layout_weight="-1"
             android:background="@drawable/ic_fi"
-            android:onClick="filtro"
+            android:onClick="onClick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textCidade"
             app:layout_constraintTop_toTopOf="parent" />

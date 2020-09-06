@@ -11,6 +11,7 @@ public class Empresa implements Serializable {
     private String idUsuario;
     private String urlImagem;
     private String nome;
+    private String cidade;
     private String categoria;
     private String horario;
     private String dias;
@@ -72,6 +73,14 @@ public class Empresa implements Serializable {
                 .child(getIdUsuario());
         empresaRef.child("status").setValue(getStatus());
 
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getTelefone() { return telefone; }
